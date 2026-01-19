@@ -5,7 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FabricateHub | Marketplace de Fabricação de Peças Personalizadas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap"
+    rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script
+    const SUPABASE_URL = 'https://evojynztlxbcyfsujtoy.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_4zP3E8RmCti-qSJ8sGHvNw_HgH15MQm';
+    const supabase = supabase.createClient(https://evojynztlxbcyfsujtoy.supabase.co, sb_publishable_4zP3E8RmCti-qSJ8sGHvNw_HgH15MQm);
+    console.log('Supabase conectado:', supabase);></script>
+     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+   <script>
+   const supabase = supabase.createClient(
+       'https://evojynztlxbcyfsujtoy.supabase.co',
+       'sb_publishable_4zP3E8RmCti-qSJ8sGHvNw_HgH15MQm'
+   );
+   </script>
     <style>
         :root {
             --primary: #2563eb;
@@ -969,13 +983,13 @@
         <section class="hero">
             <div class="container">
                 <h1>Conecte-se com Fabricantes para Peças Personalizadas</h1>
-                <p>Faça upload dos seus arquivos de engenharia (STL, STEP, DXF) e receba orçamentos de fabricantes independentes especializados em usinagem, corte a laser, soldagem, manufatura 3D, prototipagem, fabricação em madeira e muito mais.</p>
+                <p>Faça upload dos seus arquivos de engenharia (STL, STEP, DXF) e receba orçamentos de fabricantes independentes especializados em usinagem, corte a laser, soldagem, manufatura 3D, fabricação em madeira e muito mais.</p>
                 <div class="hero-btns">
                     <button class="btn btn-primary btn-large" id="get-quote-btn">
                         <i class="fas fa-upload"></i> Solicitar Orçamento
                     </button>
                     <button class="btn btn-outline btn-large" id="browse-manufacturers-btn">
-                        <i class="fas fa-search"></i> Buscar Fabricantes
+                        <i class="fas fa-search"></i> Métodos de fabricação
                     </button>
                 </div>
                 <div class="file-types">
@@ -1049,10 +1063,10 @@
                                         <option value="cnc-machining">Usinagem CNC</option>
                                         <option value="laser-cutting">Corte a Laser</option>
                                         <option value="3d-printing">Impressão 3D</option>
-                                        <option value="prototyping">Prototipagem</option>
+                                        <option value="machining">Usinagem</option>
                                         <option value="welding">Soldagem</option>
                                         <option value="wood-fabrication">Fabricação em Madeira</option>
-                                        <option value="sheet-metal">Chapa Metálica</option>
+                                        <option value="metal-bending">Conformação</option>
                                     </select>
                                 </div>
                             </div>
@@ -1310,122 +1324,144 @@
                 <div class="page-subtitle">Explore nossas capacidades de manufatura</div>
             </div>
             
-            <div class="methods-grid">
-                <div class="method-card" data-method="cnc-machining">
-                    <div class="method-header">
-                        <div class="method-icon">
-                            <i class="fas fa-cogs"></i>
-                        </div>
-                        <h3>Usinagem CNC</h3>
-                    </div>
-                    <div class="method-body">
-                        <p>Usinagem de precisão de metais e plásticos com tolerâncias apertadas.</p>
-                        <ul>
-                            <li>Fresamento 3, 4 e 5 eixos</li>
-                            <li>Torno e trabalho de torno</li>
-                            <li>Geometrias complexas</li>
-                            <li>Tolerâncias até ±0,001"</li>
-                        </ul>
-                        <button class="btn btn-outline btn-small" style="margin-top: 15px;" data-method-detail="cnc-machining">Ver Detalhes</button>
-                    </div>
-                </div>
-                
-                <div class="method-card" data-method="laser-cutting">
-                    <div class="method-header">
-                        <div class="method-icon">
-                            <i class="fas fa-cut"></i>
-                        </div>
-                        <h3>Corte a Laser</h3>
-                    </div>
-                    <div class="method-body">
-                        <p>Corte de precisão de chapas metálicas e ligas com bordas limpas.</p>
-                        <ul>
-                            <li>Aço, alumínio, latão</li>
-                            <li>Espessura até 1"</li>
-                            <li>Designs intricados</li>
-                            <li>Entrega rápida</li>
-                        </ul>
-                        <button class="btn btn-outline btn-small" style="margin-top: 15px;" data-method-detail="laser-cutting">Ver Detalhes</button>
-                    </div>
-                </div>
-                
-                <div class="method-card" data-method="3d-printing">
-                    <div class="method-header">
-                        <div class="method-icon">
-                            <i class="fas fa-print"></i>
-                        </div>
-                        <h3>Impressão 3D</h3>
-                    </div>
-                    <div class="method-body">
-                        <p>Manufatura aditiva que constrói peças camada por camada a partir de modelos digitais.</p>
-                        <ul>
-                            <li>FDM, SLA, SLS, Impressão 3D em Metal</li>
-                            <li>Prototipagem rápida</li>
-                            <li>Protótipos funcionais</li>
-                            <li>Produção de baixo volume</li>
-                        </ul>
-                        <button class="btn btn-outline btn-small" style="margin-top: 15px;" data-method-detail="3d-printing">Ver Detalhes</button>
-                    </div>
-                </div>
-                
-                <div class="method-card" data-method="prototyping">
-                    <div class="method-header">
-                        <div class="method-icon">
-                            <i class="fas fa-flask"></i>
-                        </div>
-                        <h3>Prototipagem</h3>
-                    </div>
-                    <div class="method-body">
-                        <p>Serviços de prototipagem rápida para validação de design, testes e apresentação.</p>
-                        <ul>
-                            <li>Modelos conceituais</li>
-                            <li>Protótipos funcionais</li>
-                            <li>Validação de design</li>
-                            <li>Desenvolvimento iterativo</li>
-                        </ul>
-                        <button class="btn btn-outline btn-small" style="margin-top: 15px;" data-method-detail="prototyping">Ver Detalhes</button>
-                    </div>
-                </div>
-                
-                <div class="method-card" data-method="wood-fabrication">
-                    <div class="method-header">
-                        <div class="method-icon">
-                            <i class="fas fa-tree"></i>
-                        </div>
-                        <h3>Fabricação em Madeira</h3>
-                    </div>
-                    <div class="method-body">
-                        <p>Serviços de marcenaria e carpintaria personalizados para móveis, elementos arquitetônicos e peças decorativas.</p>
-                        <ul>
-                            <li>Roteamento CNC em madeira</li>
-                            <li>Móveis personalizados</li>
-                            <li>Marcenaria arquitetônica</li>
-                            <li>Acabamento e tingimento</li>
-                        </ul>
-                        <button class="btn btn-outline btn-small" style="margin-top: 15px;" data-method-detail="wood-fabrication">Ver Detalhes</button>
-                    </div>
-                </div>
-                
-                <div class="method-card" data-method="welding">
-                    <div class="method-header">
-                        <div class="method-icon">
-                            <i class="fas fa-fire"></i>
-                        </div>
-                        <h3>Soldagem e Fabricação</h3>
-                    </div>
-                    <div class="method-body">
-                        <p>Serviços de fabricação e soldagem metálica para componentes estruturais, quadros e montagens personalizadas.</p>
-                        <ul>
-                            <li>Solda TIG (precisão)</li>
-                            <li>Solda MIG (produção)</li>
-                            <li>Solda com eletrodo revestido</li>
-                            <li>Corte a plasma</li>
-                            <li>Dobra e conformação de metais</li>
-                        </ul>
-                        <button class="btn btn-outline btn-small" style="margin-top: 15px;" data-method-detail="welding">Ver Detalhes</button>
-                    </div>
-                </div>
+<div class="methods-grid">
+    <div class="method-card" data-method="cnc-machining">
+        <div class="method-header">
+            <div class="method-icon">
+                <i class="fas fa-cogs"></i>
             </div>
+            <h3>Usinagem CNC</h3>
+        </div>
+        <div class="method-body">
+            <p>Usinagem de precisão de metais e plásticos com tolerâncias apertadas.</p>
+            <ul>
+                <li>Fresamento 3, 4 e 5 eixos</li>
+                <li>Torneamento e fresagem CNC</li>
+                <li>Geometrias complexas</li>
+                <li>Tolerâncias até ±0,001"</li>
+            </ul>
+            <button class="btn btn-outline btn-small" style="margin-top: 15px;" data-method-detail="cnc-machining">Ver Detalhes</button>
+        </div>
+    </div>
+    
+    <div class="method-card" data-method="laser-cutting">
+        <div class="method-header">
+            <div class="method-icon">
+                <i class="fas fa-cut"></i>
+            </div>
+            <h3>Corte a Laser</h3>
+        </div>
+        <div class="method-body">
+            <p>Corte de precisão de chapas metálicas e ligas com bordas limpas.</p>
+            <ul>
+                <li>Aço, alumínio, latão</li>
+                <li>Espessura até 1"</li>
+                <li>Designs intricados</li>
+                <li>Entrega rápida</li>
+            </ul>
+            <button class="btn btn-outline btn-small" style="margin-top: 15px;" data-method-detail="laser-cutting">Ver Detalhes</button>
+        </div>
+    </div>
+    
+    <div class="method-card" data-method="3d-printing">
+        <div class="method-header">
+            <div class="method-icon">
+                <i class="fas fa-print"></i>
+            </div>
+            <h3>Impressão 3D</h3>
+        </div>
+        <div class="method-body">
+            <p>Manufatura aditiva que constrói peças camada por camada a partir de modelos digitais.</p>
+            <ul>
+                <li>FDM, SLA, SLS, Impressão 3D em Metal</li>
+                <li>Prototipagem rápida</li>
+                <li>Protótipos funcionais</li>
+                <li>Produção de baixo volume</li>
+            </ul>
+            <button class="btn btn-outline btn-small" style="margin-top: 15px;" data-method-detail="3d-printing">Ver Detalhes</button>
+        </div>
+    </div>
+    
+    <!-- NOVO CARD: Usinagem (machining) -->
+    <div class="method-card" data-method="machining">
+        <div class="method-header">
+            <div class="method-icon">
+                <i class="fas fa-industry"></i>
+            </div>
+            <h3>Usinagem Convencional</h3>
+        </div>
+        <div class="method-body">
+            <p>Usinagem tradicional com tornos, fresadoras e furadeiras para produção de peças metálicas.</p>
+            <ul>
+                <li>Torneamento convencional</li>
+                <li>Fresamento manual</li>
+                <li>Furação e rosqueamento</li>
+                <li>Retificação de superfícies</li>
+                <li>Peças únicas e pequenas séries</li>
+            </ul>
+            <button class="btn btn-outline btn-small" style="margin-top: 15px;" data-method-detail="machining">Ver Detalhes</button>
+        </div>
+    </div>
+    
+    <div class="method-card" data-method="welding">
+        <div class="method-header">
+            <div class="method-icon">
+                <i class="fas fa-fire"></i>
+            </div>
+            <h3>Soldagem e Fabricação</h3>
+        </div>
+        <div class="method-body">
+            <p>Serviços de fabricação e soldagem metálica para componentes estruturais, quadros e montagens personalizadas.</p>
+            <ul>
+                <li>Solda TIG (precisão)</li>
+                <li>Solda MIG (produção)</li>
+                <li>Solda com eletrodo revestido</li>
+                <li>Corte a plasma</li>
+            </ul>
+            <button class="btn btn-outline btn-small" style="margin-top: 15px;" data-method-detail="welding">Ver Detalhes</button>
+        </div>
+    </div>
+    
+    <div class="method-card" data-method="wood-fabrication">
+        <div class="method-header">
+            <div class="method-icon">
+                <i class="fas fa-tree"></i>
+            </div>
+            <h3>Fabricação em Madeira</h3>
+        </div>
+        <div class="method-body">
+            <p>Serviços de marcenaria e carpintaria personalizados para móveis, elementos arquitetônicos e peças decorativas.</p>
+            <ul>
+                <li>Roteamento CNC em madeira</li>
+                <li>Móveis personalizados</li>
+                <li>Marcenaria arquitetônica</li>
+                <li>Acabamento e tingimento</li>
+            </ul>
+            <button class="btn btn-outline btn-small" style="margin-top: 15px;" data-method-detail="wood-fabrication">Ver Detalhes</button>
+        </div>
+    </div>
+    
+    <!-- NOVO CARD: Conformação (metal-bending) -->
+    <div class="method-card" data-method="metal-bending">
+        <div class="method-header">
+            <div class="method-icon">
+                <i class="fas fa-bezier-curve"></i>
+            </div>
+            <h3>Conformação de Metais</h3>
+        </div>
+        <div class="method-body">
+            <p>Dobramento e conformação de chapas metálicas para criar peças com formas específicas e geometrias complexas.</p>
+            <ul>
+                <li>Dobramento de chapas</li>
+                <li>Prensas e calandras</li>
+                <li>Conformação a frio e a quente</li>
+                <li>Estampagem profunda</li>
+                <li>Peças estruturais e chassis</li>
+            </ul>
+            <button class="btn btn-outline btn-small" style="margin-top: 15px;" data-method-detail="metal-bending">Ver Detalhes</button>
+        </div>
+    </div>
+</div>
         </div>
     </div>
 
@@ -1603,7 +1639,7 @@
             <div class="footer-container">
                 <div class="footer-column">
                     <h3>FabricateHub</h3>
-                    <p style="color: #d1d5db; margin-bottom: 20px;">Conectando clientes com fabricantes para fabricação de peças personalizadas desde 2020.</p>
+                    <p style="color: #d1d5db; margin-bottom: 20px;">Conectando clientes com fabricantes para fabricação de peças personalizadas desde 2026.</p>
                     <div style="display: flex; gap: 15px;">
                         <a><i class="fab fa-linkedin fa-lg"></i></a>
                         <a><i class="fab fa-twitter fa-lg"></i></a>
@@ -1643,8 +1679,66 @@
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 FabricateHub. Todos os direitos reservados. | Esta é uma interface de demonstração para um marketplace de fabricação de peças personalizadas.</p>
+                <p>&copy; 2026 FabricateHub. Todos os direitos reservados. | Esta é uma interface de demonstração para um marketplace de fabricação de peças personalizadas.</p>
             </div>
+            <!-- Modal de Explicação do Site -->
+<div id="site-explanation-modal" class="modal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header">
+            <h3>Bem-vindo ao FabricateHub! 🛠️</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <h4>Como funciona nossa plataforma:</h4>
+            
+            <div style="margin-bottom: 20px;">
+                <h5>Para Clientes:</h5>
+                <ol style="margin-left: 20px; margin-bottom: 15px;">
+                    <li><strong>Envie seu projeto:</strong> Faça upload dos arquivos técnicos (STL, STEP, DXF) na página inicial</li>
+                    <li><strong>Detalhe seu projeto:</strong> Informe material, quantidade, prazo e especificações</li>
+                    <li><strong>Receba orçamentos:</strong> Fabricantes analisam seu projeto e enviam propostas</li>
+                    <li><strong>Escolha o melhor:</strong> Compare preços, prazos e avaliações dos fabricantes</li>
+                    <li><strong>Acompanhe a produção:</strong> Monitore o progresso do seu projeto em tempo real</li>
+                </ol>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <h5>Para Fabricantes:</h5>
+                <ol style="margin-left: 20px; margin-bottom: 15px;">
+                    <li><strong>Cadastre suas capacidades:</strong> Informe os métodos de fabricação e materiais que trabalha</li>
+                    <li><strong>Encontre projetos:</strong> Busque solicitações que correspondam ao seu expertise</li>
+                    <li><strong>Analise arquivos:</strong> Acesse os arquivos técnicos completos dos clientes</li>
+                    <li><strong>Envie orçamentos:</strong> Proponha preço e prazo para os projetos</li>
+                    <li><strong>Execute o trabalho:</strong> Produza as peças e atualize o progresso</li>
+                </ol>
+            </div>
+            
+            <div style="background-color: #f0f7ff; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                <h5>🎯 Tipos de Arquivos Aceitos:</h5>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+                    <span style="background-color: var(--primary); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">STL (Modelos 3D)</span>
+                    <span style="background-color: var(--primary); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">STEP/IGES (CAD 3D)</span>
+                    <span style="background-color: var(--primary); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">DXF/DWG (Desenhos 2D)</span>
+                    <span style="background-color: var(--primary); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">PDF (Especificações)</span>
+                    <span style="background-color: var(--primary); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">SLDPRT (SolidWorks)</span>
+                </div>
+            </div>
+            
+            <div style="background-color: #f0f9f0; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                <h5>📋 Dicas para um bom orçamento:</h5>
+                <ul style="margin-left: 20px;">
+                    <li>Forneça arquivos completos e dimensionados</li>
+                    <li>Especifique tolerâncias e acabamentos desejados</li>
+                    <li>Informe a aplicação final da peça</li>
+                    <li>Seja claro sobre prazos e quantidades</li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="close-explanation-modal">Entendi, vamos começar!</button>
+        </div>
+    </div>
+</div>
         </div>
     </footer>
 
@@ -2624,6 +2718,7 @@
                         <div class="card-actions">
                             <button class="btn btn-small btn-outline view-request" data-id="${request.id}">Ver Detalhes</button>
                             <button class="btn btn-small btn-primary submit-quote" data-id="${request.id}">Enviar Orçamento</button>
+                            <button class="btn btn-small btn-accent view-files" data-id="${request.id}" data-filename="${request.fileName}">Ver Arquivos</button>
                         </div>
                     `;
                     
@@ -2650,6 +2745,14 @@
                         }
                     });
                 });
+                
+                container.querySelectorAll('.view-files').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const requestId = parseInt(e.target.getAttribute('data-id'));
+        const fileName = e.target.getAttribute('data-filename');
+        app.viewProjectFiles(requestId, fileName);
+    });
+});
             },
             
             // Renderizar tabela de orçamentos do fabricante
