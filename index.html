@@ -3517,11 +3517,14 @@
                     ...additionalData
                 };
                 
-                await supabaseClient
-                    .from('profiles')
-                    .insert([profileData]);
+                const { error: profileError } = await supabaseClient
+    .from('profiles')
+    .insert([profileData]);
 
-                showAlert('Conta criada com sucesso! Você pode fazer login agora.', 'success');
+if (profileError) {
+    console.error('Erro ao inserir perfil:', profileError);
+    throw new Error('Erro ao salvar dados do perfil: ' + profileError.message);
+}                showAlert('Conta criada com sucesso! Você pode fazer login agora.', 'success');
                 
                 document.getElementById('signupForm').reset();
                 toggleConditionalFields(); // Resetar campos condicionais
