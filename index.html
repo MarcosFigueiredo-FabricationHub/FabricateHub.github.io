@@ -123,7 +123,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            }
+        }
 
         .auth-logo {
             display: flex;
@@ -2148,7 +2148,7 @@
                         </button>
                     </form>
 
-                     <div class="form-footer">
+                    <div class="form-footer">
                         Não tem uma conta? <a onclick="showAuthForm('signup')">Criar conta</a>
                     </div>
                 </div>
@@ -2357,6 +2357,9 @@
                             <div class="user-type-badge" id="user-type-badge">Cliente</div>
                         </div>
                     </div>
+                    <button class="btn btn-outline btn-small" id="settings-btn" style="padding: 8px 12px;">
+                        <i class="fas fa-cog"></i>
+                    </button>
                     <button class="btn btn-outline" id="logout-btn">Sair</button>
                 </div>
             </div>
@@ -2869,7 +2872,7 @@
                             <ul>
                                 <li>Aço, alumínio, latão</li>
                                 <li>Espessura até 1"</li>
-                                <li>Designs intricados</li>
+                                <li>Designs intrincados</li>
                                 <li>Entrega rápida</li>
                             </ul>
                         </div>
@@ -3198,6 +3201,133 @@
                 </div>
             </div>
         </div>
+        
+        <!-- ========== MODAL DE CONFIGURAÇÕES ========== -->
+        <div id="settings-modal" class="modal">
+            <div class="modal-content" style="max-width: 700px;">
+                <div class="modal-header">
+                    <h3>Configurações da Conta</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <form id="settings-form">
+                    <div class="modal-body">
+                        <!-- Dados básicos -->
+                        <div class="form-group">
+                            <label for="settings-name">Nome Completo</label>
+                            <input type="text" id="settings-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="settings-email">Email</label>
+                            <input type="email" id="settings-email" readonly disabled style="background: #3a3a3a; color: #aaa; cursor: not-allowed;">
+                            <small style="color: #888;">O email não pode ser alterado.</small>
+                        </div>
+
+                        <!-- Campos condicionais: serão preenchidos via JS -->
+                        <div id="settings-client-fields" style="display: none;">
+                            <h4 style="color: white; margin: 20px 0 10px;">Informações de Cliente</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="settings-cpf">CPF</label>
+                                    <input type="text" id="settings-cpf" placeholder="000.000.000-00">
+                                </div>
+                                <div class="form-group">
+                                    <label for="settings-cep">CEP</label>
+                                    <input type="text" id="settings-cep" placeholder="00000-000">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-client-subtype">Tipo de Cliente</label>
+                                <select id="settings-client-subtype">
+                                    <option value="">Selecione...</option>
+                                    <option value="physical_person">Pessoa Física</option>
+                                    <option value="manufacturer_seeking_suppliers">Fabricante buscando fornecedores</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="settings-fabricator-fields" style="display: none;">
+                            <h4 style="color: white; margin: 20px 0 10px;">Informações de Fabricante</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="settings-cnpj">CNPJ</label>
+                                    <input type="text" id="settings-cnpj" placeholder="00.000.000/0000-00">
+                                </div>
+                                <div class="form-group">
+                                    <label for="settings-company-cep">CEP</label>
+                                    <input type="text" id="settings-company-cep" placeholder="00000-000">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="settings-company-name">Nome da Empresa</label>
+                                    <input type="text" id="settings-company-name" placeholder="Nome da sua empresa">
+                                </div>
+                                <div class="form-group">
+                                    <label for="settings-company-age">Tempo de Atuação (anos)</label>
+                                    <input type="number" id="settings-company-age" min="0" placeholder="Opcional">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-group-label">Áreas de Atuação</label>
+                                <div class="checkbox-grid" id="settings-fabrication-areas">
+                                    <div class="form-checkbox-group">
+                                        <input type="checkbox" id="settings-area-cnc" value="cnc-machining">
+                                        <label for="settings-area-cnc">Usinagem CNC</label>
+                                    </div>
+                                    <div class="form-checkbox-group">
+                                        <input type="checkbox" id="settings-area-laser" value="laser-cutting">
+                                        <label for="settings-area-laser">Corte a Laser</label>
+                                    </div>
+                                    <div class="form-checkbox-group">
+                                        <input type="checkbox" id="settings-area-3d" value="3d-printing">
+                                        <label for="settings-area-3d">Impressão 3D</label>
+                                    </div>
+                                    <div class="form-checkbox-group">
+                                        <input type="checkbox" id="settings-area-machining" value="machining">
+                                        <label for="settings-area-machining">Usinagem Convencional</label>
+                                    </div>
+                                    <div class="form-checkbox-group">
+                                        <input type="checkbox" id="settings-area-welding" value="welding">
+                                        <label for="settings-area-welding">Soldagem</label>
+                                    </div>
+                                    <div class="form-checkbox-group">
+                                        <input type="checkbox" id="settings-area-wood" value="wood-fabrication">
+                                        <label for="settings-area-wood">Fabricação em Madeira</label>
+                                    </div>
+                                    <div class="form-checkbox-group">
+                                        <input type="checkbox" id="settings-area-metal-bending" value="metal-bending">
+                                        <label for="settings-area-metal-bending">Conformação</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Preferência de Formato de Arquivo</label>
+                                <div class="file-format-options">
+                                    <label class="file-format-option">
+                                        <input type="radio" name="settings-file-format" value="dedicated" checked>
+                                        <div class="file-format-info">
+                                            <div class="file-format-title">Formatos Dedicados</div>
+                                            <div class="file-format-desc">STL, STEP, IGES, DXF, DWG, SLDPRT, 3DM, OBJ</div>
+                                        </div>
+                                    </label>
+                                    <label class="file-format-option">
+                                        <input type="radio" name="settings-file-format" value="simple">
+                                        <div class="file-format-info">
+                                            <div class="file-format-title">Formatos Simples/PDF</div>
+                                            <div class="file-format-desc">PDF, imagens, desenhos técnicos simples</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline close-modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <!-- Rodapé -->
         <footer>
@@ -3503,14 +3633,11 @@
                     ...additionalData
                 };
                 
-                const { error: profileError } = await supabaseClient
-    .from('profiles')
-    .insert([profileData]);
+                await supabaseClient
+                    .from('profiles')
+                    .insert([profileData]);
 
-if (profileError) {
-    console.error('Erro ao inserir perfil:', profileError);
-    throw new Error('Erro ao salvar dados do perfil: ' + profileError.message);
-}                showAlert('Conta criada com sucesso! Você pode fazer login agora.', 'success');
+                showAlert('Conta criada com sucesso! Você pode fazer login agora.', 'success');
                 
                 document.getElementById('signupForm').reset();
                 toggleConditionalFields(); // Resetar campos condicionais
@@ -4332,6 +4459,12 @@ if (profileError) {
                 });
                 
                 document.getElementById('update-capabilities-btn').addEventListener('click', () => app.openCapabilitiesModal());
+                
+                // Botão de configurações
+                document.getElementById('settings-btn').addEventListener('click', () => app.openSettingsModal());
+                
+                // Formulário de configurações
+                document.getElementById('settings-form').addEventListener('submit', (e) => app.saveUserSettings(e));
                 
                 // Botões de fechar modal
                 document.querySelectorAll('.close-modal').forEach(button => {
@@ -6719,6 +6852,113 @@ if (profileError) {
                 } catch (error) {
                     console.error('Erro ao enviar mensagem:', error);
                     utils.showNotification('Erro ao enviar mensagem.', 'error');
+                }
+            },
+
+            // ========== FUNÇÕES DE CONFIGURAÇÕES ==========
+            openSettingsModal: async () => {
+                if (!AppState.currentUser) {
+                    utils.showNotification('Você precisa estar logado.', 'error');
+                    return;
+                }
+                await app.loadUserSettings();
+                utils.openModal('settings-modal');
+            },
+
+            loadUserSettings: async () => {
+                try {
+                    const { data: profile, error } = await supabaseClient
+                        .from('profiles')
+                        .select('*')
+                        .eq('id', AppState.currentUser.id)
+                        .single();
+
+                    if (error) throw error;
+
+                    document.getElementById('settings-name').value = profile.name || '';
+                    document.getElementById('settings-email').value = AppState.currentUser.email;
+
+                    const userType = profile.user_type;
+                    const clientFields = document.getElementById('settings-client-fields');
+                    const fabricatorFields = document.getElementById('settings-fabricator-fields');
+
+                    clientFields.style.display = 'none';
+                    fabricatorFields.style.display = 'none';
+
+                    if (userType === 'client') {
+                        clientFields.style.display = 'block';
+                        document.getElementById('settings-cpf').value = profile.cpf || '';
+                        document.getElementById('settings-cep').value = profile.cep || '';
+                        document.getElementById('settings-client-subtype').value = profile.client_subtype || '';
+                    } else if (userType === 'fabricator') {
+                        fabricatorFields.style.display = 'block';
+                        document.getElementById('settings-cnpj').value = profile.cnpj || '';
+                        document.getElementById('settings-company-cep').value = profile.cep || '';
+                        document.getElementById('settings-company-name').value = profile.company_name || '';
+                        document.getElementById('settings-company-age').value = profile.company_age || '';
+
+                        const areas = profile.fabrication_areas || [];
+                        document.querySelectorAll('#settings-fabrication-areas input[type="checkbox"]').forEach(cb => {
+                            cb.checked = areas.includes(cb.value);
+                        });
+
+                        const pref = profile.file_format_preference || 'dedicated';
+                        document.querySelectorAll('input[name="settings-file-format"]').forEach(radio => {
+                            if (radio.value === pref) radio.checked = true;
+                        });
+                    }
+                } catch (error) {
+                    console.error('Erro ao carregar configurações:', error);
+                    utils.showNotification('Erro ao carregar dados do usuário.', 'error');
+                }
+            },
+
+            saveUserSettings: async (e) => {
+                e.preventDefault();
+
+                try {
+                    const userType = AppState.currentUser.type;
+                    const updates = {
+                        name: document.getElementById('settings-name').value,
+                        updated_at: new Date().toISOString()
+                    };
+
+                    if (userType === 'client') {
+                        updates.cpf = document.getElementById('settings-cpf').value;
+                        updates.cep = document.getElementById('settings-cep').value;
+                        updates.client_subtype = document.getElementById('settings-client-subtype').value;
+                    } else if (userType === 'fabricator') {
+                        updates.cnpj = document.getElementById('settings-cnpj').value;
+                        updates.cep = document.getElementById('settings-company-cep').value;
+                        updates.company_name = document.getElementById('settings-company-name').value;
+                        updates.company_age = document.getElementById('settings-company-age').value;
+
+                        const areas = [];
+                        document.querySelectorAll('#settings-fabrication-areas input[type="checkbox"]:checked').forEach(cb => {
+                            areas.push(cb.value);
+                        });
+                        updates.fabrication_areas = areas;
+
+                        const formatPref = document.querySelector('input[name="settings-file-format"]:checked');
+                        updates.file_format_preference = formatPref ? formatPref.value : 'dedicated';
+                    }
+
+                    const { error } = await supabaseClient
+                        .from('profiles')
+                        .update(updates)
+                        .eq('id', AppState.currentUser.id);
+
+                    if (error) throw error;
+
+                    AppState.currentUser.name = updates.name;
+                    document.getElementById('user-name').textContent = updates.name;
+                    document.getElementById('user-avatar').textContent = updates.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0,2);
+
+                    utils.closeAllModals();
+                    utils.showNotification('Dados atualizados com sucesso!', 'success');
+                } catch (error) {
+                    console.error('Erro ao salvar configurações:', error);
+                    utils.showNotification('Erro ao salvar alterações: ' + error.message, 'error');
                 }
             }
         };
