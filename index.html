@@ -536,6 +536,108 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+        
+        /* Estilos para os cards de planos */
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.pricing-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    transition: var(--transition);
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.pricing-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: var(--primary);
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-heavy);
+    border-color: var(--primary-light);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.pricing-card.featured {
+    border: 2px solid var(--primary);
+    transform: scale(1.02);
+    background: rgba(211, 47, 47, 0.1);
+}
+
+.pricing-header {
+    background: rgba(211, 47, 47, 0.15);
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pricing-header h4 {
+    color: white;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.pricing-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    font-family: 'Oswald', sans-serif;
+}
+
+.pricing-price span {
+    font-size: 1rem;
+    color: var(--light-gray);
+    font-weight: 400;
+}
+
+.pricing-body {
+    padding: 20px;
+}
+
+.pricing-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pricing-features li {
+    color: var(--light-gray);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pricing-features li i {
+    color: var(--primary-light);
+    font-size: 0.9rem;
+    width: 20px;
+}
+
+@media (max-width: 768px) {
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pricing-card.featured {
+        transform: scale(1);
+    }
+}
 
         /* ===== ESTILOS DO MARKETPLACE ===== */
         #marketplace-page {
@@ -2151,7 +2253,12 @@
                     <div class="form-footer">
                         Não tem uma conta? <a onclick="showAuthForm('signup')">Criar conta</a>
                     </div>
-                </div>
+                    
+                          <!-- No final do form-footer do login-form (após o link "Criar conta") -->
+                          <div style="margin-top: 30px; text-align: center;">
+                              <a onclick="showAuthForm('pricing')" style="color: var(--primary-light); cursor: pointer;">Ver planos de assinatura</a>
+                                </div>
+                                      </div>
 
                 <!-- Signup Form -->
                 <div id="signup-form" class="form-container-auth">
@@ -2304,6 +2411,10 @@
                     <div class="form-footer">
                         Já tem uma conta? <a onclick="showAuthForm('login')">Fazer login</a>
                     </div>
+                    <!-- No final do form-footer do signup-form (após o link "Fazer login") -->
+<div style="margin-top: 10px;">
+    <a onclick="showAuthForm('pricing')" style="color: var(--primary-light); cursor: pointer;">Ver planos de assinatura</a>
+</div>
                 </div>
 
                 <!-- Forgot Password Form -->
@@ -2328,6 +2439,72 @@
                         <a onclick="showAuthForm('login')">← Voltar ao login</a>
                     </div>
                 </div>
+                
+                <!-- ========== PLANOS DE ASSINATURA (nova aba) ========== -->
+<div id="pricing-form" class="form-container-auth">
+    <div class="form-header">
+        <h3>Planos de Assinatura</h3>
+        <p>Escolha o plano ideal para o seu negócio</p>
+    </div>
+
+    <div class="pricing-grid">
+        <!-- Plano Básico -->
+        <div class="pricing-card">
+            <div class="pricing-header">
+                <h4>Básico</h4>
+                <div class="pricing-price">R$ 49<span>/mês</span></div>
+            </div>
+            <div class="pricing-body">
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Acesso a todos os projetos</li>
+                    <li><i class="fas fa-check"></i> Enviar até 10 orçamentos</li>
+                    <li><i class="fas fa-check"></i> Até 4 projetos por mês</li>
+                    <li><i class="fas fa-check"></i> Taxa de R$ 29 por projeto</li>
+                </ul>
+                <button class="btn btn-outline btn-small" style="width:100%; margin-top:15px;">Assinar</button>
+            </div>
+        </div>
+
+        <!-- Plano Profissional -->
+        <div class="pricing-card">
+            <div class="pricing-header">
+                <h4>Profissional</h4>
+                <div class="pricing-price">R$ 129<span>/mês</span></div>
+            </div>
+            <div class="pricing-body">
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Acesso a todos os projetos</li>
+                    <li><i class="fas fa-check"></i> Enviar até 30 orçamentos</li>
+                    <li><i class="fas fa-check"></i> Até 20 projetos por mês</li>
+                    <li><i class="fas fa-check"></i> Taxa de R$ 19 por projeto</li>
+                </ul>
+                <button class="btn btn-outline btn-small" style="width:100%; margin-top:15px;">Assinar</button>
+            </div>
+        </div>
+
+        <!-- Plano Enterprise -->
+        <div class="pricing-card">
+            <div class="pricing-header">
+                <h4>Enterprise</h4>
+                <div class="pricing-price">R$ 299<span>/mês</span></div>
+            </div>
+            <div class="pricing-body">
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Selo de fabricante verificado</li>
+                    <li><i class="fas fa-check"></i> Envio ilimitado de orçamentos</li>
+                    <li><i class="fas fa-check"></i> Projetos ilimitados</li>
+                    <li><i class="fas fa-check"></i> Aviso de novos projetos via e-mail</li>
+                    <li><i class="fas fa-check"></i> Taxa de aceite R$ 9 por projeto</li>
+                </ul>
+                <button class="btn btn-outline btn-small" style="width:100%; margin-top:15px;">Assinar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-footer">
+        <a onclick="showAuthForm('login')">← Voltar ao login</a>
+    </div>
+</div>
             </div>
         </div>
     </div>
