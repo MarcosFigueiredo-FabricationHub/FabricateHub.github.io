@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* (todo o estilo original permanece inalterado – mantido por brevidade) */
         :root {
             --primary: #d32f2f;
             --primary-dark: #b71c1c;
@@ -1785,7 +1786,7 @@
         }
 
         .nav-link.disabled::after {
-            content: "⛔";
+            content: "";
             position: absolute;
             top: -5px;
             right: -15px;
@@ -2322,7 +2323,7 @@
                             </div>
                         </div>
 
-                        <!-- Campos condicionais para Fabricante -->
+                        <!-- Campos condicionais para Fabricante (com seleção de plano) -->
                         <div id="fabricator-fields" class="conditional-fields">
                             <h4 style="color: white; margin-bottom: 15px; font-family: 'Oswald', sans-serif;">Informações da Empresa</h4>
                             
@@ -2347,6 +2348,58 @@
                                     <input type="number" id="fabricator-company-age" min="0" placeholder="Opcional">
                                 </div>
                             </div>
+
+                            <!-- Seleção de Plano para Fabricante -->
+<div class="form-group">
+    <label class="checkbox-group-label">Escolha seu Plano de Assinatura</label>
+    <div class="pricing-grid" style="margin-top: 10px;">
+        <div class="pricing-card" onclick="selectPlan('basic', event)">
+            <div class="pricing-header">
+                <h4>Básico</h4>
+                <div class="pricing-price">R$ 49<span>/mês</span></div>
+            </div>
+            <div class="pricing-body">
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Acesso a todos os projetos</li>
+                    <li><i class="fas fa-check"></i> Enviar até 10 orçamentos</li>
+                    <li><i class="fas fa-check"></i> Até 4 projetos por mês</li>
+                    <li><i class="fas fa-check"></i> Taxa de R$ 29 por projeto</li>
+                </ul>
+            </div>
+        </div>
+        <div class="pricing-card" onclick="selectPlan('professional', event)">
+            <div class="pricing-header">
+                <h4>Profissional</h4>
+                <div class="pricing-price">R$ 100<span>/mês</span></div>
+            </div>
+            <div class="pricing-body">
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Acesso a todos os projetos</li>
+                    <li><i class="fas fa-check"></i> Enviar até 30 orçamentos</li>
+                    <li><i class="fas fa-check"></i> Até 20 projetos por mês</li>
+                    <li><i class="fas fa-check"></i> Taxa de R$ 19 por projeto</li>
+                </ul>
+            </div>
+        </div>
+        <div class="pricing-card" onclick="selectPlan('enterprise', event)">
+            <div class="pricing-header">
+                <h4>Enterprise</h4>
+                <div class="pricing-price">R$ 299<span>/mês</span></div>
+            </div>
+            <div class="pricing-body">
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Selo de fabricante verificado</li>
+                    <li><i class="fas fa-check"></i> Envio ilimitado de orçamentos</li>
+                    <li><i class="fas fa-check"></i> Projetos ilimitados</li>
+                    <li><i class="fas fa-check"></i> Aviso de novos projetos via e-mail</li>
+                    <li><i class="fas fa-check"></i> Taxa de aceite R$ 9 por projeto</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="fabricator-plan" name="plan" value="">
+    <p style="color: var(--light-gray); font-size: 0.85rem; margin-top: 5px;">Clique em um plano para selecioná-lo.</p>
+</div>
                             
                             <div class="form-group">
                                 <label class="checkbox-group-label">Áreas de Atuação</label>
@@ -2403,6 +2456,18 @@
                             </div>
                         </div>
 
+                        <!-- NOVO: Checkbox de aceite dos termos e disclaimer -->
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="form-checkbox-group">
+                                <input type="checkbox" id="terms-accept" required style="width: 18px; height: 18px;">
+                                <label for="terms-accept" style="color: var(--light-gray);">
+                                    Li e concordo com os 
+                                    <a href="#" onclick="openDisclaimerModal(); return false;" style="color: var(--primary-light); text-decoration: underline;">Termos e Disclaimer</a> 
+                                    da plataforma.
+                                </label>
+                            </div>
+                        </div>
+
                         <button type="submit" class="btn btn-primary" id="signup-btn">
                             <span>Criar Conta</span>
                         </button>
@@ -2412,7 +2477,7 @@
                         Já tem uma conta? <a onclick="showAuthForm('login')">Fazer login</a>
                     </div>
                     <!-- No final do form-footer do signup-form (após o link "Fazer login") -->
-<div style="margin-top: 10px;">
+<div style="margin-top: 30px; text-align: center;">
     <a onclick="showAuthForm('pricing')" style="color: var(--primary-light); cursor: pointer;">Ver planos de assinatura</a>
 </div>
                 </div>
@@ -2461,7 +2526,7 @@
                     <li><i class="fas fa-check"></i> Até 4 projetos por mês</li>
                     <li><i class="fas fa-check"></i> Taxa de R$ 29 por projeto</li>
                 </ul>
-                <button class="btn btn-outline btn-small" style="width:100%; margin-top:15px;">Assinar</button>
+                <!-- Botão Assinar removido -->
             </div>
         </div>
 
@@ -2469,7 +2534,7 @@
         <div class="pricing-card">
             <div class="pricing-header">
                 <h4>Profissional</h4>
-                <div class="pricing-price">R$ 129<span>/mês</span></div>
+                <div class="pricing-price">R$ 100<span>/mês</span></div>
             </div>
             <div class="pricing-body">
                 <ul class="pricing-features">
@@ -2478,7 +2543,7 @@
                     <li><i class="fas fa-check"></i> Até 20 projetos por mês</li>
                     <li><i class="fas fa-check"></i> Taxa de R$ 19 por projeto</li>
                 </ul>
-                <button class="btn btn-outline btn-small" style="width:100%; margin-top:15px;">Assinar</button>
+                <!-- Botão Assinar removido -->
             </div>
         </div>
 
@@ -2496,7 +2561,7 @@
                     <li><i class="fas fa-check"></i> Aviso de novos projetos via e-mail</li>
                     <li><i class="fas fa-check"></i> Taxa de aceite R$ 9 por projeto</li>
                 </ul>
-                <button class="btn btn-outline btn-small" style="width:100%; margin-top:15px;">Assinar</button>
+                <!-- Botão Assinar removido -->
             </div>
         </div>
     </div>
@@ -2744,6 +2809,7 @@
                                     <th>Método</th>
                                     <th>Orçamentos</th>
                                     <th>Status</th>
+                                    <th>Progresso</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -2775,6 +2841,7 @@
                                     <th>Método</th>
                                     <th>Orçamentos</th>
                                     <th>Status</th>
+                                    <th>Progresso</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -2806,6 +2873,7 @@
                                     <th>Método</th>
                                     <th>Orçamentos</th>
                                     <th>Status</th>
+                                    <th>Progresso</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -2837,6 +2905,7 @@
                                     <th>Método</th>
                                     <th>Orçamentos</th>
                                     <th>Status</th>
+                                    <th>Progresso</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -3161,7 +3230,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="quote-project-name">Projeto</label>
-                            <input type="text" id="quote-project-name" readonly>
+                            <input type="text" id="quote-project-name" required>
                         </div>
                         
                         <div class="form-row">
@@ -3556,10 +3625,49 @@
                 </div>
             </div>
         </footer>
+    </div> <!-- Fim do marketplace-page -->
+
+    <!-- ========== MODAL DE DISCLAIMER (AGORA FORA DO MARKETPLACE) ========== -->
+    <div id="disclaimer-modal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3>Termos de Uso e Disclaimer</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
+                <h4 style="color: white; margin-bottom: 10px;">Nosso propósito</h4>
+                <p style="color: var(--light-gray); margin-bottom: 15px;">Nossa missão é fortalecer e impulsionar a indústria nacional, promovendo a integração das capacidades produtivas da indústria brasileira com as demandas de empresas, empreendedores e projetos dos mais variados portes e segmentos. Atuamos como uma ponte tecnológica que facilita conexões qualificadas entre clientes e fabricantes.</p>
+
+                <h4 style="color: white; margin-bottom: 10px;">Natureza da plataforma</h4>
+                <p style="color: var(--light-gray); margin-bottom: 15px;">A plataforma possui natureza exclusivamente intermediadora e de conexão, funcionando como um ambiente digital para aproximação entre as partes. Não fabricamos, vendemos, compramos, revendemos ou entregamos produtos anunciados por terceiros.</p>
+
+                <h4 style="color: white; margin-bottom: 10px;">Responsabilidade sobre negociações</h4>
+                <p style="color: var(--light-gray); margin-bottom: 15px;">Todas as condições comerciais — incluindo, mas não se limitando a: preços, prazos, especificações técnicas, formas de pagamento, garantias, fretes e logística, qualidade dos produtos ou serviços — são definidas, acordadas e executadas diretamente entre cliente e fabricante/fornecedor, sem qualquer interferência, participação ou responsabilidade da plataforma.</p>
+
+                <h4 style="color: white; margin-bottom: 10px;">Pagamentos</h4>
+                <p style="color: var(--light-gray); margin-bottom: 15px;">A plataforma não processa, intermedeia, garante ou se responsabiliza por pagamentos realizados entre as partes. Qualquer transação financeira ocorre por conta e risco exclusivos dos usuários envolvidos.</p>
+
+                <h4 style="color: white; margin-bottom: 10px;">Frete e logística</h4>
+                <p style="color: var(--light-gray); margin-bottom: 15px;">A plataforma não se responsabiliza por fretes, transportes, prazos de entrega, avarias, extravios ou qualquer questão logística, sendo tais obrigações exclusivamente das partes negociantes.</p>
+
+                <h4 style="color: white; margin-bottom: 10px;">Verificação e garantias</h4>
+                <p style="color: var(--light-gray); margin-bottom: 15px;">Embora possamos adotar medidas de curadoria ou verificação cadastral, não garantimos: a veracidade das informações fornecidas pelos usuários; a capacidade técnica ou produtiva dos fabricantes; a qualidade, conformidade ou regularidade de produtos e serviços; o cumprimento de prazos ou obrigações comerciais. O usuário é responsável por realizar sua própria diligência antes de fechar qualquer negócio.</p>
+
+                <h4 style="color: white; margin-bottom: 10px;">Limitação de responsabilidade</h4>
+                <p style="color: var(--light-gray); margin-bottom: 15px;">Na máxima extensão permitida pela legislação aplicável, a plataforma não será responsável por quaisquer danos diretos ou indiretos decorrentes de negociações realizadas entre usuários, incluindo prejuízos financeiros, lucros cessantes, danos morais, atrasos ou falhas de execução.</p>
+
+                <h4 style="color: white; margin-bottom: 10px;">Aceite</h4>
+                <p style="color: var(--light-gray); margin-bottom: 15px;">Ao prosseguir com o cadastro, o usuário declara que: leu e compreendeu este disclaimer; reconhece o papel exclusivamente intermediador da plataforma; assume integral responsabilidade pelas negociações realizadas com terceiros.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary close-modal">Entendi</button>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // (Todo o JavaScript original permanece exatamente igual)
         // ==================== CONFIGURAÇÃO SUPABASE ====================
         const SUPABASE_URL = 'https://evojynztlxbcyfsujtoy.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2b2p5bnp0bHhiY3lmc3VqdG95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1MTA0MDAsImV4cCI6MjA4NDA4NjQwMH0.ylCkwvVMnWsioaF08lyHTz6QQPoJ1DT9BpiOcU_zQyc';
@@ -3665,6 +3773,33 @@
             }
         }
 
+        // Função para selecionar plano de assinatura (agora recebe o evento)
+window.selectPlan = function(plan, event) {
+    // Previne qualquer comportamento padrão
+    event.preventDefault();
+    // Armazena o plano no campo hidden
+    document.getElementById('fabricator-plan').value = plan;
+    // Remove destaque de todos os cards
+    document.querySelectorAll('#fabricator-fields .pricing-card').forEach(card => {
+        card.style.border = '1px solid rgba(255,255,255,0.1)';
+        card.classList.remove('featured');
+    });
+    // Destaca o card clicado
+    event.currentTarget.style.border = '2px solid var(--primary)';
+    event.currentTarget.classList.add('featured');
+};
+
+        // Função para abrir o modal de disclaimer (AGORA SEM DEPENDER DE UTILS)
+        window.openDisclaimerModal = function() {
+            const modal = document.getElementById('disclaimer-modal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                console.error('Modal de disclaimer não encontrado');
+            }
+        };
+
         // Login
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -3740,6 +3875,14 @@
             setButtonLoading('signup-btn', true);
             hideAlert();
 
+            // Verificar se o checkbox de termos foi marcado
+            const termsCheckbox = document.getElementById('terms-accept');
+            if (!termsCheckbox.checked) {
+                showAlert('Você deve aceitar os Termos e Disclaimer para se cadastrar.', 'error');
+                setButtonLoading('signup-btn', false);
+                return;
+            }
+
             const name = document.getElementById('signup-name').value;
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
@@ -3760,13 +3903,15 @@
                     company_name: null,
                     company_age: null,
                     fabrication_areas: null,
-                    file_format_preference: null
+                    file_format_preference: null,
+                    plan: null
                 };
             } else if (userType === 'fabricator') {
                 const cnpj = document.getElementById('fabricator-cnpj').value;
                 const cep = document.getElementById('fabricator-cep').value;
                 const companyName = document.getElementById('fabricator-company-name').value;
                 const companyAge = document.getElementById('fabricator-company-age').value;
+                const plan = document.getElementById('fabricator-plan').value;
                 
                 // Coletar áreas de atuação selecionadas
                 const areaCheckboxes = document.querySelectorAll('#fabricator-fields input[type="checkbox"]:checked');
@@ -3783,9 +3928,16 @@
                     company_age: companyAge || null,
                     fabrication_areas: fabricationAreas,
                     file_format_preference: fileFormatPreference,
+                    plan: plan,
                     cpf: null,
                     client_subtype: null
                 };
+
+                if (!plan) {
+                    showAlert('Por favor, selecione um plano de assinatura.', 'error');
+                    setButtonLoading('signup-btn', false);
+                    return;
+                }
             }
 
             try {
@@ -3795,24 +3947,13 @@
                     options: {
                         data: {
                             name: name,
-                            user_type: userType
+                            user_type: userType,
+                            ...additionalData
                         }
                     }
                 });
 
                 if (error) throw error;
-
-                // Criar perfil do usuário com os dados adicionais
-                const profileData = {
-                    id: data.user.id,
-                    name: name,
-                    user_type: userType,
-                    ...additionalData
-                };
-                
-                await supabaseClient
-                    .from('profiles')
-                    .insert([profileData]);
 
                 showAlert('Conta criada com sucesso! Você pode fazer login agora.', 'success');
                 
@@ -4106,15 +4247,18 @@
                 if (userData.fabrication_areas && Array.isArray(userData.fabrication_areas)) {
                     capabilities = userData.fabrication_areas;
                 } else {
+                    // Se não tiver áreas definidas, usar todas (ou um conjunto padrão)
                     capabilities = ["cnc-machining", "laser-cutting", "3d-printing", "machining", "welding", "wood-fabrication", "metal-bending"];
                 }
                 
+                // Buscar projetos pendentes que correspondam aos métodos do fabricante
                 let query = supabaseClient
                     .from('projects')
                     .select('*')
                     .eq('status', 'pending');
                 
                 if (capabilities && capabilities.length > 0) {
+                    // Construir OR para métodos
                     const orConditions = capabilities.map(method => `method.eq.${method}`).join(',');
                     query = query.or(orConditions);
                 }
@@ -4811,7 +4955,7 @@
                 if (AppState.currentUser.type === 'client') {
                     const clientProjects = AppState.projects.filter(p => p.clientId === AppState.currentUser.id);
                     const totalProjects = clientProjects.length;
-                    const pendingQuotes = clientProjects.filter(p => p.status === 'pending').length;
+                    const pendingQuotes = clientProjects.filter(p => p.status === 'pending' || p.status === 'quoted').length;
                     const activeProjects = clientProjects.filter(p => p.status === 'in-progress' || p.status === 'accepted').length;
                     const completedProjects = clientProjects.filter(p => p.status === 'completed').length;
                     
@@ -4887,7 +5031,7 @@
                         app.renderClientProjectsTable(clientProjects, 'client-projects-table');
                         break;
                     case 'pending':
-                        const pending = clientProjects.filter(p => p.status === 'pending');
+                        const pending = clientProjects.filter(p => p.status === 'pending' || p.status === 'quoted');
                         app.renderClientProjectsTable(pending, 'client-pending-table');
                         break;
                     case 'active':
@@ -4908,7 +5052,7 @@
                 if (projects.length === 0) {
                     container.innerHTML = `
                         <tr>
-                            <td colspan="6" style="text-align: center; padding: 40px; color: var(--light-gray);">
+                            <td colspan="7" style="text-align: center; padding: 40px; color: var(--light-gray);">
                                 <i class="fas fa-folder-open" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
                                 <p>Nenhum projeto encontrado nesta categoria.</p>
                             </td>
@@ -4920,6 +5064,18 @@
                 projects.forEach(project => {
                     const row = document.createElement('tr');
                     const quotesCount = project.quotes.length;
+                    
+                    let progressDisplay = '-';
+                    if (project.status === 'in-progress' || project.status === 'accepted') {
+                        progressDisplay = `
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <div style="width: 60px; background: rgba(255,255,255,0.1); border-radius: 4px; height: 8px;">
+                                    <div style="width: ${project.progress || 0}%; height: 8px; background: var(--primary); border-radius: 4px;"></div>
+                                </div>
+                                <span style="color: white;">${project.progress || 0}%</span>
+                            </div>
+                        `;
+                    }
                     
                     let actions = '';
                     
@@ -4963,6 +5119,7 @@
                         </td>
                         <td>${quotesCount}</td>
                         <td>${utils.getStatusBadge(project.status)}</td>
+                        <td>${progressDisplay}</td>
                         <td>${actions}</td>
                     `;
                     
