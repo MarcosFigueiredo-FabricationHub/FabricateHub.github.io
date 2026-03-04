@@ -49,7 +49,6 @@
 
         /* ===== ESTILOS DE LOGIN ===== */
         #auth-page {
-            background: linear-gradient(135deg, #2c3e50 0%, #000000 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -400,7 +399,6 @@
         .btn-outline {
             background-color: transparent;
             color: var(--primary);
-            border: 1px solid var(--primary);
         }
 
         .btn-outline:hover {
@@ -674,7 +672,6 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid #333;
             backdrop-filter: blur(10px);
         }
 
@@ -803,7 +800,6 @@
         }
 
         .user-type-badge {
-            background-color: var(--secondary);
             color: white;
             padding: 3px 8px;
             border-radius: 12px;
@@ -1432,7 +1428,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
+            z-index: 10000;
             align-items: center;
             justify-content: center;
             padding: 20px;
@@ -1474,7 +1470,7 @@
             justify-content: space-between;
             align-items: center;
             background: rgba(255, 255, 255, 0.05);
-            position: sticky;
+            position: relative;
             top: 0;
             z-index: 10;
         }
@@ -1492,8 +1488,8 @@
             padding: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
-            justify-content: flex-end;
-            gap: 10px;
+            justify-content: center;
+            gap: 60px;    
             background: rgba(255, 255, 255, 0.05);
             flex-wrap: wrap;
         }
@@ -2167,6 +2163,41 @@
                 padding: 10px 15px;
             }
         }
+
+        /* ===== ESTILOS PARA AVALIAÇÃO ===== */
+        .rating-stars {
+            display: inline-flex;
+            gap: 2px;
+            color: #fbbf24;
+        }
+        .rating-stars i {
+            font-size: 0.9rem;
+        }
+        .rating-number {
+            font-size: 0.85rem;
+            color: var(--light-gray);
+            margin-left: 4px;
+        }
+        .rating-input {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 5px;
+        }
+        .rating-input input {
+            display: none;
+        }
+        .rating-input label {
+            font-size: 1.5rem;
+            color: #555;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .rating-input label:hover,
+        .rating-input label:hover ~ label,
+        .rating-input input:checked ~ label {
+            color: #fbbf24;
+        }
     </style>
 </head>
 <body>
@@ -2313,6 +2344,12 @@
                                 </div>
                             </div>
                             
+                            <!-- NOVO: Telefone para Cliente -->
+                            <div class="form-group">
+                                <label for="client-phone">Telefone (WhatsApp)</label>
+                                <input type="tel" id="client-phone" placeholder="(11) 99999-9999">
+                            </div>
+
                             <div class="form-group">
                                 <label for="client-subtype">Tipo de Cliente</label>
                                 <select id="client-subtype">
@@ -2347,6 +2384,12 @@
                                     <label for="fabricator-company-age">Tempo de Atuação (anos)</label>
                                     <input type="number" id="fabricator-company-age" min="0" placeholder="Opcional">
                                 </div>
+                            </div>
+
+                            <!-- NOVO: Telefone para Fabricante -->
+                            <div class="form-group">
+                                <label for="fabricator-phone">Telefone (WhatsApp)</label>
+                                <input type="tel" id="fabricator-phone" placeholder="(11) 99999-9999">
                             </div>
 
                             <!-- Seleção de Plano para Fabricante -->
@@ -2384,7 +2427,7 @@
         <div class="pricing-card" onclick="selectPlan('enterprise', event)">
             <div class="pricing-header">
                 <h4>Enterprise</h4>
-                <div class="pricing-price">R$ 299<span>/mês</span></div>
+                <div class="pricing-price">R$ 199<span>/mês</span></div>
             </div>
             <div class="pricing-body">
                 <ul class="pricing-features">
@@ -2405,31 +2448,31 @@
                                 <label class="checkbox-group-label">Áreas de Atuação</label>
                                 <div class="checkbox-grid">
                                     <div class="form-checkbox-group">
-                                        <input type="checkbox" id="area-cnc" value="cnc-machining">
+                                        <input type="checkbox" id="area-cnc" value="cnc-machining" checked>
                                         <label for="area-cnc">Usinagem CNC</label>
                                     </div>
                                     <div class="form-checkbox-group">
-                                        <input type="checkbox" id="area-laser" value="laser-cutting">
+                                        <input type="checkbox" id="area-laser" value="laser-cutting" checked>
                                         <label for="area-laser">Corte a Laser</label>
                                     </div>
                                     <div class="form-checkbox-group">
-                                        <input type="checkbox" id="area-3d" value="3d-printing">
+                                        <input type="checkbox" id="area-3d" value="3d-printing" checked>
                                         <label for="area-3d">Impressão 3D</label>
                                     </div>
                                     <div class="form-checkbox-group">
-                                        <input type="checkbox" id="area-machining" value="machining">
+                                        <input type="checkbox" id="area-machining" value="machining" checked>
                                         <label for="area-machining">Usinagem Convencional</label>
                                     </div>
                                     <div class="form-checkbox-group">
-                                        <input type="checkbox" id="area-welding" value="welding">
+                                        <input type="checkbox" id="area-welding" value="welding" checked>
                                         <label for="area-welding">Soldagem</label>
                                     </div>
                                     <div class="form-checkbox-group">
-                                        <input type="checkbox" id="area-wood" value="wood-fabrication">
+                                        <input type="checkbox" id="area-wood" value="wood-fabrication" checked>
                                         <label for="area-wood">Fabricação em Madeira</label>
                                     </div>
                                     <div class="form-checkbox-group">
-                                        <input type="checkbox" id="area-metal-bending" value="metal-bending">
+                                        <input type="checkbox" id="area-metal-bending" value="metal-bending" checked>
                                         <label for="area-metal-bending">Conformação</label>
                                     </div>
                                 </div>
@@ -2462,7 +2505,7 @@
                                 <input type="checkbox" id="terms-accept" required style="width: 18px; height: 18px;">
                                 <label for="terms-accept" style="color: var(--light-gray);">
                                     Li e concordo com os 
-                                    <a href="#" onclick="openDisclaimerModal(); return false;" style="color: var(--primary-light); text-decoration: underline;">Termos e Disclaimer</a> 
+                                    <a href="#" onclick="openDisclaimerModal(); return false;" style="color: var(--primary-light); text-decoration: underline;">Termos e Condições</a> 
                                     da plataforma.
                                 </label>
                             </div>
@@ -2551,7 +2594,7 @@
         <div class="pricing-card">
             <div class="pricing-header">
                 <h4>Enterprise</h4>
-                <div class="pricing-price">R$ 299<span>/mês</span></div>
+                <div class="pricing-price">R$ 199<span>/mês</span></div>
             </div>
             <div class="pricing-body">
                 <ul class="pricing-features">
@@ -2993,7 +3036,7 @@
                             <thead>
                                 <tr>
                                     <th>Projeto</th>
-                                    <th>Cliente</th>
+                                    <th>Cliente (Avaliação)</th>
                                     <th>Método</th>
                                     <th>Material</th>
                                     <th>Prazo</th>
@@ -3091,7 +3134,7 @@
                     <div class="method-card" data-method="cnc-machining">
                         <div class="method-header">
                             <div class="method-icon">
-                                <i class="fas fa-cogs"></i>
+                                <i class="fas fa-industry"></i>
                             </div>
                             <h3>Usinagem CNC</h3>
                         </div>
@@ -3109,7 +3152,7 @@
                     <div class="method-card" data-method="laser-cutting">
                         <div class="method-header">
                             <div class="method-icon">
-                                <i class="fas fa-cut"></i>
+                                <i class="fas fa-industry"></i>
                             </div>
                             <h3>Corte em chapas</h3>
                         </div>
@@ -3127,7 +3170,7 @@
                     <div class="method-card" data-method="3d-printing">
                         <div class="method-header">
                             <div class="method-icon">
-                                <i class="fas fa-cube"></i>
+                                <i class="fas fa-industry"></i>
                             </div>
                             <h3>Impressão 3D</h3>
                         </div>
@@ -3145,7 +3188,7 @@
                     <div class="method-card" data-method="machining">
                         <div class="method-header">
                             <div class="method-icon">
-                                <i class="fas fa-cogs"></i>
+                                <i class="fas fa-industry"></i>
                             </div>
                             <h3>Usinagem Convencional</h3>
                         </div>
@@ -3182,7 +3225,7 @@
                     <div class="method-card" data-method="wood-fabrication">
                         <div class="method-header">
                             <div class="method-icon">
-                                <i class="fas fa-tree"></i>
+                                <i class="fas fa-industry"></i>
                             </div>
                             <h3>Fabricação em Madeira</h3>
                         </div>
@@ -3200,7 +3243,7 @@
                     <div class="method-card" data-method="metal-bending">
                         <div class="method-header">
                             <div class="method-icon">
-                                <i class="fas fa-bezier-curve"></i>
+                                <i class="fas fa-industry"></i>
                             </div>
                             <h3>Conformação de Metais</h3>
                         </div>
@@ -3215,6 +3258,236 @@
                             </ul>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== NOVAS PÁGINAS DO RODAPÉ ========== -->
+
+        <!-- Página: Como Funciona -->
+        <div id="como-funciona-page" class="page-container">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Como Funciona</h1>
+                    <div class="page-subtitle">Guia rápido para usar a plataforma</div>
+                </div>
+                <div class="card">
+                    <p style="color: var(--light-gray);">[Conteúdo explicativo sobre o funcionamento da plataforma.]</p>
+                    <p style="color: var(--light-gray);">Em breve, informações detalhadas sobre como clientes e fabricantes podem usar o FabricateHub.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página: Preços (Planos) -->
+        <div id="pricing-page" class="page-container">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Planos de Assinatura</h1>
+                    <div class="page-subtitle">Escolha o plano ideal para o seu negócio</div>
+                </div>
+                <div class="pricing-grid" style="margin: 30px 0;">
+                    <!-- Plano Básico -->
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h4>Básico</h4>
+                            <div class="pricing-price">R$ 49<span>/mês</span></div>
+                        </div>
+                        <div class="pricing-body">
+                            <ul class="pricing-features">
+                                <li><i class="fas fa-check"></i> Acesso a todos os projetos</li>
+                                <li><i class="fas fa-check"></i> Enviar até 10 orçamentos</li>
+                                <li><i class="fas fa-check"></i> Até 4 projetos por mês</li>
+                                <li><i class="fas fa-check"></i> Taxa de R$ 29 por projeto</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Plano Profissional -->
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h4>Profissional</h4>
+                            <div class="pricing-price">R$ 100<span>/mês</span></div>
+                        </div>
+                        <div class="pricing-body">
+                            <ul class="pricing-features">
+                                <li><i class="fas fa-check"></i> Acesso a todos os projetos</li>
+                                <li><i class="fas fa-check"></i> Enviar até 30 orçamentos</li>
+                                <li><i class="fas fa-check"></i> Até 20 projetos por mês</li>
+                                <li><i class="fas fa-check"></i> Taxa de R$ 19 por projeto</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Plano Enterprise -->
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h4>Enterprise</h4>
+                            <div class="pricing-price">R$ 199<span>/mês</span></div>
+                        </div>
+                        <div class="pricing-body">
+                            <ul class="pricing-features">
+                                <li><i class="fas fa-check"></i> Selo de fabricante verificado</li>
+                                <li><i class="fas fa-check"></i> Envio ilimitado de orçamentos</li>
+                                <li><i class="fas fa-check"></i> Projetos ilimitados</li>
+                                <li><i class="fas fa-check"></i> Aviso de novos projetos via e-mail</li>
+                                <li><i class="fas fa-check"></i> Taxa de aceite R$ 9 por projeto</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página: Requisitos de Arquivo -->
+        <div id="file-requirements-page" class="page-container">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Requisitos de Arquivo</h1>
+                    <div class="page-subtitle">Formatos aceitos e recomendações</div>
+                </div>
+                <div class="card">
+                    <p style="color: var(--light-gray);">[Lista de formatos aceitos: STL, STEP, IGES, DXF, DWG, SLDPRT, 3DM, OBJ, PDF. Recomendações de escala, unidades, etc.]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página: Guia de Materiais -->
+        <div id="material-guide-page" class="page-container">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Guia de Materiais</h1>
+                    <div class="page-subtitle">Materiais comuns e suas aplicações</div>
+                </div>
+                <div class="card">
+                    <p style="color: var(--light-gray);">[Descrição de materiais: alumínio, aço, aço inoxidável, latão, plásticos, madeira, etc.]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página: Central de Ajuda -->
+        <div id="help-center-page" class="page-container">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Central de Ajuda</h1>
+                    <div class="page-subtitle">Perguntas frequentes e suporte</div>
+                </div>
+                <div class="card">
+                    <p style="color: var(--light-gray);">[FAQ e formulário de contato]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página: Torne-se um Parceiro -->
+        <div id="become-partner-page" class="page-container">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Torne-se um Parceiro</h1>
+                    <div class="page-subtitle">Cadastre sua empresa como fabricante</div>
+                </div>
+                <div class="card">
+                    <p style="color: var(--light-gray);">[Informações para fabricantes se registrarem]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página: Verificação de Capacidade -->
+        <div id="capability-verification-page" class="page-container">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Verificação de Capacidade</h1>
+                    <div class="page-subtitle">Como validar suas capacidades de fabricação</div>
+                </div>
+                <div class="card">
+                    <p style="color: var(--light-gray);">[Processo de verificação e selo de qualidade]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página: Diretrizes de Preços -->
+        <div id="pricing-guidelines-page" class="page-container">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Diretrizes de Preços</h1>
+                    <div class="page-subtitle">Orientações para formação de preços</div>
+                </div>
+                <div class="card">
+                    <p style="color: var(--light-gray);">[Boas práticas para orçamentos competitivos]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página: Recursos para Fabricantes -->
+        <div id="resources-page" class="page-container">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Recursos</h1>
+                    <div class="page-subtitle">Ferramentas e materiais de apoio</div>
+                </div>
+                <div class="card">
+                    <p style="color: var(--light-gray);">[Downloads, guias, templates]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página: Sobre Nós -->
+        <div id="about-page" class="page-container">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Sobre Nós</h1>
+                    <div class="page-subtitle">Conheça o FabricateHub</div>
+                </div>
+                <div class="card">
+                    <p style="color: var(--light-gray);">[História, missão, valores e equipe]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página: Blog -->
+        <div id="blog-page" class="page-container">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Blog</h1>
+                    <div class="page-subtitle">Artigos e novidades</div>
+                </div>
+                <div class="card">
+                    <p style="color: var(--light-gray);">[Lista de posts]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página: Carreiras -->
+        <div id="careers-page" class="page-container">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Carreiras</h1>
+                    <div class="page-subtitle">Trabalhe conosco</div>
+                </div>
+                <div class="card">
+                    <p style="color: var(--light-gray);">[Vagas abertas e cultura]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página: Contato -->
+        <div id="contact-page" class="page-container">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Contato</h1>
+                    <div class="page-subtitle">Fale com a gente</div>
+                </div>
+                <div class="card">
+                    <p style="color: var(--light-gray);">[Formulário de contato, e-mail, telefone]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página: Política de Privacidade -->
+        <div id="privacy-page" class="page-container">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Política de Privacidade</h1>
+                    <div class="page-subtitle">Como protegemos seus dados</div>
+                </div>
+                <div class="card">
+                    <p style="color: var(--light-gray);">[Texto legal da política de privacidade]</p>
                 </div>
             </div>
         </div>
@@ -3290,8 +3563,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline close-modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Enviar Orçamento</button>
+                        <button type="button" class="btn btn-outline close-modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
                 </form>
             </div>
@@ -3359,12 +3632,20 @@
                                     <label for="cap-prototype" style="color: white;">Prototipagem</label>
                                 </div>
                                 <div>
-                                    <input type="checkbox" id="cap-wood" value="wood-fabrication">
+                                    <input type="checkbox" id="cap-machining" value="machining" checked>
+                                    <label for="cap-machining" style="color: white;">Usinagem Convencional</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="cap-welding" value="welding" checked>
+                                    <label for="cap-welding" style="color: white;">Soldagem</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="cap-wood" value="wood-fabrication" checked>
                                     <label for="cap-wood" style="color: white;">Fabricação em Madeira</label>
                                 </div>
                                 <div>
-                                    <input type="checkbox" id="cap-welding" value="welding">
-                                    <label for="cap-welding" style="color: white;">Soldagem</label>
+                                    <input type="checkbox" id="cap-metal-bending" value="metal-bending" checked>
+                                    <label for="cap-metal-bending" style="color: white;">Conformação</label>
                                 </div>
                             </div>
                         </div>
@@ -3391,7 +3672,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline close-modal">Cancelar</button>
+                        <button type="button" class="btn btn-outline close-modal">Fechar</button>
                         <button type="submit" class="btn btn-primary">Salvar Capacidades</button>
                     </div>
                 </form>
@@ -3443,7 +3724,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline close-modal">Fechar Chat</button>
+                    <button type="button" class="btn btn-outline close-modal">Fechar</button>
                 </div>
             </div>
         </div>
@@ -3481,6 +3762,11 @@
                                     <input type="text" id="settings-cep" placeholder="00000-000">
                                 </div>
                             </div>
+                            <!-- NOVO: Telefone para Cliente nas configurações -->
+                            <div class="form-group">
+                                <label for="settings-client-phone">Telefone (WhatsApp)</label>
+                                <input type="tel" id="settings-client-phone" placeholder="(11) 99999-9999">
+                            </div>
                             <div class="form-group">
                                 <label for="settings-client-subtype">Tipo de Cliente</label>
                                 <select id="settings-client-subtype">
@@ -3513,35 +3799,40 @@
                                     <input type="number" id="settings-company-age" min="0" placeholder="Opcional">
                                 </div>
                             </div>
+                            <!-- NOVO: Telefone para Fabricante nas configurações -->
+                            <div class="form-group">
+                                <label for="settings-fabricator-phone">Telefone (WhatsApp)</label>
+                                <input type="tel" id="settings-fabricator-phone" placeholder="(11) 99999-9999">
+                            </div>
                             <div class="form-group">
                                 <label class="checkbox-group-label">Áreas de Atuação</label>
                                 <div class="checkbox-grid" id="settings-fabrication-areas">
                                     <div class="form-checkbox-group">
-                                        <input type="checkbox" id="settings-area-cnc" value="cnc-machining">
+                                        <input type="checkbox" id="settings-area-cnc" value="cnc-machining" checked>
                                         <label for="settings-area-cnc">Usinagem CNC</label>
                                     </div>
                                     <div class="form-checkbox-group">
-                                        <input type="checkbox" id="settings-area-laser" value="laser-cutting">
+                                        <input type="checkbox" id="settings-area-laser" value="laser-cutting" checked>
                                         <label for="settings-area-laser">Corte a Laser</label>
                                     </div>
                                     <div class="form-checkbox-group">
-                                        <input type="checkbox" id="settings-area-3d" value="3d-printing">
+                                        <input type="checkbox" id="settings-area-3d" value="3d-printing" checked>
                                         <label for="settings-area-3d">Impressão 3D</label>
                                     </div>
                                     <div class="form-checkbox-group">
-                                        <input type="checkbox" id="settings-area-machining" value="machining">
+                                        <input type="checkbox" id="settings-area-machining" value="machining" checked>
                                         <label for="settings-area-machining">Usinagem Convencional</label>
                                     </div>
                                     <div class="form-checkbox-group">
-                                        <input type="checkbox" id="settings-area-welding" value="welding">
+                                        <input type="checkbox" id="settings-area-welding" value="welding" checked>
                                         <label for="settings-area-welding">Soldagem</label>
                                     </div>
                                     <div class="form-checkbox-group">
-                                        <input type="checkbox" id="settings-area-wood" value="wood-fabrication">
+                                        <input type="checkbox" id="settings-area-wood" value="wood-fabrication" checked>
                                         <label for="settings-area-wood">Fabricação em Madeira</label>
                                     </div>
                                     <div class="form-checkbox-group">
-                                        <input type="checkbox" id="settings-area-metal-bending" value="metal-bending">
+                                        <input type="checkbox" id="settings-area-metal-bending" value="metal-bending" checked>
                                         <label for="settings-area-metal-bending">Conformação</label>
                                     </div>
                                 </div>
@@ -3568,10 +3859,45 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline close-modal">Cancelar</button>
+                        <button type="button" class="btn btn-outline close-modal">Fechar</button>
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                     </div>
                 </form>
+            </div>
+        </div>
+
+        <!-- ========== MODAL DE AVALIAÇÃO ========== -->
+        <div id="rating-modal" class="modal">
+            <div class="modal-content" style="max-width: 500px;">
+                <div class="modal-header">
+                    <h3 id="rating-modal-title">Avaliar</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="rating-form">
+                        <input type="hidden" id="rating-target-id">
+                        <input type="hidden" id="rating-project-id">
+                        <input type="hidden" id="rating-target-type"> <!-- 'fabricator' or 'client' -->
+                        <div class="form-group" style="text-align: center;">
+                            <label style="display: block; margin-bottom: 15px;">Sua avaliação (1 a 5 estrelas)</label>
+                            <div class="rating-input" id="rating-stars-input">
+                                <input type="radio" name="rating" id="star5" value="5"><label for="star5" title="5 estrelas">★</label>
+                                <input type="radio" name="rating" id="star4" value="4"><label for="star4" title="4 estrelas">★</label>
+                                <input type="radio" name="rating" id="star3" value="3"><label for="star3" title="3 estrelas">★</label>
+                                <input type="radio" name="rating" id="star2" value="2"><label for="star2" title="2 estrelas">★</label>
+                                <input type="radio" name="rating" id="star1" value="1"><label for="star1" title="1 estrela">★</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="rating-comment">Comentário (opcional)</label>
+                            <textarea id="rating-comment" rows="3" placeholder="Deixe seu feedback..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline close-modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="submit-rating-btn">Enviar Avaliação</button>
+                </div>
             </div>
         </div>
 
@@ -3581,7 +3907,7 @@
                 <div class="footer-container">
                     <div class="footer-column">
                         <h3>FabricateHub</h3>
-                        <p style="color: #bdbdbd; margin-bottom: 20px;">Conectando clientes com fabricantes para fabricação de peças personalizadas desde 2026.</p>
+                        <p style="color: #bdbdbd; margin-bottom: 20px;">Conectando clientes com fabricantes para fabricação de componentes sob demanda desde 2026.</p>
                         <div style="display: flex; gap: 15px;">
                             <a><i class="fab fa-linkedin fa-lg"></i></a>
                             <a><i class="fab fa-twitter fa-lg"></i></a>
@@ -3627,7 +3953,7 @@
         </footer>
     </div> <!-- Fim do marketplace-page -->
 
-    <!-- ========== MODAL DE DISCLAIMER (AGORA FORA DO MARKETPLACE) ========== -->
+    <!-- ========== MODAL DE DISCLAIMER ========== -->
     <div id="disclaimer-modal" class="modal">
         <div class="modal-content" style="max-width: 700px;">
             <div class="modal-header">
@@ -3660,14 +3986,22 @@
                 <p style="color: var(--light-gray); margin-bottom: 15px;">Ao prosseguir com o cadastro, o usuário declara que: leu e compreendeu este disclaimer; reconhece o papel exclusivamente intermediador da plataforma; assume integral responsabilidade pelas negociações realizadas com terceiros.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary close-modal">Entendi</button>
+                <button type="button" class="btn btn-primary close-modal">Ok</button>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // (Todo o JavaScript original permanece exatamente igual)
+        // ==================== FUNÇÃO DE DISCLAIMER ====================
+        window.openDisclaimerModal = function() {
+            const modal = document.getElementById('disclaimer-modal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
         // ==================== CONFIGURAÇÃO SUPABASE ====================
         const SUPABASE_URL = 'https://evojynztlxbcyfsujtoy.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2b2p5bnp0bHhiY3lmc3VqdG95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1MTA0MDAsImV4cCI6MjA4NDA4NjQwMH0.ylCkwvVMnWsioaF08lyHTz6QQPoJ1DT9BpiOcU_zQyc';
@@ -3683,7 +4017,7 @@
             fabricatorQuotes: [],
             fabricatorJobs: [],
             fabricatorCapabilities: {
-                methods: ["cnc-machining", "laser-cutting", "3d-printing", "prototyping"],
+                methods: ["cnc-machining", "laser-cutting", "3d-printing", "machining", "welding", "wood-fabrication", "metal-bending"],
                 minOrder: 100,
                 maxSize: "60x60x60",
                 leadTime: 14,
@@ -3757,7 +4091,6 @@
             }
         }
 
-        // Função para mostrar/ocultar campos condicionais
         function toggleConditionalFields() {
             const userType = document.getElementById('signup-usertype').value;
             const clientFields = document.getElementById('client-fields');
@@ -3773,31 +4106,15 @@
             }
         }
 
-        // Função para selecionar plano de assinatura (agora recebe o evento)
-window.selectPlan = function(plan, event) {
-    // Previne qualquer comportamento padrão
-    event.preventDefault();
-    // Armazena o plano no campo hidden
-    document.getElementById('fabricator-plan').value = plan;
-    // Remove destaque de todos os cards
-    document.querySelectorAll('#fabricator-fields .pricing-card').forEach(card => {
-        card.style.border = '1px solid rgba(255,255,255,0.1)';
-        card.classList.remove('featured');
-    });
-    // Destaca o card clicado
-    event.currentTarget.style.border = '2px solid var(--primary)';
-    event.currentTarget.classList.add('featured');
-};
-
-        // Função para abrir o modal de disclaimer (AGORA SEM DEPENDER DE UTILS)
-        window.openDisclaimerModal = function() {
-            const modal = document.getElementById('disclaimer-modal');
-            if (modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            } else {
-                console.error('Modal de disclaimer não encontrado');
-            }
+        window.selectPlan = function(plan, event) {
+            event.preventDefault();
+            document.getElementById('fabricator-plan').value = plan;
+            document.querySelectorAll('#fabricator-fields .pricing-card').forEach(card => {
+                card.style.border = '1px solid rgba(255,255,255,0.1)';
+                card.classList.remove('featured');
+            });
+            event.currentTarget.style.border = '2px solid var(--primary)';
+            event.currentTarget.classList.add('featured');
         };
 
         // Login
@@ -3817,7 +4134,6 @@ window.selectPlan = function(plan, event) {
 
                 if (error) throw error;
 
-                // Buscar perfil do usuário
                 const { data: profile, error: profileError } = await supabaseClient
                     .from('profiles')
                     .select('*')
@@ -3825,7 +4141,6 @@ window.selectPlan = function(plan, event) {
                     .single();
 
                 if (profileError && profileError.code === 'PGRST116') {
-                    // Perfil não existe, criar um
                     const { data: newProfile } = await supabaseClient
                         .from('profiles')
                         .insert([{
@@ -3875,7 +4190,6 @@ window.selectPlan = function(plan, event) {
             setButtonLoading('signup-btn', true);
             hideAlert();
 
-            // Verificar se o checkbox de termos foi marcado
             const termsCheckbox = document.getElementById('terms-accept');
             if (!termsCheckbox.checked) {
                 showAlert('Você deve aceitar os Termos e Disclaimer para se cadastrar.', 'error');
@@ -3888,17 +4202,18 @@ window.selectPlan = function(plan, event) {
             const password = document.getElementById('signup-password').value;
             const userType = document.getElementById('signup-usertype').value;
 
-            // Coletar dados condicionais
             let additionalData = {};
             
             if (userType === 'client') {
                 const cpf = document.getElementById('client-cpf').value;
                 const cep = document.getElementById('client-cep').value;
+                const phone = document.getElementById('client-phone').value;
                 const clientSubtype = document.getElementById('client-subtype').value;
                 
                 additionalData = {
                     cpf,
                     cep,
+                    phone,
                     client_subtype: clientSubtype,
                     company_name: null,
                     company_age: null,
@@ -3911,19 +4226,19 @@ window.selectPlan = function(plan, event) {
                 const cep = document.getElementById('fabricator-cep').value;
                 const companyName = document.getElementById('fabricator-company-name').value;
                 const companyAge = document.getElementById('fabricator-company-age').value;
+                const phone = document.getElementById('fabricator-phone').value;
                 const plan = document.getElementById('fabricator-plan').value;
                 
-                // Coletar áreas de atuação selecionadas
                 const areaCheckboxes = document.querySelectorAll('#fabricator-fields input[type="checkbox"]:checked');
                 const fabricationAreas = Array.from(areaCheckboxes).map(cb => cb.value);
                 
-                // Coletar preferência de formato de arquivo
                 const fileFormatPref = document.querySelector('input[name="file-format-pref"]:checked');
                 const fileFormatPreference = fileFormatPref ? fileFormatPref.value : 'dedicated';
                 
                 additionalData = {
                     cnpj,
                     cep,
+                    phone,
                     company_name: companyName,
                     company_age: companyAge || null,
                     fabrication_areas: fabricationAreas,
@@ -3958,7 +4273,7 @@ window.selectPlan = function(plan, event) {
                 showAlert('Conta criada com sucesso! Você pode fazer login agora.', 'success');
                 
                 document.getElementById('signupForm').reset();
-                toggleConditionalFields(); // Resetar campos condicionais
+                toggleConditionalFields();
                 
                 setTimeout(() => {
                     showAuthForm('login');
@@ -3995,31 +4310,6 @@ window.selectPlan = function(plan, event) {
             }
         });
 
-        // OAuth
-        async function signInWithGoogle() {
-            try {
-                const { error } = await supabaseClient.auth.signInWithOAuth({
-                    provider: 'google',
-                    options: { redirectTo: window.location.origin }
-                });
-                if (error) throw error;
-            } catch (error) {
-                showAlert(error.message || 'Erro ao fazer login com Google', 'error');
-            }
-        }
-
-        async function signInWithGitHub() {
-            try {
-                const { error } = await supabaseClient.auth.signInWithOAuth({
-                    provider: 'github',
-                    options: { redirectTo: window.location.origin }
-                });
-                if (error) throw error;
-            } catch (error) {
-                showAlert(error.message || 'Erro ao fazer login com GitHub', 'error');
-            }
-        }
-
         // Mostrar Marketplace
         function showMarketplace() {
             window.scrollTo(0, 0);
@@ -4032,12 +4322,11 @@ window.selectPlan = function(plan, event) {
             document.getElementById('user-avatar').textContent = currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
             document.getElementById('user-type-badge').textContent = currentUser.type === 'client' ? 'Cliente' : 'Fabricante';
             
-            // ===== CONTROLE DE ACESSO MODIFICADO =====
             const navFabricator = document.getElementById('nav-fabricator');
             const userType = currentUser.type;
             
             if (userType === 'client') {
-              navFabricator.classList.add('disabled');
+                navFabricator.classList.add('disabled');
                 
                 if (document.getElementById('fabricator-page').classList.contains('active')) {
                     app.showPage('home');
@@ -4058,30 +4347,13 @@ window.selectPlan = function(plan, event) {
                 
             } else if (userType === 'fabricator') {
                 navFabricator.classList.remove('disabled');
-            
-                // Clientes podem ver o link do painel do fabricante, mas será restrito
-                navFabricator.classList.remove('disabled');
-                
-                if (document.getElementById('fabricator-page').classList.contains('active')) {
-                    app.showPage('home');
-                }
-                
-            } else if (userType === 'fabricator') {
-                navFabricator.classList.remove('disabled');
-                
-                // Fabricantes podem acessar o painel do cliente normalmente
                 const fabricatorPage = document.getElementById('fabricator-page');
                 const overlay = fabricatorPage.querySelector('.access-overlay');
                 if (overlay) {
                     overlay.remove();
                 }
-                
-                // Garantir que o fabricante também possa acessar projetos como cliente
-                loadClientProjectsFromSupabase().then(projects => {
-                    console.log('Fabricante carregou', projects.length, 'projetos como cliente');
-                });
+                fabricatorPage.style.position = '';
             }
-            // ===== FIM CONTROLE DE ACESSO =====
             
             showNotification(`Bem-vindo, ${currentUser.name}!`, 'success');
             
@@ -4122,7 +4394,6 @@ window.selectPlan = function(plan, event) {
                 
                 if (error) throw error;
                 
-                // LIMPAR ARRAY ANTES DE RECARREGAR
                 AppState.projects = [];
                 
                 const formattedProjects = projects.map(project => ({
@@ -4147,7 +4418,6 @@ window.selectPlan = function(plan, event) {
                     progress: 0
                 }));
                 
-                // Carregar orçamentos para cada projeto APENAS UMA VEZ
                 for (let project of formattedProjects) {
                     const { data: quotes, error: quotesError } = await supabaseClient
                         .from('quotes')
@@ -4190,7 +4460,6 @@ window.selectPlan = function(plan, event) {
                         }
                     }
                     
-                    // Carregar progresso do job se o projeto estiver ativo
                     if (project.status === 'in-progress' || project.status === 'accepted') {
                         const { data: job, error: jobError } = await supabaseClient
                             .from('jobs')
@@ -4205,7 +4474,6 @@ window.selectPlan = function(plan, event) {
                         }
                     }
                     
-                    // Carregar contagem de mensagens não lidas
                     if (project.status === 'in-progress' || project.status === 'accepted') {
                         const { count, error: msgError } = await supabaseClient
                             .from('messages')
@@ -4239,26 +4507,19 @@ window.selectPlan = function(plan, event) {
                     .single();
                 
                 if (userError || userData.user_type !== 'fabricator') {
-                    console.log('Usuário não é fabricante ou erro ao verificar tipo');
                     return [];
                 }
                 
-                let capabilities = [];
-                if (userData.fabrication_areas && Array.isArray(userData.fabrication_areas)) {
-                    capabilities = userData.fabrication_areas;
-                } else {
-                    // Se não tiver áreas definidas, usar todas (ou um conjunto padrão)
-                    capabilities = ["cnc-machining", "laser-cutting", "3d-printing", "machining", "welding", "wood-fabrication", "metal-bending"];
-                }
+                let capabilities = userData.fabrication_areas && Array.isArray(userData.fabrication_areas) 
+                    ? userData.fabrication_areas 
+                    : ["cnc-machining", "laser-cutting", "3d-printing", "machining", "welding", "wood-fabrication", "metal-bending"];
                 
-                // Buscar projetos pendentes que correspondam aos métodos do fabricante
                 let query = supabaseClient
                     .from('projects')
                     .select('*')
                     .eq('status', 'pending');
                 
                 if (capabilities && capabilities.length > 0) {
-                    // Construir OR para métodos
                     const orConditions = capabilities.map(method => `method.eq.${method}`).join(',');
                     query = query.or(orConditions);
                 }
@@ -4273,6 +4534,7 @@ window.selectPlan = function(plan, event) {
                 const formattedRequests = [];
                 for (let project of projects) {
                     let clientName = 'Cliente';
+                    let clientRating = null;
                     try {
                         const { data: profile } = await supabaseClient
                             .from('profiles')
@@ -4283,6 +4545,17 @@ window.selectPlan = function(plan, event) {
                         if (profile) {
                             clientName = profile.name;
                         }
+                        
+                        // Obter avaliação do cliente
+                        const { data: ratings } = await supabaseClient
+                            .from('ratings')
+                            .select('rating')
+                            .eq('rated_user_id', project.client_id);
+                        
+                        if (ratings && ratings.length > 0) {
+                            const sum = ratings.reduce((acc, r) => acc + r.rating, 0);
+                            clientRating = (sum / ratings.length).toFixed(1);
+                        }
                     } catch (error) {
                         console.error('Erro ao buscar perfil do cliente:', error);
                     }
@@ -4292,6 +4565,7 @@ window.selectPlan = function(plan, event) {
                         name: project.name,
                         clientId: project.client_id,
                         clientName: clientName,
+                        clientRating: clientRating,
                         fileName: project.file_name,
                         fileSize: project.file_size,
                         fileUrl: project.file_url,
@@ -4334,19 +4608,6 @@ window.selectPlan = function(plan, event) {
                 
                 if (error) throw error;
                 
-                const { data: profileData } = await supabaseClient
-                    .from('profiles')
-                    .select('user_type')
-                    .eq('id', AppState.currentUser.id)
-                    .single();
-                
-                if (profileData && profileData.user_type !== 'fabricator') {
-                    await supabaseClient
-                        .from('profiles')
-                        .update({ user_type: 'client' })
-                        .eq('id', AppState.currentUser.id);
-                }
-                
                 return data[0];
             } catch (error) {
                 console.error('Erro ao salvar projeto:', error);
@@ -4356,24 +4617,19 @@ window.selectPlan = function(plan, event) {
 
         async function submitQuoteToSupabase(quoteData, pdfFile = null) {
             try {
-                console.log('Iniciando upload do orçamento para projeto:', quoteData.projectId);
-                
                 let pdfUrl = null;
                 let pdfFileName = null;
 
                 if (pdfFile) {
-                    console.log('Fazendo upload do PDF...');
                     try {
                         const pdfUploadResult = await uploadPdfToSupabase(pdfFile, quoteData.projectId);
                         pdfUrl = pdfUploadResult.pdfUrl;
                         pdfFileName = pdfUploadResult.pdfFileName;
-                        console.log('PDF upload concluído:', pdfUrl);
                     } catch (pdfError) {
                         console.error('Erro no upload do PDF, enviando orçamento sem PDF:', pdfError);
                     }
                 }
 
-                console.log('Inserindo orçamento no banco de dados...');
                 const { data, error } = await supabaseClient
                     .from('quotes')
                     .insert([{
@@ -4390,11 +4646,9 @@ window.selectPlan = function(plan, event) {
                     .select();
                 
                 if (error) {
-                    console.error('Erro ao inserir orçamento:', error);
                     throw new Error(`Erro no banco de dados: ${error.message}`);
                 }
                 
-                console.log('Atualizando status do projeto...');
                 const { error: updateError } = await supabaseClient
                     .from('projects')
                     .update({ status: 'quoted' })
@@ -4404,7 +4658,6 @@ window.selectPlan = function(plan, event) {
                     console.error('Erro ao atualizar projeto:', updateError);
                 }
                 
-                console.log('Orçamento enviado com sucesso!');
                 return data[0];
                 
             } catch (error) {
@@ -4430,7 +4683,6 @@ window.selectPlan = function(plan, event) {
                     });
                     
                     if (createError) {
-                        console.error('Erro ao criar bucket:', createError);
                         const fallbackPath = `project-files/${fileName}`;
                         const { data: fallbackData, error: fallbackError } = await supabaseClient.storage
                             .from('project-files')
@@ -4460,7 +4712,6 @@ window.selectPlan = function(plan, event) {
                     });
                 
                 if (error) {
-                    console.log('Erro no upload para quote-pdfs, tentando project-files...');
                     const fallbackPath = `project-files/${fileName}`;
                     const { data: fallbackData, error: fallbackError } = await supabaseClient.storage
                         .from('project-files')
@@ -4505,7 +4756,6 @@ window.selectPlan = function(plan, event) {
                 const bucketExists = buckets.some(bucket => bucket.name === 'project-files');
                 
                 if (!bucketExists) {
-                    console.log('Bucket não existe, criando...');
                     await supabaseClient.storage.createBucket('project-files', {
                         public: true,
                         allowedMimeTypes: [
@@ -4544,6 +4794,58 @@ window.selectPlan = function(plan, event) {
                 throw error;
             }
         }
+
+        // ==================== FUNÇÕES DE AVALIAÇÃO ====================
+        async function getUserAverageRating(userId) {
+    const { data, error } = await supabaseClient
+        .from('ratings')
+        .select('rating')
+        .eq('rated_user_id', userId);
+    if (error) {
+        console.error('Erro ao buscar média:', error);
+        return null;
+    }
+    if (!data || data.length === 0) return null;
+    const sum = data.reduce((acc, r) => acc + r.rating, 0);
+    return (sum / data.length).toFixed(1);
+}
+
+        async function submitRating(raterId, ratedUserId, projectId, rating, comment = '') {
+    // Verifica se já existe avaliação para este projeto (opcional, evita duplicidade)
+    const { data: existing, error: checkError } = await supabaseClient
+        .from('ratings')
+        .select('id')
+        .eq('project_id', projectId)
+        .eq('rater_id', raterId)
+        .maybeSingle();
+
+    if (checkError) throw checkError;
+    if (existing) {
+        throw new Error('Você já avaliou este projeto.');
+    }
+
+    // Insere a avaliação
+    const { error } = await supabaseClient
+        .from('ratings')
+        .insert([{
+            rater_id: raterId,
+            rated_user_id: ratedUserId,
+            project_id: projectId,
+            rating: rating,
+            comment: comment
+        }]);
+
+    if (error) throw error;
+
+    // Atualiza a média no perfil do avaliado
+    const avg = await getUserAverageRating(ratedUserId);
+    const { error: updateError } = await supabaseClient
+        .from('profiles')
+        .update({ rating_avg: avg ? parseFloat(avg) : null })
+        .eq('id', ratedUserId);
+
+    if (updateError) console.error('Erro ao atualizar média no perfil:', updateError);
+}
 
         // ==================== FUNÇÕES UTILITÁRIAS DO MARKETPLACE ====================
         const utils = {
@@ -4636,17 +4938,30 @@ window.selectPlan = function(plan, event) {
             
             getMethodIcon: (method) => {
                 const iconMap = {
-                    'cnc-machining': 'microchip',
-                    'laser-cutting': 'bolt',
-                    '3d-printing': 'cube',
-                    'prototyping': 'flask',
-                    'wood-fabrication': 'hammer',
-                    'welding': 'wrench',
-                    'sheet-metal': 'layer-group',
+                    'cnc-machining': 'cogs',
+                    'laser-cutting': 'cogs',
+                    '3d-printing': 'cogs',
+                    'prototyping': 'cogs',
+                    'wood-fabrication': 'cogs',
+                    'welding': 'cogs',
+                    'sheet-metal': 'cogs',
                     'machining': 'cogs',
-                    'metal-bending': 'compress-alt'
+                    'metal-bending': 'cogs'
                 };
                 return iconMap[method] || 'cogs';
+            },
+            
+            getRatingStars: (rating) => {
+                if (!rating) return '<span class="rating-number">(sem avaliações)</span>';
+                const fullStars = Math.floor(rating);
+                const halfStar = rating % 1 >= 0.5;
+                let stars = '';
+                for (let i = 0; i < 5; i++) {
+                    if (i < fullStars) stars += '<i class="fas fa-star"></i>';
+                    else if (i === fullStars && halfStar) stars += '<i class="fas fa-star-half-alt"></i>';
+                    else stars += '<i class="far fa-star"></i>';
+                }
+                return `<span class="rating-stars">${stars}</span><span class="rating-number">(${rating})</span>`;
             }
         };
 
@@ -4656,11 +4971,9 @@ window.selectPlan = function(plan, event) {
                 app.setupEventListeners();
                 app.updateUI();
                 app.showPage('home');
-                // Notificação de boas-vindas removida daqui para evitar duplicidade
             },
             
             setupEventListeners: () => {
-                // Navegação
                 document.querySelectorAll('.nav-link').forEach(link => {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
@@ -4672,7 +4985,6 @@ window.selectPlan = function(plan, event) {
                 
                 document.getElementById('logo').addEventListener('click', () => app.showPage('home'));
                 
-                // Botão "Solicitar Orçamento" na hero section - rola até a seção de upload
                 document.getElementById('get-quote-btn').addEventListener('click', () => {
                     app.showPage('home');
                     setTimeout(() => {
@@ -4681,12 +4993,10 @@ window.selectPlan = function(plan, event) {
                     }, 100);
                 });
                 
-                // Botão "Métodos de fabricação" na hero section - sempre vai para a página de métodos
                 document.getElementById('browse-manufacturers-btn').addEventListener('click', () => {
                     app.showPage('methods');
                 });
                 
-                // Troca de abas
                 document.querySelectorAll('.tab').forEach(tab => {
                     tab.addEventListener('click', () => {
                         const tabId = tab.getAttribute('data-tab');
@@ -4694,7 +5004,6 @@ window.selectPlan = function(plan, event) {
                     });
                 });
                 
-                // Upload de arquivos
                 const uploadArea = document.getElementById('upload-area');
                 const fileInput = document.getElementById('file-input');
                 const uploadContent = document.getElementById('upload-content');
@@ -4721,7 +5030,6 @@ window.selectPlan = function(plan, event) {
                     app.handleFileUpload(files);
                 });
                 
-                // Upload de PDF no modal de orçamento
                 const pdfUploadArea = document.getElementById('pdf-upload-area');
                 const pdfUploadContent = document.getElementById('pdf-upload-content');
                 const pdfInput = document.getElementById('quote-pdf-input');
@@ -4757,7 +5065,6 @@ window.selectPlan = function(plan, event) {
                     }
                 });
                 
-                // Botão para remover PDF
                 const pdfRemoveBtn = document.getElementById('pdf-remove-btn');
                 if (pdfRemoveBtn) {
                     pdfRemoveBtn.addEventListener('click', () => {
@@ -4765,12 +5072,10 @@ window.selectPlan = function(plan, event) {
                     });
                 }
                 
-                // Submissões de formulários
                 document.getElementById('project-form').addEventListener('submit', app.handleProjectSubmit);
                 document.getElementById('quote-form').addEventListener('submit', app.handleQuoteSubmit);
                 document.getElementById('capabilities-form').addEventListener('submit', app.handleCapabilitiesSubmit);
                 
-                // Cliques em botões
                 document.getElementById('new-project-btn').addEventListener('click', () => {
                     app.showPage('home');
                     setTimeout(() => {
@@ -4781,18 +5086,14 @@ window.selectPlan = function(plan, event) {
                 
                 document.getElementById('update-capabilities-btn').addEventListener('click', () => app.openCapabilitiesModal());
                 
-                // Botão de configurações
                 document.getElementById('settings-btn').addEventListener('click', () => app.openSettingsModal());
                 
-                // Formulário de configurações
                 document.getElementById('settings-form').addEventListener('submit', (e) => app.saveUserSettings(e));
                 
-                // Botões de fechar modal
                 document.querySelectorAll('.close-modal').forEach(button => {
                     button.addEventListener('click', utils.closeAllModals);
                 });
                 
-                // Fechar modal ao clicar fora
                 document.querySelectorAll('.modal').forEach(modal => {
                     modal.addEventListener('click', (e) => {
                         if (e.target === modal) {
@@ -4801,7 +5102,6 @@ window.selectPlan = function(plan, event) {
                     });
                 });
                 
-                // Cards de método (agora apenas para abrir modal)
                 document.querySelectorAll('.method-card').forEach(card => {
                     card.addEventListener('click', (e) => {
                         const method = card.getAttribute('data-method');
@@ -4809,7 +5109,6 @@ window.selectPlan = function(plan, event) {
                     });
                 });
                 
-                // Event listeners para o chat
                 document.getElementById('send-chat-message').addEventListener('click', app.sendChatMessage);
                 
                 document.getElementById('chat-message-input').addEventListener('keypress', (e) => {
@@ -4819,9 +5118,9 @@ window.selectPlan = function(plan, event) {
                     }
                 });
                 
-                // Event delegation para botões das tabelas
+                document.getElementById('submit-rating-btn').addEventListener('click', app.handleRatingSubmit);
+                
                 document.addEventListener('click', (e) => {
-                    // Botão "Ver Orçamentos"
                     if (e.target.classList.contains('view-quotes-btn') || e.target.closest('.view-quotes-btn')) {
                         const button = e.target.classList.contains('view-quotes-btn') ? e.target : e.target.closest('.view-quotes-btn');
                         const projectId = button.getAttribute('data-project-id');
@@ -4830,7 +5129,6 @@ window.selectPlan = function(plan, event) {
                         }
                     }
                     
-                    // Botão "Cancelar Projeto"
                     if (e.target.classList.contains('cancel-project-btn') || e.target.closest('.cancel-project-btn')) {
                         const button = e.target.classList.contains('cancel-project-btn') ? e.target : e.target.closest('.cancel-project-btn');
                         const projectId = button.getAttribute('data-project-id');
@@ -4839,7 +5137,6 @@ window.selectPlan = function(plan, event) {
                         }
                     }
                     
-                    // Botão "Chat"
                     if (e.target.classList.contains('open-chat-btn') || e.target.closest('.open-chat-btn')) {
                         const button = e.target.classList.contains('open-chat-btn') ? e.target : e.target.closest('.open-chat-btn');
                         const projectId = button.getAttribute('data-project-id');
@@ -4848,7 +5145,6 @@ window.selectPlan = function(plan, event) {
                         }
                     }
                     
-                    // Botão "Enviar Orçamento" (fabricante)
                     if (e.target.classList.contains('submit-quote-btn') || e.target.closest('.submit-quote-btn')) {
                         const button = e.target.classList.contains('submit-quote-btn') ? e.target : e.target.closest('.submit-quote-btn');
                         const projectId = button.getAttribute('data-id');
@@ -4860,7 +5156,6 @@ window.selectPlan = function(plan, event) {
                         }
                     }
                     
-                    // Botão "Download" do projeto (fabricante)
                     if (e.target.classList.contains('download-project-btn') || e.target.closest('.download-project-btn')) {
                         const button = e.target.classList.contains('download-project-btn') ? e.target : e.target.closest('.download-project-btn');
                         const fileUrl = button.getAttribute('data-file-url');
@@ -4872,12 +5167,78 @@ window.selectPlan = function(plan, event) {
                         }
                     }
                     
-                    // Botão "Atualizar Progresso" (fabricante)
                     if (e.target.classList.contains('update-progress-btn') || e.target.closest('.update-progress-btn')) {
                         const button = e.target.classList.contains('update-progress-btn') ? e.target : e.target.closest('.update-progress-btn');
                         const jobId = button.getAttribute('data-job-id');
                         app.updateJobProgress(jobId);
                     }
+                    
+                    if (e.target.classList.contains('rate-client-btn') || e.target.closest('.rate-client-btn')) {
+                        const button = e.target.classList.contains('rate-client-btn') ? e.target : e.target.closest('.rate-client-btn');
+                        const projectId = button.getAttribute('data-project-id');
+                        const clientId = button.getAttribute('data-client-id');
+                        app.openRatingModal('client', clientId, projectId);
+                    }
+                    
+                    if (e.target.classList.contains('rate-fabricator-btn') || e.target.closest('.rate-fabricator-btn')) {
+                        const button = e.target.classList.contains('rate-fabricator-btn') ? e.target : e.target.closest('.rate-fabricator-btn');
+                        const projectId = button.getAttribute('data-project-id');
+                        const fabricatorId = button.getAttribute('data-fabricator-id');
+                        app.openRatingModal('fabricator', fabricatorId, projectId);
+                    }
+                });
+
+                document.getElementById('pricing-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    app.showPage('pricing');
+                });
+                document.getElementById('file-requirements-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    app.showPage('file-requirements');
+                });
+                document.getElementById('material-guide-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    app.showPage('material-guide');
+                });
+                document.getElementById('help-center-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    app.showPage('help-center');
+                });
+                document.getElementById('become-partner-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    app.showPage('become-partner');
+                });
+                document.getElementById('capabilities-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    app.showPage('capability-verification');
+                });
+                document.getElementById('pricing-guidelines-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    app.showPage('pricing-guidelines');
+                });
+                document.getElementById('manufacturer-resources-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    app.showPage('resources');
+                });
+                document.getElementById('about-us-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    app.showPage('about');
+                });
+                document.getElementById('blog-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    app.showPage('blog');
+                });
+                document.getElementById('careers-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    app.showPage('careers');
+                });
+                document.getElementById('contact-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    app.showPage('contact');
+                });
+                document.getElementById('privacy-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    app.showPage('privacy');
                 });
             },
             
@@ -4894,19 +5255,35 @@ window.selectPlan = function(plan, event) {
                 document.querySelectorAll('.page-container').forEach(page => {
                     page.classList.remove('active');
                 });
-                
                 document.querySelectorAll('.nav-link').forEach(link => {
                     link.classList.remove('active');
                 });
-                
                 const page = document.getElementById(`${pageName}-page`);
                 if (page) {
                     page.classList.add('active');
-                    document.getElementById(`nav-${pageName}`).classList.add('active');
-                    
-                    app.loadPageContent(pageName);
-                    
+                    if (['home', 'client', 'fabricator', 'methods'].includes(pageName)) {
+                        document.getElementById(`nav-${pageName}`).classList.add('active');
+                    }
                     window.scrollTo(0, 0);
+                    
+                    if (pageName === 'fabricator' && AppState.currentUser.type !== 'fabricator') {
+                        return; // bloqueia carregamento para clientes
+                    }
+                }
+            },
+            
+            loadPageContent: (pageName) => {
+                switch(pageName) {
+                    case 'client':
+                        app.loadClientDashboard();
+                        break;
+                    case 'fabricator':
+                        if (AppState.currentUser.type === 'fabricator') {
+                            app.loadFabricatorDashboard();
+                        }
+                        break;
+                    case 'methods':
+                        break;
                 }
             },
             
@@ -4932,22 +5309,9 @@ window.selectPlan = function(plan, event) {
                 if (tabId.startsWith('client-')) {
                     app.loadClientTabContent(tabId.replace('client-', ''));
                 } else if (tabId.startsWith('fabricator-')) {
-                    app.loadFabricatorTabContent(tabId.replace('fabricator-', ''));
-                }
-            },
-            
-            loadPageContent: (pageName) => {
-                switch(pageName) {
-                    case 'client':
-                        app.loadClientDashboard();
-                        break;
-                    case 'fabricator':
-                        app.loadFabricatorDashboard();
-                        break;
-                    case 'methods':
-                        break;
-                    default:
-                        break;
+                    if (AppState.currentUser.type === 'fabricator') {
+                        app.loadFabricatorTabContent(tabId.replace('fabricator-', ''));
+                    }
                 }
             },
             
@@ -5066,7 +5430,8 @@ window.selectPlan = function(plan, event) {
                     const quotesCount = project.quotes.length;
                     
                     let progressDisplay = '-';
-                    if (project.status === 'in-progress' || project.status === 'accepted') {
+                    if ((tbodyId === 'client-active-table' || tbodyId === 'client-completed-table') && 
+                        (project.status === 'in-progress' || project.status === 'accepted')) {
                         progressDisplay = `
                             <div style="display: flex; align-items: center; gap: 5px;">
                                 <div style="width: 60px; background: rgba(255,255,255,0.1); border-radius: 4px; height: 8px;">
@@ -5095,7 +5460,26 @@ window.selectPlan = function(plan, event) {
                                 ${quotesCount > 0 ? `<button class="btn btn-small btn-primary view-quotes-btn" data-project-id="${project.id}">Ver Orçamentos (${quotesCount})</button>` : ''}
                             </div>
                         `;
-                    } else if (project.status === 'completed' || project.status === 'cancelled') {
+                    } else if (project.status === 'completed') {
+                        // Projeto concluído: adiciona botão de avaliação para o cliente avaliar o fabricante
+                        const acceptedQuote = project.quotes.find(q => q.status === 'accepted');
+                        if (acceptedQuote) {
+                            actions = `
+                                <div class="action-buttons">
+                                    <button class="btn btn-small btn-primary rate-fabricator-btn" data-project-id="${project.id}" data-fabricator-id="${acceptedQuote.fabricatorId}">
+                                        <i class="fas fa-star"></i> Avaliar Fabricante
+                                    </button>
+                                    <button class="btn btn-small btn-outline view-quotes-btn" data-project-id="${project.id}">Ver Detalhes</button>
+                                </div>
+                            `;
+                        } else {
+                            actions = `
+                                <div class="action-buttons">
+                                    <button class="btn btn-small btn-outline view-quotes-btn" data-project-id="${project.id}">Ver Detalhes</button>
+                                </div>
+                            `;
+                        }
+                    } else if (project.status === 'cancelled') {
                         actions = `
                             <div class="action-buttons">
                                 <button class="btn btn-small btn-outline view-quotes-btn" data-project-id="${project.id}">Ver Detalhes</button>
@@ -5145,101 +5529,62 @@ window.selectPlan = function(plan, event) {
             },
             
             loadFabricatorJobs: async () => {
-                try {
-                    console.log('Carregando trabalhos para o fabricante:', AppState.currentUser.id, AppState.currentUser.name);
-                    
-                    const { data: userData } = await supabaseClient
-                        .from('profiles')
-                        .select('user_type')
-                        .eq('id', AppState.currentUser.id)
-                        .single();
-                        
-                    if (!userData || userData.user_type !== 'fabricator') {
-                        console.log('Usuário não é fabricante, retornando array vazio');
-                        AppState.fabricatorJobs = [];
-                        return [];
-                    }
-                    
-                    const { data: jobs, error } = await supabaseClient
-                        .from('jobs')
-                        .select(`
-                            *,
-                            projects:project_id (name, client_id, due_date),
-                            quotes:quote_id (amount, fabricator_id, status)
-                        `)
-                        .eq('fabricator_id', AppState.currentUser.id)
-                        .in('status', ['in-progress', 'accepted', 'completed']);
-                    
-                    if (error) {
-                        console.error('Erro na query de jobs:', error);
-                        throw error;
-                    }
-                    
-                    console.log(`Encontrados ${jobs?.length || 0} jobs para o fabricante ${AppState.currentUser.id}`);
-                    
-                    const formattedJobs = [];
-                    for (let job of jobs || []) {
-                        let clientName = 'Cliente';
-                        try {
-                            const { data: clientProfile } = await supabaseClient
-                                .from('profiles')
-                                .select('name')
-                                .eq('id', job.projects?.client_id)
-                                .single();
-                            
-                            if (clientProfile) {
-                                clientName = clientProfile.name;
-                            }
-                        } catch (error) {
-                            console.error('Erro ao buscar nome do cliente:', error);
-                        }
-                        
-                        if (job.quotes?.fabricator_id !== AppState.currentUser.id) {
-                            console.warn(`Job ${job.id} tem quote de fabricante diferente! Ignorando...`);
-                            continue;
-                        }
-                        
-                        const formattedJob = {
-                            id: job.id,
-                            projectId: job.project_id,
-                            projectName: job.projects?.name || 'Projeto',
-                            clientId: job.projects?.client_id,
-                            clientName: clientName,
-                            quoteId: job.quote_id,
-                            fabricatorId: job.fabricator_id,
-                            fabricatorName: AppState.currentUser.name,
-                            startDate: job.start_date?.split('T')[0] || new Date().toISOString().split('T')[0],
-                            dueDate: job.projects?.due_date || new Date().toISOString().split('T')[0],
-                            status: job.status,
-                            progress: job.progress || 10,
-                            completedDate: job.completed_at?.split('T')[0] || null,
-                            rating: job.rating || null,
-                            unreadMessages: 0
-                        };
-                        
-                        const { count, error: msgError } = await supabaseClient
-                            .from('messages')
-                            .select('*', { count: 'exact', head: true })
-                            .eq('project_id', formattedJob.projectId)
-                            .eq('read', false)
-                            .neq('sender_id', AppState.currentUser.id);
-                        
-                        if (!msgError && count) {
-                            formattedJob.unreadMessages = count;
-                        }
-                        
-                        formattedJobs.push(formattedJob);
-                    }
-                    
-                    AppState.fabricatorJobs = formattedJobs;
-                    console.log(`Jobs formatados para o fabricante: ${formattedJobs.length}`);
-                    
-                } catch (error) {
-                    console.error('Erro ao carregar trabalhos:', error);
-                    AppState.fabricatorJobs = [];
-                    return [];
-                }
-            },
+    try {
+        const { data: jobs, error } = await supabaseClient
+            .from('jobs')
+            .select(`
+                *,
+                projects:project_id (id, name, client_id, due_date),
+                quotes:quote_id (id, amount, fabricator_id, status)
+            `)
+            .eq('fabricator_id', AppState.currentUser.id)
+            .in('status', ['in-progress', 'accepted', 'completed']) // inclui completed
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        const formattedJobs = [];
+        for (let job of jobs || []) {
+            // Busca nome do cliente
+            let clientName = 'Cliente';
+            if (job.projects?.client_id) {
+                const { data: clientProfile } = await supabaseClient
+                    .from('profiles')
+                    .select('name')
+                    .eq('id', job.projects.client_id)
+                    .single();
+                if (clientProfile) clientName = clientProfile.name;
+            }
+
+            // Verifica se a cotação realmente pertence a este fabricante (segurança)
+            if (job.quotes?.fabricator_id !== AppState.currentUser.id) continue;
+
+            formattedJobs.push({
+                id: job.id,
+                projectId: job.project_id,
+                projectName: job.projects?.name || 'Projeto',
+                clientId: job.projects?.client_id,
+                clientName: clientName,
+                quoteId: job.quote_id,
+                fabricatorId: job.fabricator_id,
+                startDate: job.start_date?.split('T')[0] || new Date().toISOString().split('T')[0],
+                dueDate: job.projects?.due_date || new Date().toISOString().split('T')[0],
+                status: job.status,
+                progress: job.progress || 0,
+                completedDate: job.completed_at?.split('T')[0] || null,
+                rating: job.rating, // se existir, será número; caso contrário null
+                unreadMessages: 0
+            });
+        }
+
+        AppState.fabricatorJobs = formattedJobs;
+        return formattedJobs;
+    } catch (error) {
+        console.error('Erro ao carregar trabalhos:', error);
+        AppState.fabricatorJobs = [];
+        return [];
+    }
+},
             
             loadFabricatorTabContent: (tab) => {
                 switch(tab) {
@@ -5281,9 +5626,15 @@ window.selectPlan = function(plan, event) {
                 
                 requests.forEach(request => {
                     const row = document.createElement('tr');
+                    const ratingHtml = request.clientRating ? utils.getRatingStars(request.clientRating) : '<span class="rating-number">(sem avaliações)</span>';
                     row.innerHTML = `
                         <td><strong style="color: white;">${request.name}</strong></td>
-                        <td>${request.clientName}</td>
+                        <td>
+                            <div>
+                                <div style="color: white;">${request.clientName}</div>
+                                <div>${ratingHtml}</div>
+                            </div>
+                        </td>
                         <td>${request.method}</td>
                         <td>${request.material}</td>
                         <td>${utils.formatDate(request.dueDate)}</td>
@@ -5441,7 +5792,7 @@ window.selectPlan = function(plan, event) {
                             stars += i < job.rating ? '<i class="fas fa-star" style="color: #fbbf24;"></i>' : '<i class="far fa-star" style="color: #d1d5db;"></i>';
                         }
                     } else {
-                        stars = 'Não avaliado';
+                        stars = '<button class="btn btn-small btn-outline rate-client-btn" data-project-id="' + job.projectId + '" data-client-id="' + job.clientId + '">Avaliar Cliente</button>';
                     }
                     
                     const quote = AppState.fabricatorQuotes.find(q => q.id === job.quoteId);
@@ -5479,7 +5830,6 @@ window.selectPlan = function(plan, event) {
                         .single();
                     
                     if (userError || userData?.user_type !== 'fabricator') {
-                        console.log('Usuário não é fabricante, retornando array vazio');
                         AppState.fabricatorQuotes = [];
                         return [];
                     }
@@ -5766,16 +6116,12 @@ window.selectPlan = function(plan, event) {
             handleQuoteSubmit: async (e) => {
                 e.preventDefault();
                 
-                console.log('Iniciando envio de orçamento...');
-                console.log('Projeto atual:', AppState.currentQuoteProject);
-                
                 const amount = parseFloat(document.getElementById('quote-amount').value);
                 const leadTime = parseInt(document.getElementById('quote-lead-time').value);
                 const paymentTerms = document.getElementById('quote-payment-terms').value;
                 const notes = document.getElementById('quote-notes').value;
                 
                 if (!AppState.currentQuoteProject) {
-                    console.error('Nenhum projeto selecionado para orçamento!');
                     utils.showNotification('Erro: Nenhum projeto selecionado.', 'error');
                     return;
                 }
@@ -5789,10 +6135,7 @@ window.selectPlan = function(plan, event) {
                         notes: notes
                     };
                     
-                    console.log('Dados do orçamento:', quoteData);
-                    
                     const savedQuote = await submitQuoteToSupabase(quoteData, AppState.currentQuotePdfFile);
-                    console.log('Orçamento salvo no Supabase:', savedQuote);
                     
                     const newQuote = {
                         id: savedQuote.id,
@@ -5915,151 +6258,7 @@ window.selectPlan = function(plan, event) {
                 utils.openModal('quote-modal');
             },
             
-            openProjectDetailModal: (projectId, isRequest = false) => {
-                console.log('Abrindo modal de detalhes do projeto. ID:', projectId, 'isRequest:', isRequest);
-                
-                let project;
-                
-                if (isRequest) {
-                    project = AppState.fabricatorRequests.find(r => r.id === projectId);
-                } else {
-                    project = AppState.projects.find(p => p.id === projectId);
-                }
-                
-                if (!project) {
-                    console.error('Projeto não encontrado! ID:', projectId);
-                    utils.showNotification('Erro: Projeto não encontrado.', 'error');
-                    return;
-                }
-                
-                const modalContent = document.getElementById('project-detail-content');
-                const modalFooter = document.querySelector('#project-detail-modal .modal-footer');
-                const quotes = project.quotes || [];
-                
-                modalContent.innerHTML = `
-                    <div class="card" style="box-shadow: none; border: none; padding: 0;">
-                        <div class="card-header" style="border: none; padding: 0 0 20px 0;">
-                            <div class="card-title">
-                                <h3>${project.name}</h3>
-                                <p style="color: var(--light-gray);">${project.description}</p>
-                            </div>
-                        </div>
-                        
-                        <div class="card-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Cliente</span>
-                                <span class="detail-value">${project.clientName}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Data de Publicação</span>
-                                <span class="detail-value">${utils.formatDate(project.date)}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Data de Entrega</span>
-                                <span class="detail-value">${utils.formatDate(project.dueDate)}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Status</span>
-                                <span class="detail-value">${utils.getStatusBadge(project.status)}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Método de Fabricação</span>
-                                <span class="detail-value">${project.method}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Material</span>
-                                <span class="detail-value">${project.material}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Quantidade</span>
-                                <span class="detail-value">${project.quantity}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Arquivo</span>
-                                <span class="detail-value">${project.fileName} (${project.fileSize})</span>
-                            </div>
-                        </div>
-                        
-                        ${quotes.length > 0 ? `
-                        <div style="margin-top: 20px;">
-                            <h4 style="color: white;">Orçamentos Recebidos (${quotes.length})</h4>
-                            ${quotes.map(quote => `
-                                <div class="quote-card">
-                                    <div class="quote-card-header">
-                                        <div>
-                                            <strong style="color: white;">${quote.fabricatorName}</strong>
-                                            <div style="color: var(--light-gray);">${utils.formatCurrency(quote.amount)} • ${quote.leadTime} dias</div>
-                                            ${quote.pdfUrl ? `
-                                            <a href="${quote.pdfUrl}" target="_blank" class="quote-pdf-link">
-                                                <i class="fas fa-file-pdf"></i> Ver PDF do Orçamento
-                                            </a>
-                                            ` : ''}
-                                        </div>
-                                        <div>
-                                            ${quote.status === 'accepted' ? 
-                                                '<span class="status-badge status-completed">Aceito</span>' : 
-                                                '<span class="status-badge status-pending">Pendente</span>'
-                                            }
-                                        </div>
-                                    </div>
-                                    <p style="color: var(--light-gray);">Enviado em ${utils.formatDate(quote.date)}</p>
-                                    ${quote.notes ? `<p style="color: var(--light-gray);"><strong>Observações:</strong> ${quote.notes}</p>` : ''}
-                                    ${AppState.currentUser.id === project.clientId && quote.status === 'pending' ? `
-                                    <div class="quote-card-actions">
-                                        <button class="btn btn-small btn-primary accept-quote-btn" data-quote-id="${quote.id}" data-project-id="${project.id}" data-fabricator-id="${quote.fabricatorId}">Aceitar Orçamento</button>
-                                        <button class="btn btn-small btn-outline reject-quote-btn" data-quote-id="${quote.id}" data-project-id="${project.id}">Rejeitar</button>
-                                    </div>
-                                    ` : ''}
-                                </div>
-                            `).join('')}
-                        </div>
-                        ` : ''}
-                    </div>
-                `;
-                
-                if (isRequest && project.fileUrl) {
-                    modalFooter.innerHTML = `
-                        <button type="button" class="btn btn-secondary" id="modal-download-btn">
-                            <i class="fas fa-download"></i> Download do Projeto
-                        </button>
-                        <button type="button" class="btn btn-outline close-modal">Fechar</button>
-                    `;
-                    
-                    document.getElementById('modal-download-btn').addEventListener('click', () => {
-                        app.downloadProjectFile(project.fileUrl, project.fileName);
-                    });
-                    
-                    modalFooter.querySelector('.close-modal').addEventListener('click', utils.closeAllModals);
-                } else {
-                    modalFooter.innerHTML = `
-                        <button type="button" class="btn btn-outline close-modal">Fechar</button>
-                    `;
-                    modalFooter.querySelector('.close-modal').addEventListener('click', utils.closeAllModals);
-                }
-                
-                modalContent.querySelectorAll('.accept-quote-btn').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        const quoteId = e.target.getAttribute('data-quote-id');
-                        const projectId = e.target.getAttribute('data-project-id');
-                        const fabricatorId = e.target.getAttribute('data-fabricator-id');
-                        app.acceptQuote(projectId, quoteId, fabricatorId);
-                    });
-                });
-                
-                modalContent.querySelectorAll('.reject-quote-btn').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        const quoteId = e.target.getAttribute('data-quote-id');
-                        const projectId = e.target.getAttribute('data-project-id');
-                        app.rejectQuote(projectId, quoteId);
-                    });
-                });
-                
-                utils.openModal('project-detail-modal');
-            },
-            
             openQuoteDetailModal: async (projectId) => {
-                console.log('Abrindo modal de orçamentos para projeto:', projectId);
-                
                 let project = AppState.projects.find(p => p.id === projectId);
                 
                 if (!project) {
@@ -6084,10 +6283,13 @@ window.selectPlan = function(plan, event) {
                             .eq('id', quote.fabricator_id)
                             .single();
                         
+                        const fabricatorRating = await getUserAverageRating(quote.fabricator_id);
+                        
                         project.quotes.push({
                             id: quote.id,
                             fabricatorId: quote.fabricator_id,
                             fabricatorName: fabricatorProfile?.name || 'Fabricante',
+                            fabricatorRating: fabricatorRating,
                             amount: parseFloat(quote.amount),
                             leadTime: quote.lead_time,
                             date: quote.created_at.split('T')[0],
@@ -6124,6 +6326,7 @@ window.selectPlan = function(plan, event) {
                                 <div class="quote-card-header">
                                     <div>
                                         <strong style="color: white;">${quote.fabricatorName}</strong>
+                                        ${quote.fabricatorRating ? `<span class="rating-stars">${utils.getRatingStars(quote.fabricatorRating)}</span>` : '<span class="rating-number">(sem avaliações)</span>'}
                                         <div style="display: flex; gap: 15px; margin-top: 5px;">
                                             <span style="color: var(--light-gray);"><i class="fas fa-dollar-sign"></i> ${utils.formatCurrency(quote.amount)}</span>
                                             <span style="color: var(--light-gray);"><i class="far fa-clock"></i> ${quote.leadTime} dias</span>
@@ -6268,7 +6471,7 @@ window.selectPlan = function(plan, event) {
                 const modalContent = document.getElementById('quote-detail-content');
                 
                 modalContent.innerHTML = `
-                    <div class="card" style="box-shadow: none; border: none; padding: 0;">
+                    <div class="card" style="box-shadow: none; border: none;">
                         <div class="card-header" style="border: none; padding: 0 0 20px 0;">
                             <div class="card-title">
                                 <h3>${quote.projectName}</h3>
@@ -6420,56 +6623,21 @@ window.selectPlan = function(plan, event) {
                             <p style="color: var(--light-gray);"><strong>Melhor Para:</strong> Protótipos, geometrias complexas, peças personalizadas</p>
                         `
                     },
-                    'prototyping': {
-                        title: 'Prototipagem',
-                        description: 'Serviços de prototipagem rápida para criar rapidamente modelos físicos para validação de design, testes e apresentação.',
-                        details: `
-                            <p style="color: var(--light-gray);"><strong>Serviços Oferecidos:</strong></p>
-                            <ul style="color: var(--light-gray);">
-                                <li>Modelos conceituais</li>
-                                <li>Protipos funcionais</li>
-                                <li>Validação de design</li>
-                                <li>Amostras para testes de usuário</li>
-                                <li>Desenvolvimento iterativo</li>
-                            </ul>
-                            
-                            <p style="color: var(--light-gray);"><strong>Aplicações Comuns:</strong></p>
-                            <ul style="color: var(--light-gray);">
-                                <li>Desenvolvimento de produto</li>
-                                <li>Verificação de design</li>
-                                <li>Apresentações para investidores</li>
-                                <li>Testes de mercado</li>
-                                <li>Campanhas de crowdfunding</li>
-                            </ul>
-                            
-                            <p style="color: var(--light-gray);"><strong>Prazo de Entrega Típico:</strong> 3-14 dias</p>
-                            <p style="color: var(--light-gray);"><strong>Melhor Para:</strong> Desenvolvimento de novos produtos, validação de design</p>
-                        `
-                    },
-                    'wood-fabrication': {
-                        title: 'Fabricação em Madeira',
-                        description: 'Serviços de marcenaria e carpintaria personalizados para móveis, elementos arquitetônicos e peças decorativas.',
+                    'machining': {
+                        title: 'Usinagem Convencional',
+                        description: 'Usinagem tradicional com tornos, fresadoras e furadeiras para produção de peças metálicas.',
                         details: `
                             <p style="color: var(--light-gray);"><strong>Capacidades:</strong></p>
                             <ul style="color: var(--light-gray);">
-                                <li>Roteamento CNC em madeira</li>
-                                <li>Móveis personalizados</li>
-                                <li>Marcenaria arquitetônica</li>
-                                <li>Juntas (cauda de andorinha, espiga e entalhe)</li>
-                                <li>Acabamento e tingimento</li>
+                                <li>Torneamento convencional</li>
+                                <li>Fresamento manual</li>
+                                <li>Furação e rosqueamento</li>
+                                <li>Retificação de superfícies</li>
+                                <li>Peças únicas e pequenas séries</li>
                             </ul>
                             
-                            <p style="color: var(--light-gray);"><strong>Aplicações Comuns:</strong></p>
-                            <ul style="color: var(--light-gray);">
-                                <li>Móveis personalizados</li>
-                                <li>Armários e embutidos</li>
-                                <li>Detalhes arquitetônicos</li>
-                                <li>Sinalização e displays</li>
-                                <li>Arte e esculturas</li>
-                            </ul>
-                            
-                            <p style="color: var(--light-gray);"><strong>Prazo de Entrega Típico:</strong> 2-4 semanas</p>
-                            <p style="color: var(--light-gray);"><strong>Melhor Para:</strong> Móveis, marcenaria arquitetônica, peças personalizadas</p>
+                            <p style="color: var(--light-gray);"><strong>Prazo de Entrega Típico:</strong> 1-2 semanas</p>
+                            <p style="color: var(--light-gray);"><strong>Melhor Para:</strong> Peças simples, pequenas séries, manutenção</p>
                         `
                     },
                     'welding': {
@@ -6485,17 +6653,42 @@ window.selectPlan = function(plan, event) {
                                 <li>Dobra e conformação de metais</li>
                             </ul>
                             
-                            <p style="color: var(--light-gray);"><strong>Aplicações Comuns:</strong></p>
-                            <ul style="color: var(--light-gray);">
-                                <li>Aço estrutural</li>
-                                <li>Quadros e racks personalizados</li>
-                                <li>Montagens de tubos e tubulações</li>
-                                <li>Proteções e invólucros de máquinas</li>
-                                <li>Arte e escultura</li>
-                            </ul>
-                            
                             <p style="color: var(--light-gray);"><strong>Prazo de Entrega Típico:</strong> 1-3 semanas</p>
                             <p style="color: var(--light-gray);"><strong>Melhor Para:</strong> Componentes estruturais, quadros metálicos, montagens personalizadas</p>
+                        `
+                    },
+                    'wood-fabrication': {
+                        title: 'Fabricação em Madeira',
+                        description: 'Serviços de marcenaria e carpintaria personalizados para móveis, elementos arquitetônicos e peças decorativas.',
+                        details: `
+                            <p style="color: var(--light-gray);"><strong>Capacidades:</strong></p>
+                            <ul style="color: var(--light-gray);">
+                                <li>Roteamento CNC em madeira</li>
+                                <li>Móveis personalizados</li>
+                                <li>Marcenaria arquitetônica</li>
+                                <li>Juntas (cauda de andorinha, espiga e entalhe)</li>
+                                <li>Acabamento e tingimento</li>
+                            </ul>
+                            
+                            <p style="color: var(--light-gray);"><strong>Prazo de Entrega Típico:</strong> 2-4 semanas</p>
+                            <p style="color: var(--light-gray);"><strong>Melhor Para:</strong> Móveis, marcenaria arquitetônica, peças personalizadas</p>
+                        `
+                    },
+                    'metal-bending': {
+                        title: 'Conformação de Metais',
+                        description: 'Dobramento e conformação de chapas metálicas para criar peças com formas específicas e geometrias complexas.',
+                        details: `
+                            <p style="color: var(--light-gray);"><strong>Capacidades:</strong></p>
+                            <ul style="color: var(--light-gray);">
+                                <li>Dobramento de chapas</li>
+                                <li>Prensas e calandras</li>
+                                <li>Conformação a frio e a quente</li>
+                                <li>Estampagem profunda</li>
+                                <li>Peças estruturais e chassis</li>
+                            </ul>
+                            
+                            <p style="color: var(--light-gray);"><strong>Prazo de Entrega Típico:</strong> 1-2 semanas</p>
+                            <p style="color: var(--light-gray);"><strong>Melhor Para:</strong> Chapas dobradas, estruturas metálicas, caixas</p>
                         `
                     }
                 };
@@ -6507,8 +6700,6 @@ window.selectPlan = function(plan, event) {
                     <p style="color: var(--light-gray);">${detail.description}</p>
                     ${detail.details}
                 `;
-                
-                // Botão "Procurar Projetos" removido – apenas o botão "Fechar" permanece no rodapé
                 
                 utils.openModal('method-detail-modal');
             },
@@ -6531,8 +6722,6 @@ window.selectPlan = function(plan, event) {
             acceptQuote: async (projectId, quoteId, fabricatorId) => {
                 if (confirm('Tem certeza que deseja aceitar este orçamento?')) {
                     try {
-                        console.log('Aceitando orçamento:', { projectId, quoteId, fabricatorId });
-                        
                         const { error: quoteError } = await supabaseClient
                             .from('quotes')
                             .update({ 
@@ -6542,8 +6731,6 @@ window.selectPlan = function(plan, event) {
                             .eq('id', quoteId);
                         
                         if (quoteError) throw new Error(`Erro ao atualizar orçamento: ${quoteError.message}`);
-                        
-                        console.log('Cotação atualizada para accepted no Supabase');
                         
                         const { error: rejectOtherQuotesError } = await supabaseClient
                             .from('quotes')
@@ -6567,8 +6754,6 @@ window.selectPlan = function(plan, event) {
                             .eq('id', projectId);
                         
                         if (projectError) throw new Error(`Erro ao atualizar projeto: ${projectError.message}`);
-                        
-                        console.log('Projeto atualizado para in-progress no Supabase');
                         
                         const { data: existingJobs, error: jobsError } = await supabaseClient
                             .from('jobs')
@@ -6599,8 +6784,6 @@ window.selectPlan = function(plan, event) {
                             
                             if (updateJobError) {
                                 console.error('Erro ao atualizar job existente:', updateJobError);
-                            } else {
-                                console.log('Job atualizado:', jobId);
                             }
                         }
                         
@@ -6626,7 +6809,6 @@ window.selectPlan = function(plan, event) {
                                 throw new Error(`Erro ao criar trabalho: ${insertError.message}`);
                             } else {
                                 jobId = newJob.id;
-                                console.log('Novo job criado:', newJob);
                             }
                         }
                         
@@ -6668,8 +6850,6 @@ window.selectPlan = function(plan, event) {
                                     message: welcomeMessage,
                                     created_at: new Date().toISOString()
                                 }]);
-                            
-                            console.log('Mensagem inicial enviada no chat');
                         } catch (msgError) {
                             console.error('Erro ao enviar mensagem inicial:', msgError);
                         }
@@ -6771,88 +6951,99 @@ window.selectPlan = function(plan, event) {
             },
             
             updateJobProgress: async (jobId) => {
-                const job = AppState.fabricatorJobs.find(j => j.id === jobId);
-                if (job) {
-                    const newProgress = prompt(`Digite a nova porcentagem de progresso para "${job.projectName}":`, job.progress);
-                    if (newProgress !== null) {
-                        const progress = parseInt(newProgress);
-                        if (!isNaN(progress) && progress >= 0 && progress <= 100) {
-                            job.progress = progress;
-                            
-                            try {
-                                await supabaseClient
-                                    .from('jobs')
-                                    .update({ progress: progress })
-                                    .eq('id', jobId);
-                                
-                                const project = AppState.projects.find(p => p.id === job.projectId);
-                                if (project) {
-                                    project.progress = progress;
-                                    
-                                    await supabaseClient
-                                        .from('projects')
-                                        .update({ 
-                                            updated_at: new Date().toISOString()
-                                        })
-                                        .eq('id', job.projectId);
-                                }
-                                
-                                if (progress === 100) {
-                                    job.status = 'completed';
-                                    job.completedDate = new Date().toISOString().split('T')[0];
-                                    
-                                    const project = AppState.projects.find(p => p.id === job.projectId);
-                                    if (project) {
-                                        project.status = 'completed';
-                                    }
-                                    
-                                    const quote = AppState.fabricatorQuotes.find(q => q.id === job.quoteId);
-                                    if (quote) {
-                                        quote.status = 'completed';
-                                    }
-                                    
-                                    await supabaseClient
-                                        .from('jobs')
-                                        .update({ 
-                                            status: 'completed',
-                                            completed_at: new Date().toISOString()
-                                        })
-                                        .eq('id', jobId);
-                                    
-                                    await supabaseClient
-                                        .from('projects')
-                                        .update({ 
-                                            status: 'completed',
-                                            updated_at: new Date().toISOString()
-                                        })
-                                        .eq('id', job.projectId);
-                                    
-                                    await supabaseClient
-                                        .from('quotes')
-                                        .update({ 
-                                            status: 'completed',
-                                            updated_at: new Date().toISOString()
-                                        })
-                                        .eq('id', job.quoteId);
-                                }
-                                
-                                utils.showNotification(`Progresso atualizado para ${progress}% em "${job.projectName}".`, 'success');
-                                app.updateUI();
-                            } catch (error) {
-                                console.error('Erro ao atualizar progresso:', error);
-                                utils.showNotification('Erro ao atualizar progresso no servidor.', 'error');
-                            }
-                        } else {
-                            utils.showNotification('Por favor, digite uma porcentagem válida entre 0 e 100.', 'error');
-                        }
-                    }
-                }
-            },
+    const job = AppState.fabricatorJobs.find(j => j.id === jobId);
+    if (!job) {
+        utils.showNotification('Trabalho não encontrado.', 'error');
+        return;
+    }
+
+    const newProgress = prompt(`Digite a nova porcentagem de progresso para "${job.projectName}":`, job.progress);
+    if (newProgress === null) return;
+
+    const progress = parseInt(newProgress);
+    if (isNaN(progress) || progress < 0 || progress > 100) {
+        utils.showNotification('Por favor, digite uma porcentagem válida entre 0 e 100.', 'error');
+        return;
+    }
+
+    try {
+        // Atualiza o progresso no job
+        const { error: jobError } = await supabaseClient
+            .from('jobs')
+            .update({ 
+                progress: progress,
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', jobId)
+            .eq('fabricator_id', AppState.currentUser.id); // segurança extra
+
+        if (jobError) throw jobError;
+
+        // Se atingiu 100%, marca como concluído
+        if (progress === 100) {
+            const { error: completeError } = await supabaseClient
+                .from('jobs')
+                .update({ 
+                    status: 'completed',
+                    completed_date: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                })
+                .eq('id', jobId)
+                .eq('fabricator_id', AppState.currentUser.id);
+
+            if (completeError) throw completeError;
+
+            // Atualiza o projeto relacionado
+            const { error: projectError } = await supabaseClient
+                .from('projects')
+                .update({ 
+                    status: 'completed',
+                    updated_at: new Date().toISOString()
+                })
+                .eq('id', job.projectId)
+                .eq('client_id', job.clientId); // só o cliente dono pode alterar
+
+            if (projectError) throw projectError;
+
+            // Atualiza a cotação relacionada
+            const { error: quoteError } = await supabaseClient
+                .from('quotes')
+                .update({ 
+                    status: 'completed',
+                    updated_at: new Date().toISOString()
+                })
+                .eq('id', job.quoteId)
+                .eq('fabricator_id', AppState.currentUser.id);
+
+            if (quoteError) throw quoteError;
+
+            // Atualiza o objeto local
+            job.status = 'completed';
+            job.completedDate = new Date().toISOString().split('T')[0];
+
+            const project = AppState.projects.find(p => p.id === job.projectId);
+            if (project) project.status = 'completed';
+
+            const quote = AppState.fabricatorQuotes.find(q => q.id === job.quoteId);
+            if (quote) quote.status = 'completed';
+        }
+
+        // Atualiza o progresso no objeto local
+        job.progress = progress;
+
+        utils.showNotification(`Progresso atualizado para ${progress}% em "${job.projectName}".`, 'success');
+        
+        // Recarrega os dados do fabricante para atualizar as abas
+        await app.loadFabricatorJobs();
+        // app.loadFabricatorTabContent(app.getCurrentFabricatorTab()); // função auxiliar
+
+    } catch (error) {
+        console.error('Erro ao atualizar progresso:', error);
+        utils.showNotification(`Erro: ${error.message}`, 'error');
+    }
+},
             
-            // ===== FUNÇÕES PARA O CHAT =====
             openChatModal: async (projectId) => {
-                console.log('Abrindo chat para projeto:', projectId, 'Usuário:', AppState.currentUser);
-                
                 AppState.chatMessages = [];
                 const chatContainer = document.getElementById('chat-messages');
                 if (chatContainer) {
@@ -6863,13 +7054,9 @@ window.selectPlan = function(plan, event) {
                 let acceptedQuote = null;
                 
                 if (AppState.currentUser.type === 'client') {
-                    console.log('Cliente abrindo chat...');
-                    
                     project = AppState.projects.find(p => p.id === projectId);
                     
                     if (!project) {
-                        console.log('Projeto não encontrado no estado local, buscando no Supabase...');
-                        
                         try {
                             const { data: projectData, error } = await supabaseClient
                                 .from('projects')
@@ -6878,7 +7065,6 @@ window.selectPlan = function(plan, event) {
                                 .single();
                                 
                             if (error || !projectData) {
-                                console.error('Projeto não encontrado no Supabase:', error);
                                 utils.showNotification('Projeto não encontrado.', 'error');
                                 return;
                             }
@@ -6929,16 +7115,11 @@ window.selectPlan = function(plan, event) {
                     acceptedQuote = project.quotes.find(q => q.status === 'accepted');
                     
                     if (!acceptedQuote) {
-                        console.log('Nenhum orçamento aceito encontrado para o projeto:', project);
                         utils.showNotification('O chat será liberado após aceitar um orçamento do fabricante.', 'warning');
                         return;
                     }
                     
-                    console.log('Cliente pode acessar chat - Orçamento aceito encontrado:', acceptedQuote);
-                    
                 } else if (AppState.currentUser.type === 'fabricator') {
-                    console.log('Fabricante abrindo chat...');
-                    
                     const job = AppState.fabricatorJobs.find(j => j.projectId === projectId && j.fabricatorId === AppState.currentUser.id);
                     
                     if (!job) {
@@ -6951,7 +7132,6 @@ window.selectPlan = function(plan, event) {
                                 .single();
                                 
                             if (jobError || !jobData) {
-                                console.log('Fabricante não tem job ativo para este projeto:', jobError);
                                 utils.showNotification('Você não tem um trabalho ativo para este projeto.', 'warning');
                                 return;
                             }
@@ -6970,7 +7150,6 @@ window.selectPlan = function(plan, event) {
                             .single();
                             
                         if (error || !projectData) {
-                            console.error('Projeto não encontrado no Supabase:', error);
                             utils.showNotification('Projeto não encontrado.', 'error');
                             return;
                         }
@@ -7010,8 +7189,6 @@ window.selectPlan = function(plan, event) {
                             project.quotes.push(acceptedQuote);
                         }
                         
-                        console.log('Projeto carregado para fabricante:', project);
-                        
                     } catch (error) {
                         console.error('Erro ao carregar projeto do fabricante:', error);
                         utils.showNotification('Erro ao carregar informações do projeto.', 'error');
@@ -7020,28 +7197,22 @@ window.selectPlan = function(plan, event) {
                 }
                 
                 if (!project) {
-                    console.error('Projeto não encontrado após todas as tentativas');
                     utils.showNotification('Projeto não encontrado.', 'error');
                     return;
                 }
                 
-                console.log('Tudo OK para abrir chat:', { project, acceptedQuote });
-                
                 AppState.currentChatProject = project;
                 
                 let otherPartyName = '';
-                let otherPartyId = null;
                 
                 if (AppState.currentUser.type === 'client') {
                     if (acceptedQuote) {
                         otherPartyName = acceptedQuote.fabricatorName;
-                        otherPartyId = acceptedQuote.fabricatorId;
                     } else {
                         otherPartyName = 'Fabricante';
                     }
                 } else {
                     otherPartyName = project.clientName;
-                    otherPartyId = project.clientId;
                 }
                 
                 document.getElementById('chat-project-name').textContent = `Chat: ${project.name}`;
@@ -7189,7 +7360,6 @@ window.selectPlan = function(plan, event) {
                 }
             },
 
-            // ========== FUNÇÕES DE CONFIGURAÇÕES ==========
             openSettingsModal: async () => {
                 if (!AppState.currentUser) {
                     utils.showNotification('Você precisa estar logado.', 'error');
@@ -7223,6 +7393,7 @@ window.selectPlan = function(plan, event) {
                         clientFields.style.display = 'block';
                         document.getElementById('settings-cpf').value = profile.cpf || '';
                         document.getElementById('settings-cep').value = profile.cep || '';
+                        document.getElementById('settings-client-phone').value = profile.phone || '';
                         document.getElementById('settings-client-subtype').value = profile.client_subtype || '';
                     } else if (userType === 'fabricator') {
                         fabricatorFields.style.display = 'block';
@@ -7230,6 +7401,7 @@ window.selectPlan = function(plan, event) {
                         document.getElementById('settings-company-cep').value = profile.cep || '';
                         document.getElementById('settings-company-name').value = profile.company_name || '';
                         document.getElementById('settings-company-age').value = profile.company_age || '';
+                        document.getElementById('settings-fabricator-phone').value = profile.phone || '';
 
                         const areas = profile.fabrication_areas || [];
                         document.querySelectorAll('#settings-fabrication-areas input[type="checkbox"]').forEach(cb => {
@@ -7260,12 +7432,14 @@ window.selectPlan = function(plan, event) {
                     if (userType === 'client') {
                         updates.cpf = document.getElementById('settings-cpf').value;
                         updates.cep = document.getElementById('settings-cep').value;
+                        updates.phone = document.getElementById('settings-client-phone').value;
                         updates.client_subtype = document.getElementById('settings-client-subtype').value;
                     } else if (userType === 'fabricator') {
                         updates.cnpj = document.getElementById('settings-cnpj').value;
                         updates.cep = document.getElementById('settings-company-cep').value;
                         updates.company_name = document.getElementById('settings-company-name').value;
                         updates.company_age = document.getElementById('settings-company-age').value;
+                        updates.phone = document.getElementById('settings-fabricator-phone').value;
 
                         const areas = [];
                         document.querySelectorAll('#settings-fabrication-areas input[type="checkbox"]:checked').forEach(cb => {
@@ -7294,13 +7468,70 @@ window.selectPlan = function(plan, event) {
                     console.error('Erro ao salvar configurações:', error);
                     utils.showNotification('Erro ao salvar alterações: ' + error.message, 'error');
                 }
-            }
+            },
+
+            openRatingModal: (targetType, targetId, projectId) => {
+                document.getElementById('rating-target-id').value = targetId;
+                document.getElementById('rating-project-id').value = projectId;
+                document.getElementById('rating-target-type').value = targetType;
+                
+                document.querySelectorAll('#rating-stars-input input').forEach(r => r.checked = false);
+                document.getElementById('rating-comment').value = '';
+                
+                const title = targetType === 'fabricator' ? 'Avaliar Fabricante' : 'Avaliar Cliente';
+                document.getElementById('rating-modal-title').textContent = title;
+                
+                utils.openModal('rating-modal');
+            },
+
+            handleRatingSubmit: async () => {
+    const ratedUserId = document.getElementById('rating-target-id').value;
+    const projectId = document.getElementById('rating-project-id').value;
+    const targetType = document.getElementById('rating-target-type').value; // 'fabricator' ou 'client'
+    const ratingInput = document.querySelector('input[name="rating"]:checked');
+
+    if (!ratingInput) {
+        utils.showNotification('Por favor, selecione uma nota de 1 a 5 estrelas.', 'error');
+        return;
+    }
+
+    const rating = parseInt(ratingInput.value);
+    const comment = document.getElementById('rating-comment').value;
+
+    try {
+        await submitRating(AppState.currentUser.id, ratedUserId, projectId, rating, comment);
+        utils.closeAllModals();
+        utils.showNotification('Avaliação enviada com sucesso!', 'success');
+
+        // Recarrega os dados para atualizar as abas
+        if (AppState.currentUser.type === 'client') {
+            await loadClientProjectsFromSupabase();
+            app.loadClientTabContent('completed');
+        } else {
+            await app.loadFabricatorJobs();
+            app.loadFabricatorTabContent('completed');
+        }
+    } catch (error) {
+        console.error('Erro ao enviar avaliação:', error);
+        utils.showNotification(`Erro: ${error.message}`, 'error');
+    }
+},
         };
 
         // ==================== OUVINTES DE EVENTO DA JANELA ====================
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 utils.closeAllModals();
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            const closeButton = e.target.closest('.close-modal');
+            if (closeButton) {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = 'auto';
             }
         });
 
