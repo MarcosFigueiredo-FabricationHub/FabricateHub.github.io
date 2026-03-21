@@ -809,6 +809,27 @@
             white-space: nowrap;
         }
 
+        /* Verified Badge Styles */
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 6px;
+            background-color: #054FF7;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 0.7rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            vertical-align: middle;
+        }
+
+        .verified-badge i {
+            font-size: 0.8rem;
+            color: white;
+        }
+
         /* Conteúdo da Página */
         .page-container {
             min-height: calc(100vh - 200px);
@@ -2168,7 +2189,7 @@
         .rating-stars {
             display: inline-flex;
             gap: 2px;
-            color: #fbbf24;
+            color: #da3a37;
         }
         .rating-stars i {
             font-size: 0.9rem;
@@ -2196,7 +2217,7 @@
         .rating-input label:hover,
         .rating-input label:hover ~ label,
         .rating-input input:checked ~ label {
-            color: #fbbf24;
+            color: #da3a37;
         }
     </style>
 </head>
@@ -2221,7 +2242,7 @@
                                 <i class="fas fa-check"></i>
                             </div>
                             <div>
-                                <strong>Orçamentos em até 48h!</strong><br>
+                                <strong>Orçamentos em até 72h!</strong><br>
                                 Receba múltiplas propostas rapidamente
                             </div>
                         </div>
@@ -2413,21 +2434,21 @@
         <div class="pricing-card" onclick="selectPlan('professional', event)">
             <div class="pricing-header">
                 <h4>Profissional</h4>
-                <div class="pricing-price">R$ 100<span>/mês</span></div>
+                <div class="pricing-price">R$ 99<span>/mês</span></div>
             </div>
             <div class="pricing-body">
                 <ul class="pricing-features">
                     <li><i class="fas fa-check"></i> Acesso a todos os projetos</li>
-                    <li><i class="fas fa-check"></i> Enviar até 30 orçamentos</li>
+                    <li><i class="fas fa-check"></i> Enviar até 40 orçamentos</li>
                     <li><i class="fas fa-check"></i> Até 20 projetos por mês</li>
                     <li><i class="fas fa-check"></i> Taxa de R$ 19 por projeto</li>
                 </ul>
             </div>
         </div>
-        <div class="pricing-card" onclick="selectPlan('enterprise', event)">
+        <div class="pricing-card" onclick="selectPlan('Fabricante', event)">
             <div class="pricing-header">
-                <h4>Enterprise</h4>
-                <div class="pricing-price">R$ 199<span>/mês</span></div>
+                <h4>Fabricante</h4>
+                <div class="pricing-price">R$ 249<span>/mês</span></div>
             </div>
             <div class="pricing-body">
                 <ul class="pricing-features">
@@ -2577,12 +2598,12 @@
         <div class="pricing-card">
             <div class="pricing-header">
                 <h4>Profissional</h4>
-                <div class="pricing-price">R$ 100<span>/mês</span></div>
+                <div class="pricing-price">R$ 99<span>/mês</span></div>
             </div>
             <div class="pricing-body">
                 <ul class="pricing-features">
                     <li><i class="fas fa-check"></i> Acesso a todos os projetos</li>
-                    <li><i class="fas fa-check"></i> Enviar até 30 orçamentos</li>
+                    <li><i class="fas fa-check"></i> Enviar até 40 orçamentos</li>
                     <li><i class="fas fa-check"></i> Até 20 projetos por mês</li>
                     <li><i class="fas fa-check"></i> Taxa de R$ 19 por projeto</li>
                 </ul>
@@ -2590,11 +2611,11 @@
             </div>
         </div>
 
-        <!-- Plano Enterprise -->
+        <!-- Plano Fabricante -->
         <div class="pricing-card">
             <div class="pricing-header">
-                <h4>Enterprise</h4>
-                <div class="pricing-price">R$ 199<span>/mês</span></div>
+                <h4>Fabricante</h4>
+                <div class="pricing-price">R$ 249<span>/mês</span></div>
             </div>
             <div class="pricing-body">
                 <ul class="pricing-features">
@@ -2636,12 +2657,15 @@
                 </nav>
                 <div class="header-actions">
                     <div class="user-info">
-                        <div class="user-avatar" id="user-avatar">JD</div>
-                        <div>
-                            <div id="user-name">João Designer</div>
-                            <div class="user-type-badge" id="user-type-badge">Cliente</div>
-                        </div>
-                    </div>
+    <div class="user-avatar" id="user-avatar">JD</div>
+    <div>
+        <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+            <div id="user-name">João Designer</div>
+            <span id="verified-badge" class="verified-badge" style="display: none;"><i class="fas fa-industry"></i></span>
+        </div>
+        <div class="user-type-badge" id="user-type-badge">Cliente</div>
+    </div>
+</div>
                     <button class="btn btn-outline btn-small" id="settings-btn" style="padding: 8px 12px;">
                         <i class="fas fa-cog"></i>
                     </button>
@@ -2844,9 +2868,9 @@
                                 </select>
                             </div>
                         </div>
-                        <table>
+                         <table>
                             <thead>
-                                <tr>
+                                 <tr>
                                     <th>Nome do Projeto</th>
                                     <th>Data</th>
                                     <th>Método</th>
@@ -2854,12 +2878,12 @@
                                     <th>Status</th>
                                     <th>Progresso</th>
                                     <th>Ações</th>
-                                </tr>
+                                 </tr>
                             </thead>
                             <tbody id="client-projects-table">
                                 <!-- Projetos do cliente serão populados aqui por JavaScript -->
                             </tbody>
-                        </table>
+                         </table>
                     </div>
                 </div>
                 
@@ -2876,9 +2900,9 @@
                                 </select>
                             </div>
                         </div>
-                        <table>
+                         <table>
                             <thead>
-                                <tr>
+                                 <tr>
                                     <th>Nome do Projeto</th>
                                     <th>Data</th>
                                     <th>Método</th>
@@ -2886,12 +2910,12 @@
                                     <th>Status</th>
                                     <th>Progresso</th>
                                     <th>Ações</th>
-                                </tr>
+                                 </tr>
                             </thead>
                             <tbody id="client-pending-table">
                                 <!-- Projetos com status 'pending' serão populados aqui -->
                             </tbody>
-                        </table>
+                         </table>
                     </div>
                 </div>
                 
@@ -2908,9 +2932,9 @@
                                 </select>
                             </div>
                         </div>
-                        <table>
+                         <table>
                             <thead>
-                                <tr>
+                                 <tr>
                                     <th>Nome do Projeto</th>
                                     <th>Data</th>
                                     <th>Método</th>
@@ -2918,12 +2942,12 @@
                                     <th>Status</th>
                                     <th>Progresso</th>
                                     <th>Ações</th>
-                                </tr>
+                                 </tr>
                             </thead>
                             <tbody id="client-active-table">
                                 <!-- Projetos com status 'in-progress' ou 'accepted' serão populados aqui -->
                             </tbody>
-                        </table>
+                         </table>
                     </div>
                 </div>
                 
@@ -2940,9 +2964,9 @@
                                 </select>
                             </div>
                         </div>
-                        <table>
+                         <table>
                             <thead>
-                                <tr>
+                                 <tr>
                                     <th>Nome do Projeto</th>
                                     <th>Data</th>
                                     <th>Método</th>
@@ -2950,12 +2974,12 @@
                                     <th>Status</th>
                                     <th>Progresso</th>
                                     <th>Ações</th>
-                                </tr>
+                                 </tr>
                             </thead>
                             <tbody id="client-completed-table">
                                 <!-- Projetos com status 'completed' serão populados aqui -->
                             </tbody>
-                        </table>
+                         </table>
                     </div>
                 </div>
             </div>
@@ -3032,41 +3056,41 @@
                                 </select>
                             </div>
                         </div>
-                        <table>
+                         <table>
                             <thead>
-                                <tr>
+                                 <tr>
                                     <th>Projeto</th>
                                     <th>Cliente (Avaliação)</th>
                                     <th>Método</th>
                                     <th>Material</th>
                                     <th>Prazo</th>
                                     <th>Ações</th>
-                                </tr>
+                                 </tr>
                             </thead>
                             <tbody id="fabricator-new-requests-table">
                                 <!-- Novas solicitações serão populadas aqui -->
                             </tbody>
-                        </table>
+                         </table>
                     </div>
                 </div>
                 
                 <div id="fabricator-quotes" class="tab-content">
                     <div class="table-container">
-                        <table>
+                         <table>
                             <thead>
-                                <tr>
+                                 <tr>
                                     <th>Projeto</th>
                                     <th>Cliente</th>
                                     <th>Valor do Orçamento</th>
                                     <th>Data de Envio</th>
                                     <th>Status</th>
                                     <th>Ações</th>
-                                </tr>
+                                 </tr>
                             </thead>
                             <tbody id="fabricator-quotes-table">
                                 <!-- Orçamentos enviados serão populados aqui por JavaScript -->
                             </tbody>
-                        </table>
+                         </table>
                     </div>
                 </div>
                 
@@ -3082,41 +3106,41 @@
                                 </select>
                             </div>
                         </div>
-                        <table>
+                         <table>
                             <thead>
-                                <tr>
+                                 <tr>
                                     <th>Projeto</th>
                                     <th>Cliente</th>
                                     <th>Progresso</th>
                                     <th>Data Entrega</th>
                                     <th>Status</th>
                                     <th>Ações</th>
-                                </tr>
+                                 </tr>
                             </thead>
                             <tbody id="fabricator-active-jobs-table">
                                 <!-- Trabalhos ativos serão populados aqui -->
                             </tbody>
-                        </table>
+                         </table>
                     </div>
                 </div>
                 
                 <div id="fabricator-completed" class="tab-content">
                     <div class="table-container">
-                        <table>
+                         <table>
                             <thead>
-                                <tr>
+                                 <tr>
                                     <th>Projeto</th>
                                     <th>Cliente</th>
                                     <th>Data de Conclusão</th>
                                     <th>Valor</th>
                                     <th>Avaliação</th>
                                     <th>Ações</th>
-                                </tr>
+                                 </tr>
                             </thead>
                             <tbody id="fabricator-completed-table">
                                 <!-- Trabalhos concluídos serão populados aqui por JavaScript -->
                             </tbody>
-                        </table>
+                         </table>
                     </div>
                 </div>
             </div>
@@ -3305,22 +3329,22 @@
                     <div class="pricing-card">
                         <div class="pricing-header">
                             <h4>Profissional</h4>
-                            <div class="pricing-price">R$ 100<span>/mês</span></div>
+                            <div class="pricing-price">R$ 99<span>/mês</span></div>
                         </div>
                         <div class="pricing-body">
                             <ul class="pricing-features">
                                 <li><i class="fas fa-check"></i> Acesso a todos os projetos</li>
-                                <li><i class="fas fa-check"></i> Enviar até 30 orçamentos</li>
+                                <li><i class="fas fa-check"></i> Enviar até 40 orçamentos</li>
                                 <li><i class="fas fa-check"></i> Até 20 projetos por mês</li>
                                 <li><i class="fas fa-check"></i> Taxa de R$ 19 por projeto</li>
                             </ul>
                         </div>
                     </div>
-                    <!-- Plano Enterprise -->
+                    <!-- Plano Fabricante -->
                     <div class="pricing-card">
                         <div class="pricing-header">
-                            <h4>Enterprise</h4>
-                            <div class="pricing-price">R$ 199<span>/mês</span></div>
+                            <h4>Fabricante</h4>
+                            <div class="pricing-price">R$ 249<span>/mês</span></div>
                         </div>
                         <div class="pricing-body">
                             <ul class="pricing-features">
@@ -3337,43 +3361,220 @@
         </div>
 
         <!-- Página: Requisitos de Arquivo -->
-        <div id="file-requirements-page" class="page-container">
-            <div class="container">
-                <div class="page-title">
-                    <h1>Requisitos de Arquivo</h1>
-                    <div class="page-subtitle">Formatos aceitos e recomendações</div>
-                </div>
-                <div class="card">
-                    <p style="color: var(--light-gray);">[Lista de formatos aceitos: STL, STEP, IGES, DXF, DWG, SLDPRT, 3DM, OBJ, PDF. Recomendações de escala, unidades, etc.]</p>
-                </div>
-            </div>
+<div id="file-requirements-page" class="page-container">
+    <div class="container">
+        <div class="page-title">
+            <h1>Requisitos de Arquivo</h1>
+            <div class="page-subtitle">Formatos aceitos e recomendações</div>
         </div>
+        <div class="card" style="color: #ffffff;">
+            <!-- Removi a tag <p> desnecessária e o estilo inline conflitante -->
+            
+            <h2>Diretrizes Técnicas para Envio de Arquivos</h2>
+
+            <p>Para garantir a precisão, a confidencialidade e a agilidade na cotação do seu projeto, estabelecemos algumas diretrizes técnicas para o envio de arquivos. Nosso ambiente digital é otimizado para receber os principais formatos utilizados no mercado de engenharia e manufatura.</p>
+
+            <h3>1. Formatos Aceitos</h3>
+            <p>Nossos fabricantes parceiros trabalham com alta interoperabilidade para se adequar ao seu fluxo de trabalho. São aceitos arquivos nos seguintes formatos:</p>
+
+             <table>
+                <thead>
+                     <tr>
+                        <th>Categoria</th>
+                        <th>Formatos</th>
+                     </tr>
+                </thead>
+                <tbody>
+                     <tr>
+                        <td><strong>Sólidos e Superfícies</strong></td>
+                        <td>STEP (.stp, .step), IGES (.igs, .iges)</td>
+                     </tr>
+                     <tr>
+                        <td><strong>Manufatura Aditiva</strong></td>
+                        <td>STL (.stl)</td>
+                     </tr>
+                     <tr>
+                        <td><strong>CAD Nativo</strong></td>
+                        <td>SLDPRT (SolidWorks), 3DM (Rhino)</td>
+                     </tr>
+                     <tr>
+                        <td><strong>Desenho Técnico 2D</strong></td>
+                        <td>DWG, DXF, PDF (para cotas e anotações)</td>
+                     </tr>
+                     <tr>
+                        <td><strong>Outros</strong></td>
+                        <td>OBJ (.obj)</td>
+                     </tr>
+                </tbody>
+             </table>
+
+            <h3>2. Especificações Técnicas e Boas Práticas</h3>
+            <p>Para assegurar a máxima fidelidade na análise e orçamento, recomendamos a observação dos seguintes pontos:</p>
+
+            <ul>
+                <li><strong>Unidades:</strong> Especifique claramente a unidade dimensional utilizada no projeto (milímetros, centímetros ou polegadas). Quando possível, configure o arquivo para exportação em <strong>milímetros</strong>.</li>
+                <li><strong>Escala:</strong> Arquivos 2D (DXF, DWG, PDF) devem ser enviados na <strong>escala 1:1</strong> (sem fator de escala aplicado na folha).</li>
+                <li><strong>Geometria:</strong> Para arquivos 3D, priorize o envio de corpos sólidos ou superfícies "impermeáveis" (watertight), especialmente para processos de manufatura aditiva.</li>
+            </ul>
+
+            <h3>3. Limites e Transferência</h3>
+            <p>Otimizamos nossa plataforma para receber projetos de alta complexidade de forma segura:</p>
+
+            <ul>
+                <li><strong>Tamanho Máximo:</strong> O sistema aceita arquivos de até <strong>50MB</strong> por projeto.</li>
+                <li><strong>Compactação:</strong> Caso o projeto contenha múltiplos arquivos ou exceda o limite de 50MB, é possível enviá-los compactados em formato <strong>.ZIP</strong> ou <strong>.RAR</strong>.</li>
+                <li><strong>Nomenclatura:</strong> Evite caracteres especiais (ç, ã, @, #, etc.) nos nomes dos arquivos para prevenir erros de leitura.</li>
+            </ul>
+
+            <h3>4. Segurança e Conformidade (LGPD)</h3>
+            <p>A confidencialidade do seu projeto é nossa prioridade.</p>
+
+            <ul>
+                <li><strong>Proteção de Dados:</strong> Todo o ambiente de upload e armazenamento é regido pela <strong>Lei Geral de Proteção de Dados (LGPD)</strong>. Seus dados e propriedade intelectual são tratados com o mais alto nível de sigilo.</li>
+                <li><strong>Termo de Responsabilidade:</strong> Para projetos que envolvam desenvolvimento proprietário ou terceirização de manufatura, os fabricantes cadastrados assinaram um <strong>Termo de Confidencialidade e Responsabilidade Técnica</strong>, assegurando a proteção legal para ambas as partes.</li>
+            </ul>
+
+            <h3>Dúvidas?</h3>
+            <p>Nosso suporte está à disposição para auxiliar na validação dos seus arquivos antes do envio para cotação. Caso enfrente dificuldades com o upload ou formatação, entre em contato.</p>
+        </div>
+    </div>
+</div>
 
         <!-- Página: Guia de Materiais -->
         <div id="material-guide-page" class="page-container">
-            <div class="container">
-                <div class="page-title">
-                    <h1>Guia de Materiais</h1>
-                    <div class="page-subtitle">Materiais comuns e suas aplicações</div>
-                </div>
-                <div class="card">
-                    <p style="color: var(--light-gray);">[Descrição de materiais: alumínio, aço, aço inoxidável, latão, plásticos, madeira, etc.]</p>
-                </div>
-            </div>
+    <div class="container">
+        <div class="page-title">
+            <h1>Materiais e Aplicações</h1>
+            <div class="page-subtitle">Versatilidade para atender a indústria brasileira</div>
         </div>
+        <div class="card" style="color: #ffffff;">
+            <h2>Ampla gama de materiais para soluções personalizadas</h2>
+
+            <p>Contamos com uma rede de fabricantes qualificados e tecnologia de ponta para processar os mais diversos tipos de materiais, desde metais ferrosos e não ferrosos até polímeros e madeira. A experiência dos fabricantes presentes na FabricateHub abrange as necessidades típicas da indústria nacional, garantindo a escolha ideal para cada aplicação.</p>
+
+            <h3>Metais Ferrosos</h3>
+            <p>Amplamente utilizados na construção mecânica, estruturas e componentes que exigem resistência mecânica e durabilidade.</p>
+            <ul>
+                <li><strong>Aço Carbono:</strong> Ideal para estruturas, peças automotivas, implementos agrícolas e máquinas industriais. Disponível em diversas ligas e acabamentos.</li>
+                <li><strong>Aço Inoxidável (304/316):</strong> Alta resistência à corrosão, utilizado em indústria alimentícia, farmacêutica, química, equipamentos marítimos e arquitetura.</li>
+            </ul>
+
+            <h3>Metais Não Ferrosos</h3>
+            <p>Soluções para aplicações que exigem leveza, condutividade ou resistência específica.</p>
+            <ul>
+                <li><strong>Alumínio (liga 5052, 6061, 7075):</strong> Leveza, boa resistência mecânica e excelente acabamento. Aplicações em aeroespacial, transporte, eletrônica, esquadrias e peças de design.</li>
+                <li><strong>Latão e Bronze:</strong> Ligas de cobre com características anticorrosivas e boa usinabilidade. Utilizados em conexões, válvulas, componentes elétricos, ornamentais e mancais.</li>
+                <li><strong>Cobre:</strong> Alta condutividade elétrica e térmica, empregado em barramentos, dissipadores, contatos elétricos e trocadores de calor.</li>
+            </ul>
+
+            <h3>Polímeros e Compósitos</h3>
+            <p>Alternativas versáteis para redução de peso, isolamento elétrico e resistência química.</p>
+            <ul>
+                <li><strong>Plásticos de Engenharia:</strong> Nylon, Poliacetal (POM), Polipropileno (PP), Policarbonato (PC), ABS, PEAD, PTFE (Teflon®), entre outros. Aplicações em buchas, engrenagens, carcaças, componentes elétricos e hidráulicos.</li>
+                <li><strong>Resinas Fotopolimerizáveis:</strong> Utilizadas em impressão 3D de alta resolução para prototipagem rápida, modelos conceituais, joalheria e odontologia. Excelente acabamento superficial e precisão.</li>
+            </ul>
+
+            <h3>Materiais à Base de Madeira</h3>
+            <p>Soluções sustentáveis e de alta resistência para movelaria, modelos e formas.</p>
+            <ul>
+                <li><strong>Madeira Maciça:</strong> Pinus, Mogno, Imbuia, Cumaru (conforme disponibilidade). Utilizada em móveis de alto padrão, revestimentos e peças decorativas.</li>
+                <li><strong>Compensados e MDF:</strong> Painéis de madeira reconstituída, ideais para modelos de fundição (padrões), maquetes, displays, móveis planejados e estruturas leves. Oferecem estabilidade dimensional e facilidade de usinagem.</li>
+            </ul>
+
+            <h3>Outros Materiais e Possibilidades</h3>
+            <p>Além dos citados, temos capacidade de trabalhar com uma infinidade de outros materiais, mediante disponibilidade deste material nos fabricantes. Exemplos incluem:</p>
+            <ul>
+                <li><strong>Materiais Especiais:</strong> Titânio, Inconel, zamac, elastômeros (borrachas), poliuretano, cerâmica técnica.</li>
+                <li><strong>Materiais Fornecidos pelo Cliente:</strong> Caso sua indústria possua matéria-prima específica ou desenvolva ligas proprietárias, podemos processá-las respeitando todas as especificações técnicas.</li>
+            </ul>
+
+            <h3>Aplicações Industriais</h3>
+            <p>Nossa experiência abrange diversos setores da indústria brasileira:</p>
+            <ul>
+                <li><strong>Automotivo e Agrícola:</strong> Peças estruturais, suportes, componentes de suspensão, implementos.</li>
+                <li><strong>Óleo e Gás:</strong> Flanges, conexões, componentes submarinos (aço inoxidável e ligas especiais).</li>
+                <li><strong>Alimentício e Farmacêutico:</strong> Equipamentos em aço inoxidável, peças de plástico de engenharia (aprovadas para contato).</li>
+                <li><strong>Construção Civil e Arquitetura:</strong> Esquadrias de alumínio, painéis perfurados, estruturas metálicas, revestimentos em madeira.</li>
+                <li><strong>Eletroeletrônico:</strong> Dissipadores, carcaças, conectores, guias de cabos.</li>
+                <li><strong>Prototipagem e Design:</strong> Modelos em resina, peças conceituais em ABS, maquetes em MDF.</li>
+            </ul>
+
+            <h3>Consultoria Técnica</h3>
+            <p>As equipes de engenharia das indústrias parceiras FabricateHub estão preparadas para auxiliar na escolha do material mais adequado ao seu projeto, considerando fatores como resistência mecânica, custo-benefício, acabamento, resistência química e térmica, além das condições de usinagem. Trabalhamos em conjunto com sua indústria para garantir que cada peça atenda rigorosamente às especificações.</p>
+
+            <p><em>Envie seu projeto para cotação com nossos fabricantes parceiros – temos a solução em materiais de acordo com a sua necessidade.</em></p>
+        </div>
+    </div>
+</div>
 
         <!-- Página: Central de Ajuda -->
         <div id="help-center-page" class="page-container">
-            <div class="container">
-                <div class="page-title">
-                    <h1>Central de Ajuda</h1>
-                    <div class="page-subtitle">Perguntas frequentes e suporte</div>
-                </div>
-                <div class="card">
-                    <p style="color: var(--light-gray);">[FAQ e formulário de contato]</p>
-                </div>
-            </div>
+    <div class="container">
+        <div class="page-title">
+            <h1>Central de ajuda</h1>
+            <div class="page-subtitle">Canais de comunicação e atendimento</div>
         </div>
+        
+        <div class="card" style="color: #ffffff;">
+            
+            <h2>Estamos Prontos para Atender sua Demanda</h2>
+            
+            <p>Sua indústria precisa de agilidade, e nós entregamos. No caso de dúvidas ou considerações em relação a plataforma da FabricateHub, contestação em relação as políticas da plataforma ou práticas dos fabricantes, nossa equipe está à disposição. Abaixo estão todos os canais para falar conosco.</p>
+
+            <h3>📞 Canais de Atendimento</h3>
+            
+             <table>
+                <thead>
+                     <tr>
+                        <th>Canal</th>
+                        <th>Informação</th>
+                        <th>Disponibilidade</th>
+                     </tr>
+                </thead>
+                <tbody>
+                     <tr>
+                        <td><strong>WhatsApp</strong></td>
+                        <td>(41) 98438-3148</td>
+                        <td><span style="color: #da3a37;">●</span> <strong>24/7</strong> (dias úteis, finais de semana e feriados)</td>
+                     </tr>
+                     <tr>
+                        <td><strong>E-mail</strong></td>
+                        <td>marcosdosanjos@outlook.com</td>
+                        <td>Resposta em poucas horas em horário comercial</td>
+                     </tr>
+                     <tr>
+                        <td><strong>Instagram</strong></td>
+                        <td>@fabricate_hub</td>
+                        <td>Acompanhamento de cases e novidades técnicas</td>
+                     </tr>
+                </tbody>
+             </table>
+
+            <h3>👤 Responsável Técnico</h3>
+            <p>Todo o atendimento é realizado diretamente por:</p>
+            <p style="font-size: 1.2em; background: rgba(255,255,255,0.1); padding: 15px; border-left: 4px solid #da3a37;">
+                <strong>Marcos dos Anjos Figueiredo</strong><br>
+                <span style="font-size: 0.9em;">Responsável pela integração e funcionamento da plataforma.</span>
+            </p>
+
+            <h3>⏱️ Horário de Funcionamento</h3>
+            <ul>
+                <li><strong>WhatsApp:</strong> Atendimento <strong>todos os dias, 24 horas</strong>.</li>
+                <li><strong>E-mail:</strong> De segunda a sexta, das 8h às 18h.</li>
+                <li><strong>Urgências:</strong> Para assuntos urgentes, prefira o WhatsApp para uma tratativa mais ágil.</li>
+            </ul>
+
+            <h3>🔒 Sigilo e Confidencialidade</h3>
+            <p>Todo contato comercial e técnico é protegido por nossa política de confidencialidade. Informações de projetos, desenhos e estratégias são tratadas com total sigilo, em conformidade com a LGPD. O primeiro contato já estabelece um ambiente seguro para discutirmos sua demanda.</p>
+
+            <hr style="border-color: rgba(255,255,255,0.2); margin: 30px 0;">
+
+            <p style="text-align: center; font-size: 1.1em;">
+                <strong>Entre em contato agora mesmo pelo <a href="https://wa.me/5541984383148" style="color: #da3a37; text-decoration: none;">WhatsApp</a> ou envie um e-mail para <a href="mailto:marcosdosanjos@outlook.com" style="color: #da3a37; text-decoration: none;">marcosdosanjos@outlook.com</a>.</strong><br>
+            </p>
+        </div>
+    </div>
+</div>
 
         <!-- Página: Torne-se um Parceiro -->
         <div id="become-partner-page" class="page-container">
@@ -3929,7 +4130,7 @@
                         <h3>Para Fabricantes</h3>
                         <ul>
                             <li><a id="become-partner-link">Torne-se um Parceiro</a></li>
-                            <li><a class="nav-link" data-page="fabricator">Painel do Fabricante</a></li>
+                            <li><a id="nav-fabricator" class="nav-link" data-page="fabricator-page">Painel do Fabricante</a></li>
                             <li><a id="capabilities-link">Verificação de Capacidade</a></li>
                             <li><a id="pricing-guidelines-link">Diretrizes de Preços</a></li>
                             <li><a id="manufacturer-resources-link">Recursos</a></li>
@@ -4155,14 +4356,16 @@
                         id: data.user.id,
                         name: newProfile?.name || data.user.email.split('@')[0],
                         email: data.user.email,
-                        type: newProfile?.user_type || 'client'
+                        type: newProfile?.user_type || 'client',
+                        is_verified: false
                     };
                 } else if (profile) {
                     currentUser = {
                         id: data.user.id,
                         name: profile?.name || data.user.email.split('@')[0],
                         email: data.user.email,
-                        type: profile?.user_type || 'client'
+                        type: profile?.user_type || 'client',
+                        is_verified: profile?.is_verified || false
                     };
                 } else {
                     throw new Error('Erro ao carregar perfil do usuário');
@@ -4219,7 +4422,8 @@
                     company_age: null,
                     fabrication_areas: null,
                     file_format_preference: null,
-                    plan: null
+                    plan: null,
+                    is_verified: false
                 };
             } else if (userType === 'fabricator') {
                 const cnpj = document.getElementById('fabricator-cnpj').value;
@@ -4245,7 +4449,8 @@
                     file_format_preference: fileFormatPreference,
                     plan: plan,
                     cpf: null,
-                    client_subtype: null
+                    client_subtype: null,
+                    is_verified: (plan === 'Fabricante') // Only Fabricante plan gives verified status
                 };
 
                 if (!plan) {
@@ -4321,6 +4526,14 @@
             document.getElementById('user-name').textContent = currentUser.name;
             document.getElementById('user-avatar').textContent = currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
             document.getElementById('user-type-badge').textContent = currentUser.type === 'client' ? 'Cliente' : 'Fabricante';
+            
+            // Show verified badge if user is a fabricator and is_verified is true
+            const verifiedBadge = document.getElementById('verified-badge');
+            if (currentUser.type === 'fabricator' && currentUser.is_verified === true) {
+                verifiedBadge.style.display = 'inline-flex';
+            } else {
+                verifiedBadge.style.display = 'none';
+            }
             
             const navFabricator = document.getElementById('nav-fabricator');
             const userType = currentUser.type;
@@ -4400,6 +4613,7 @@
                     id: project.id,
                     name: project.name,
                     clientId: project.client_id,
+                    acceptedFabricatorId: project.accepted_fabricator_id,
                     clientName: AppState.currentUser.name,
                     fileName: project.file_name,
                     fileSize: project.file_size,
@@ -4431,7 +4645,7 @@
                             if (!uniqueQuotesMap.has(quote.id)) {
                                 const { data: fabricatorProfile } = await supabaseClient
                                     .from('profiles')
-                                    .select('name')
+                                    .select('name, is_verified')
                                     .eq('id', quote.fabricator_id)
                                     .single();
                                 
@@ -4439,6 +4653,7 @@
                                     id: quote.id,
                                     fabricatorId: quote.fabricator_id,
                                     fabricatorName: fabricatorProfile?.name || 'Fabricante',
+                                    fabricatorVerified: fabricatorProfile?.is_verified || false,
                                     amount: parseFloat(quote.amount),
                                     leadTime: quote.lead_time,
                                     date: quote.created_at.split('T')[0],
@@ -4538,23 +4753,13 @@
                     try {
                         const { data: profile } = await supabaseClient
                             .from('profiles')
-                            .select('name')
+                            .select('name, rating_avg')
                             .eq('id', project.client_id)
                             .single();
-                        
+
                         if (profile) {
                             clientName = profile.name;
-                        }
-                        
-                        // Obter avaliação do cliente
-                        const { data: ratings } = await supabaseClient
-                            .from('ratings')
-                            .select('rating')
-                            .eq('rated_user_id', project.client_id);
-                        
-                        if (ratings && ratings.length > 0) {
-                            const sum = ratings.reduce((acc, r) => acc + r.rating, 0);
-                            clientRating = (sum / ratings.length).toFixed(1);
+                            clientRating = profile.rating_avg ? profile.rating_avg.toFixed(1) : null;
                         }
                     } catch (error) {
                         console.error('Erro ao buscar perfil do cliente:', error);
@@ -4797,55 +5002,52 @@
 
         // ==================== FUNÇÕES DE AVALIAÇÃO ====================
         async function getUserAverageRating(userId) {
-    const { data, error } = await supabaseClient
-        .from('ratings')
-        .select('rating')
-        .eq('rated_user_id', userId);
-    if (error) {
-        console.error('Erro ao buscar média:', error);
-        return null;
-    }
-    if (!data || data.length === 0) return null;
-    const sum = data.reduce((acc, r) => acc + r.rating, 0);
-    return (sum / data.length).toFixed(1);
-}
+            const { data, error } = await supabaseClient
+                .from('ratings')
+                .select('rating')
+                .eq('rated_user_id', userId);
+            if (error) {
+                console.error('Erro ao buscar média:', error);
+                return null;
+            }
+            if (!data || data.length === 0) return null;
+            const sum = data.reduce((acc, r) => acc + r.rating, 0);
+            return (sum / data.length).toFixed(1);
+        }
 
         async function submitRating(raterId, ratedUserId, projectId, rating, comment = '') {
-    // Verifica se já existe avaliação para este projeto (opcional, evita duplicidade)
-    const { data: existing, error: checkError } = await supabaseClient
-        .from('ratings')
-        .select('id')
-        .eq('project_id', projectId)
-        .eq('rater_id', raterId)
-        .maybeSingle();
+            const { data: existing, error: checkError } = await supabaseClient
+                .from('ratings')
+                .select('id')
+                .eq('project_id', projectId)
+                .eq('rater_id', raterId)
+                .maybeSingle();
 
-    if (checkError) throw checkError;
-    if (existing) {
-        throw new Error('Você já avaliou este projeto.');
-    }
+            if (checkError) throw checkError;
+            if (existing) {
+                throw new Error('Você já avaliou este projeto.');
+            }
 
-    // Insere a avaliação
-    const { error } = await supabaseClient
-        .from('ratings')
-        .insert([{
-            rater_id: raterId,
-            rated_user_id: ratedUserId,
-            project_id: projectId,
-            rating: rating,
-            comment: comment
-        }]);
+            const { error } = await supabaseClient
+                .from('ratings')
+                .insert([{
+                    rater_id: raterId,
+                    rated_user_id: ratedUserId,
+                    project_id: projectId,
+                    rating: rating,
+                    comment: comment
+                }]);
 
-    if (error) throw error;
+            if (error) throw error;
 
-    // Atualiza a média no perfil do avaliado
-    const avg = await getUserAverageRating(ratedUserId);
-    const { error: updateError } = await supabaseClient
-        .from('profiles')
-        .update({ rating_avg: avg ? parseFloat(avg) : null })
-        .eq('id', ratedUserId);
+            const avg = await getUserAverageRating(ratedUserId);
+            const { error: updateError } = await supabaseClient
+                .from('profiles')
+                .update({ rating_avg: avg ? parseFloat(avg) : null })
+                .eq('id', ratedUserId);
 
-    if (updateError) console.error('Erro ao atualizar média no perfil:', updateError);
-}
+            if (updateError) console.error('Erro ao atualizar média no perfil:', updateError);
+        }
 
         // ==================== FUNÇÕES UTILITÁRIAS DO MARKETPLACE ====================
         const utils = {
@@ -5265,9 +5467,11 @@
                         document.getElementById(`nav-${pageName}`).classList.add('active');
                     }
                     window.scrollTo(0, 0);
-                    
-                    if (pageName === 'fabricator' && AppState.currentUser.type !== 'fabricator') {
-                        return; // bloqueia carregamento para clientes
+
+                    if (pageName === 'client' && AppState.currentUser?.type === 'client') {
+                        app.loadClientDashboard();
+                    } else if (pageName === 'fabricator' && AppState.currentUser?.type === 'fabricator') {
+                        app.loadFabricatorDashboard();
                     }
                 }
             },
@@ -5419,8 +5623,8 @@
                             <td colspan="7" style="text-align: center; padding: 40px; color: var(--light-gray);">
                                 <i class="fas fa-folder-open" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
                                 <p>Nenhum projeto encontrado nesta categoria.</p>
-                            </td>
-                        </tr>
+                             </td>
+                         </tr>
                     `;
                     return;
                 }
@@ -5461,13 +5665,11 @@
                             </div>
                         `;
                     } else if (project.status === 'completed') {
-                        // Projeto concluído: adiciona botão de avaliação para o cliente avaliar o fabricante
-                        const acceptedQuote = project.quotes.find(q => q.status === 'accepted');
-                        if (acceptedQuote) {
+                        if (project.acceptedFabricatorId) {
                             actions = `
                                 <div class="action-buttons">
-                                    <button class="btn btn-small btn-primary rate-fabricator-btn" data-project-id="${project.id}" data-fabricator-id="${acceptedQuote.fabricatorId}">
-                                        <i class="fas fa-star"></i> Avaliar Fabricante
+                                    <button class="btn btn-small btn-outline rate-fabricator-btn" data-project-id="${project.id}" data-fabricator-id="${project.acceptedFabricatorId}">
+                                        Avaliar Fabricante
                                     </button>
                                     <button class="btn btn-small btn-outline view-quotes-btn" data-project-id="${project.id}">Ver Detalhes</button>
                                 </div>
@@ -5529,62 +5731,60 @@
             },
             
             loadFabricatorJobs: async () => {
-    try {
-        const { data: jobs, error } = await supabaseClient
-            .from('jobs')
-            .select(`
-                *,
-                projects:project_id (id, name, client_id, due_date),
-                quotes:quote_id (id, amount, fabricator_id, status)
-            `)
-            .eq('fabricator_id', AppState.currentUser.id)
-            .in('status', ['in-progress', 'accepted', 'completed']) // inclui completed
-            .order('created_at', { ascending: false });
+                try {
+                    const { data: jobs, error } = await supabaseClient
+                        .from('jobs')
+                        .select(`
+                            *,
+                            projects:project_id (id, name, client_id, due_date),
+                            quotes:quote_id (id, amount, fabricator_id, status)
+                        `)
+                        .eq('fabricator_id', AppState.currentUser.id)
+                        .in('status', ['in-progress', 'accepted', 'completed'])
+                        .order('created_at', { ascending: false });
 
-        if (error) throw error;
+                    if (error) throw error;
 
-        const formattedJobs = [];
-        for (let job of jobs || []) {
-            // Busca nome do cliente
-            let clientName = 'Cliente';
-            if (job.projects?.client_id) {
-                const { data: clientProfile } = await supabaseClient
-                    .from('profiles')
-                    .select('name')
-                    .eq('id', job.projects.client_id)
-                    .single();
-                if (clientProfile) clientName = clientProfile.name;
-            }
+                    const formattedJobs = [];
+                    for (let job of jobs || []) {
+                        let clientName = 'Cliente';
+                        if (job.projects?.client_id) {
+                            const { data: clientProfile } = await supabaseClient
+                                .from('profiles')
+                                .select('name')
+                                .eq('id', job.projects.client_id)
+                                .single();
+                            if (clientProfile) clientName = clientProfile.name;
+                        }
 
-            // Verifica se a cotação realmente pertence a este fabricante (segurança)
-            if (job.quotes?.fabricator_id !== AppState.currentUser.id) continue;
+                        if (job.quotes?.fabricator_id !== AppState.currentUser.id) continue;
 
-            formattedJobs.push({
-                id: job.id,
-                projectId: job.project_id,
-                projectName: job.projects?.name || 'Projeto',
-                clientId: job.projects?.client_id,
-                clientName: clientName,
-                quoteId: job.quote_id,
-                fabricatorId: job.fabricator_id,
-                startDate: job.start_date?.split('T')[0] || new Date().toISOString().split('T')[0],
-                dueDate: job.projects?.due_date || new Date().toISOString().split('T')[0],
-                status: job.status,
-                progress: job.progress || 0,
-                completedDate: job.completed_at?.split('T')[0] || null,
-                rating: job.rating, // se existir, será número; caso contrário null
-                unreadMessages: 0
-            });
-        }
+                        formattedJobs.push({
+                            id: job.id,
+                            projectId: job.project_id,
+                            projectName: job.projects?.name || 'Projeto',
+                            clientId: job.projects?.client_id,
+                            clientName: clientName,
+                            quoteId: job.quote_id,
+                            fabricatorId: job.fabricator_id,
+                            startDate: job.start_date?.split('T')[0] || new Date().toISOString().split('T')[0],
+                            dueDate: job.projects?.due_date || new Date().toISOString().split('T')[0],
+                            status: job.status,
+                            progress: job.progress || 0,
+                            completedDate: job.completed_at?.split('T')[0] || null,
+                            rating: job.rating,
+                            unreadMessages: 0
+                        });
+                    }
 
-        AppState.fabricatorJobs = formattedJobs;
-        return formattedJobs;
-    } catch (error) {
-        console.error('Erro ao carregar trabalhos:', error);
-        AppState.fabricatorJobs = [];
-        return [];
-    }
-},
+                    AppState.fabricatorJobs = formattedJobs;
+                    return formattedJobs;
+                } catch (error) {
+                    console.error('Erro ao carregar trabalhos:', error);
+                    AppState.fabricatorJobs = [];
+                    return [];
+                }
+            },
             
             loadFabricatorTabContent: (tab) => {
                 switch(tab) {
@@ -5618,8 +5818,8 @@
                                 <i class="fas fa-briefcase" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
                                 <p>Nenhuma nova solicitação disponível no momento.</p>
                                 <p style="font-size: 0.9rem; margin-top: 10px;">Verifique suas capacidades de fabricação ou tente novamente mais tarde.</p>
-                            </td>
-                        </tr>
+                             </td>
+                         </tr>
                     `;
                     return;
                 }
@@ -5663,8 +5863,8 @@
                             <td colspan="6" style="text-align: center; padding: 40px; color: var(--light-gray);">
                                 <i class="fas fa-file-signature" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
                                 <p>Nenhum orçamento enviado ainda. Comece enviando um orçamento para um projeto!</p>
-                            </td>
-                        </tr>
+                             </td>
+                         </tr>
                     `;
                     return;
                 }
@@ -5724,8 +5924,8 @@
                             <td colspan="6" style="text-align: center; padding: 40px; color: var(--light-gray);">
                                 <i class="fas fa-tasks" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
                                 <p>Nenhum trabalho ativo. Orçamentos precisam ser aceitos pelos clientes primeiro.</p>
-                            </td>
-                        </tr>
+                             </td>
+                         </tr>
                     `;
                     return;
                 }
@@ -5777,8 +5977,8 @@
                             <td colspan="6" style="text-align: center; padding: 40px; color: var(--light-gray);">
                                 <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
                                 <p>Nenhum trabalho concluído ainda.</p>
-                            </td>
-                        </tr>
+                             </td>
+                         </tr>
                     `;
                     return;
                 }
@@ -5789,7 +5989,7 @@
                     let stars = '';
                     if (job.rating) {
                         for (let i = 0; i < 5; i++) {
-                            stars += i < job.rating ? '<i class="fas fa-star" style="color: #fbbf24;"></i>' : '<i class="far fa-star" style="color: #d1d5db;"></i>';
+                            stars += i < job.rating ? '<i class="fas fa-star" style="color: #da3a37;"></i>' : '<i class="far fa-star" style="color: #d1d5db;"></i>';
                         }
                     } else {
                         stars = '<button class="btn btn-small btn-outline rate-client-btn" data-project-id="' + job.projectId + '" data-client-id="' + job.clientId + '">Avaliar Cliente</button>';
@@ -6198,30 +6398,47 @@
                 }
             },
             
-            handleCapabilitiesSubmit: (e) => {
+            handleCapabilitiesSubmit: async (e) => {
                 e.preventDefault();
-                
+
                 const methodCheckboxes = document.querySelectorAll('#capabilities-form input[type="checkbox"]:checked');
                 const methods = Array.from(methodCheckboxes).map(cb => cb.value);
-                
+
                 const minOrder = parseFloat(document.getElementById('cap-min-order').value);
                 const maxSize = document.getElementById('cap-max-size').value;
                 const leadTime = parseInt(document.getElementById('cap-lead-time').value);
                 const materials = document.getElementById('cap-materials').value;
-                
-                AppState.fabricatorCapabilities = {
-                    methods: methods,
-                    minOrder: minOrder,
-                    maxSize: maxSize,
-                    leadTime: leadTime,
-                    materials: materials
-                };
-                
-                utils.closeAllModals();
-                
-                utils.showNotification('Capacidades de fabricação atualizadas com sucesso!', 'success');
-                
-                app.updateUI();
+
+                try {
+                    const { error } = await supabaseClient
+                        .from('profiles')
+                        .update({
+                            fabrication_areas: methods,
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', AppState.currentUser.id);
+
+                    if (error) throw error;
+
+                    AppState.fabricatorCapabilities = {
+                        methods,
+                        minOrder,
+                        maxSize,
+                        leadTime,
+                        materials
+                    };
+
+                    utils.closeAllModals();
+                    utils.showNotification('Capacidades atualizadas com sucesso!', 'success');
+
+                    await loadFabricatorRequestsFromSupabase();
+                    app.loadFabricatorTabContent('new');
+                    app.updateFabricatorStats();
+
+                } catch (error) {
+                    console.error('Erro ao salvar capacidades:', error);
+                    utils.showNotification('Erro ao salvar. Tente novamente.', 'error');
+                }
             },
             
             openQuoteModal: (project) => {
@@ -6279,7 +6496,7 @@
                     for (let quote of quotes) {
                         const { data: fabricatorProfile } = await supabaseClient
                             .from('profiles')
-                            .select('name')
+                            .select('name, is_verified')
                             .eq('id', quote.fabricator_id)
                             .single();
                         
@@ -6289,6 +6506,7 @@
                             id: quote.id,
                             fabricatorId: quote.fabricator_id,
                             fabricatorName: fabricatorProfile?.name || 'Fabricante',
+                            fabricatorVerified: fabricatorProfile?.is_verified || false,
                             fabricatorRating: fabricatorRating,
                             amount: parseFloat(quote.amount),
                             leadTime: quote.lead_time,
@@ -6326,6 +6544,7 @@
                                 <div class="quote-card-header">
                                     <div>
                                         <strong style="color: white;">${quote.fabricatorName}</strong>
+                                        ${quote.fabricatorVerified ? `<span class="verified-badge" style="display: inline-flex; margin-left: 6px;"><i class="fas fa-industry"></i></span>` : ''}
                                         ${quote.fabricatorRating ? `<span class="rating-stars">${utils.getRatingStars(quote.fabricatorRating)}</span>` : '<span class="rating-number">(sem avaliações)</span>'}
                                         <div style="display: flex; gap: 15px; margin-top: 5px;">
                                             <span style="color: var(--light-gray);"><i class="fas fa-dollar-sign"></i> ${utils.formatCurrency(quote.amount)}</span>
@@ -6704,19 +6923,31 @@
                 utils.openModal('method-detail-modal');
             },
             
-            openCapabilitiesModal: () => {
-                const caps = AppState.fabricatorCapabilities;
-                
-                document.querySelectorAll('#capabilities-form input[type="checkbox"]').forEach(checkbox => {
-                    checkbox.checked = caps.methods.includes(checkbox.value);
-                });
-                
-                document.getElementById('cap-min-order').value = caps.minOrder;
-                document.getElementById('cap-max-size').value = caps.maxSize;
-                document.getElementById('cap-lead-time').value = caps.leadTime;
-                document.getElementById('cap-materials').value = caps.materials;
-                
-                utils.openModal('capabilities-modal');
+            openCapabilitiesModal: async () => {
+                try {
+                    const { data: profile, error } = await supabaseClient
+                        .from('profiles')
+                        .select('*')
+                        .eq('id', AppState.currentUser.id)
+                        .single();
+
+                    if (error) throw error;
+
+                    const areas = profile.fabrication_areas || [];
+                    document.querySelectorAll('#capabilities-form input[type="checkbox"]').forEach(checkbox => {
+                        checkbox.checked = areas.includes(checkbox.value);
+                    });
+
+                    document.getElementById('cap-min-order').value = profile.min_order || 100;
+                    document.getElementById('cap-max-size').value = profile.max_size || '60x60x60';
+                    document.getElementById('cap-lead-time').value = profile.lead_time || 14;
+                    document.getElementById('cap-materials').value = profile.materials || 'Alumínio, Aço, Aço Inoxidável, ABS, PLA, Nylon';
+
+                    utils.openModal('capabilities-modal');
+                } catch (error) {
+                    console.error('Erro ao carregar capacidades:', error);
+                    utils.showNotification('Erro ao carregar suas capacidades.', 'error');
+                }
             },
             
             acceptQuote: async (projectId, quoteId, fabricatorId) => {
@@ -6749,6 +6980,7 @@
                             .from('projects')
                             .update({ 
                                 status: 'in-progress',
+                                accepted_fabricator_id: fabricatorId,
                                 updated_at: new Date().toISOString()
                             })
                             .eq('id', projectId);
@@ -6817,6 +7049,7 @@
                             project.status = 'in-progress';
                             project.selectedQuoteId = quoteId;
                             project.acceptedQuoteId = quoteId;
+                            project.acceptedFabricatorId = fabricatorId;
                             project.progress = 10;
                             
                             project.quotes.forEach(quote => {
@@ -6951,97 +7184,90 @@
             },
             
             updateJobProgress: async (jobId) => {
-    const job = AppState.fabricatorJobs.find(j => j.id === jobId);
-    if (!job) {
-        utils.showNotification('Trabalho não encontrado.', 'error');
-        return;
-    }
+                const job = AppState.fabricatorJobs.find(j => j.id === jobId);
+                if (!job) {
+                    utils.showNotification('Trabalho não encontrado.', 'error');
+                    return;
+                }
 
-    const newProgress = prompt(`Digite a nova porcentagem de progresso para "${job.projectName}":`, job.progress);
-    if (newProgress === null) return;
+                const newProgress = prompt(`Digite a nova porcentagem de progresso para "${job.projectName}":`, job.progress);
+                if (newProgress === null) return;
 
-    const progress = parseInt(newProgress);
-    if (isNaN(progress) || progress < 0 || progress > 100) {
-        utils.showNotification('Por favor, digite uma porcentagem válida entre 0 e 100.', 'error');
-        return;
-    }
+                const progress = parseInt(newProgress);
+                if (isNaN(progress) || progress < 0 || progress > 100) {
+                    utils.showNotification('Por favor, digite uma porcentagem válida entre 0 e 100.', 'error');
+                    return;
+                }
 
-    try {
-        // Atualiza o progresso no job
-        const { error: jobError } = await supabaseClient
-            .from('jobs')
-            .update({ 
-                progress: progress,
-                updated_at: new Date().toISOString()
-            })
-            .eq('id', jobId)
-            .eq('fabricator_id', AppState.currentUser.id); // segurança extra
+                try {
+                    const { error: jobError } = await supabaseClient
+                        .from('jobs')
+                        .update({ 
+                            progress: progress,
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', jobId)
+                        .eq('fabricator_id', AppState.currentUser.id);
 
-        if (jobError) throw jobError;
+                    if (jobError) throw jobError;
 
-        // Se atingiu 100%, marca como concluído
-        if (progress === 100) {
-            const { error: completeError } = await supabaseClient
-                .from('jobs')
-                .update({ 
-                    status: 'completed',
-                    completed_date: new Date().toISOString(),
-                    updated_at: new Date().toISOString()
-                })
-                .eq('id', jobId)
-                .eq('fabricator_id', AppState.currentUser.id);
+                    if (progress === 100) {
+                        const { error: completeError } = await supabaseClient
+                            .from('jobs')
+                            .update({ 
+                                status: 'completed',
+                                completed_date: new Date().toISOString(),
+                                updated_at: new Date().toISOString()
+                            })
+                            .eq('id', jobId)
+                            .eq('fabricator_id', AppState.currentUser.id);
 
-            if (completeError) throw completeError;
+                        if (completeError) throw completeError;
 
-            // Atualiza o projeto relacionado
-            const { error: projectError } = await supabaseClient
-                .from('projects')
-                .update({ 
-                    status: 'completed',
-                    updated_at: new Date().toISOString()
-                })
-                .eq('id', job.projectId)
-                .eq('client_id', job.clientId); // só o cliente dono pode alterar
+                        const { error: projectError } = await supabaseClient
+                            .from('projects')
+                            .update({ 
+                                status: 'completed',
+                                updated_at: new Date().toISOString()
+                            })
+                            .eq('id', job.projectId)
+                            .eq('client_id', job.clientId);
 
-            if (projectError) throw projectError;
+                        if (projectError) throw projectError;
 
-            // Atualiza a cotação relacionada
-            const { error: quoteError } = await supabaseClient
-                .from('quotes')
-                .update({ 
-                    status: 'completed',
-                    updated_at: new Date().toISOString()
-                })
-                .eq('id', job.quoteId)
-                .eq('fabricator_id', AppState.currentUser.id);
+                        const { error: quoteError } = await supabaseClient
+                            .from('quotes')
+                            .update({ 
+                                status: 'completed',
+                                updated_at: new Date().toISOString()
+                            })
+                            .eq('id', job.quoteId)
+                            .eq('fabricator_id', AppState.currentUser.id);
 
-            if (quoteError) throw quoteError;
+                        if (quoteError) throw quoteError;
 
-            // Atualiza o objeto local
-            job.status = 'completed';
-            job.completedDate = new Date().toISOString().split('T')[0];
+                        job.status = 'completed';
+                        job.completedDate = new Date().toISOString().split('T')[0];
 
-            const project = AppState.projects.find(p => p.id === job.projectId);
-            if (project) project.status = 'completed';
+                        const project = AppState.projects.find(p => p.id === job.projectId);
+                        if (project) project.status = 'completed';
 
-            const quote = AppState.fabricatorQuotes.find(q => q.id === job.quoteId);
-            if (quote) quote.status = 'completed';
-        }
+                        const quote = AppState.fabricatorQuotes.find(q => q.id === job.quoteId);
+                        if (quote) quote.status = 'completed';
+                    }
 
-        // Atualiza o progresso no objeto local
-        job.progress = progress;
+                    job.progress = progress;
 
-        utils.showNotification(`Progresso atualizado para ${progress}% em "${job.projectName}".`, 'success');
-        
-        // Recarrega os dados do fabricante para atualizar as abas
-        await app.loadFabricatorJobs();
-        // app.loadFabricatorTabContent(app.getCurrentFabricatorTab()); // função auxiliar
+                    utils.showNotification(`Progresso atualizado para ${progress}% em "${job.projectName}".`, 'success');
+                    
+                    await app.loadFabricatorJobs();
+                    // app.loadFabricatorTabContent(app.getCurrentFabricatorTab()); // função auxiliar
 
-    } catch (error) {
-        console.error('Erro ao atualizar progresso:', error);
-        utils.showNotification(`Erro: ${error.message}`, 'error');
-    }
-},
+                } catch (error) {
+                    console.error('Erro ao atualizar progresso:', error);
+                    utils.showNotification(`Erro: ${error.message}`, 'error');
+                }
+            },
             
             openChatModal: async (projectId) => {
                 AppState.chatMessages = [];
@@ -7485,37 +7711,36 @@
             },
 
             handleRatingSubmit: async () => {
-    const ratedUserId = document.getElementById('rating-target-id').value;
-    const projectId = document.getElementById('rating-project-id').value;
-    const targetType = document.getElementById('rating-target-type').value; // 'fabricator' ou 'client'
-    const ratingInput = document.querySelector('input[name="rating"]:checked');
+                const ratedUserId = document.getElementById('rating-target-id').value;
+                const projectId = document.getElementById('rating-project-id').value;
+                const targetType = document.getElementById('rating-target-type').value;
+                const ratingInput = document.querySelector('input[name="rating"]:checked');
 
-    if (!ratingInput) {
-        utils.showNotification('Por favor, selecione uma nota de 1 a 5 estrelas.', 'error');
-        return;
-    }
+                if (!ratingInput) {
+                    utils.showNotification('Por favor, selecione uma nota de 1 a 5 estrelas.', 'error');
+                    return;
+                }
 
-    const rating = parseInt(ratingInput.value);
-    const comment = document.getElementById('rating-comment').value;
+                const rating = parseInt(ratingInput.value);
+                const comment = document.getElementById('rating-comment').value;
 
-    try {
-        await submitRating(AppState.currentUser.id, ratedUserId, projectId, rating, comment);
-        utils.closeAllModals();
-        utils.showNotification('Avaliação enviada com sucesso!', 'success');
+                try {
+                    await submitRating(AppState.currentUser.id, ratedUserId, projectId, rating, comment);
+                    utils.closeAllModals();
+                    utils.showNotification('Avaliação enviada com sucesso!', 'success');
 
-        // Recarrega os dados para atualizar as abas
-        if (AppState.currentUser.type === 'client') {
-            await loadClientProjectsFromSupabase();
-            app.loadClientTabContent('completed');
-        } else {
-            await app.loadFabricatorJobs();
-            app.loadFabricatorTabContent('completed');
-        }
-    } catch (error) {
-        console.error('Erro ao enviar avaliação:', error);
-        utils.showNotification(`Erro: ${error.message}`, 'error');
-    }
-},
+                    if (AppState.currentUser.type === 'client') {
+                        await loadClientProjectsFromSupabase();
+                        app.loadClientTabContent('completed');
+                    } else {
+                        await app.loadFabricatorJobs();
+                        app.loadFabricatorTabContent('completed');
+                    }
+                } catch (error) {
+                    console.error('Erro ao enviar avaliação:', error);
+                    utils.showNotification(`Erro: ${error.message}`, 'error');
+                }
+            },
         };
 
         // ==================== OUVINTES DE EVENTO DA JANELA ====================
@@ -7553,7 +7778,8 @@
                         id: session.user.id,
                         name: profile?.name || session.user.email.split('@')[0],
                         email: session.user.email,
-                        type: profile?.user_type || 'client'
+                        type: profile?.user_type || 'client',
+                        is_verified: profile?.is_verified || false
                     };
                     
                     AppState.currentUser = currentUser;
@@ -7567,7 +7793,8 @@
                         .insert([{
                             id: session.user.id,
                             name: session.user.email.split('@')[0],
-                            user_type: 'client'
+                            user_type: 'client',
+                            is_verified: false
                         }])
                         .select()
                         .single();
@@ -7577,7 +7804,8 @@
                             id: session.user.id,
                             name: newProfile.name,
                             email: session.user.email,
-                            type: newProfile.user_type || 'client'
+                            type: newProfile.user_type || 'client',
+                            is_verified: false
                         };
                         
                         AppState.currentUser = currentUser;
