@@ -6,6 +6,7 @@
     <title>FabricateHub | Marketplace de Fabricação</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <style>
         /* (todo o estilo original permanece inalterado – mantido por brevidade) */
         :root {
@@ -2271,47 +2272,46 @@
             <div class="auth-side right">
                 <div id="alert" class="alert"></div>
 
-                <!-- Login Form -->
-                <div id="login-form" class="form-container-auth active">
-                    <div class="form-header">
-                        <h3>Bem-vindo de volta!</h3>
-                        <p>Entre com sua conta para continuar</p>
-                    </div>
+                <!-- Login Form (COM hCaptcha) -->
+<div id="login-form" class="form-container-auth active">
+    <div class="form-header">
+        <h3>Bem-vindo de volta!</h3>
+        <p>Entre com sua conta para continuar</p>
+    </div>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" required placeholder="seu@email.com">
+        </div>
+        <div class="form-group">
+            <label for="login-password">Senha</label>
+            <div class="password-input">
+                <input type="password" id="login-password" required placeholder="••••••••">
+                <button type="button" class="password-toggle" onclick="togglePassword('login-password')">
+                    <i class="far fa-eye"></i>
+                </button>
+            </div>
+        </div>
+        <div style="text-align: right; margin-bottom: 20px;">
+            <a onclick="showAuthForm('forgot')" style="color: var(--primary-light); cursor: pointer; font-size: 0.9rem;">Esqueceu sua senha?</a>
+        </div>
 
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label for="login-email">Email</label>
-                            <input type="email" id="login-email" required placeholder="seu@email.com">
-                        </div>
+        <!-- 🔒 hCaptcha inserido aqui -->
+        <div class="h-captcha-container">
+            <div class="h-captcha" data-sitekey="e7d2cc12-1d36-4b94-a8a8-4c508f8636b6"></div>
+        </div>
 
-                        <div class="form-group">
-                            <label for="login-password">Senha</label>
-                            <div class="password-input">
-                                <input type="password" id="login-password" required placeholder="••••••••">
-                                <button type="button" class="password-toggle" onclick="togglePassword('login-password')">
-                                    <i class="far fa-eye"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div style="text-align: right; margin-bottom: 20px;">
-                            <a onclick="showAuthForm('forgot')" style="color: var(--primary-light); cursor: pointer; font-size: 0.9rem;">Esqueceu sua senha?</a>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" id="login-btn">
-                            <span>Entrar</span>
-                        </button>
-                    </form>
-
-                    <div class="form-footer">
-                        Não tem uma conta? <a onclick="showAuthForm('signup')">Criar conta</a>
-                    </div>
-                    
-                          <!-- No final do form-footer do login-form (após o link "Criar conta") -->
-                          <div style="margin-top: 30px; text-align: center;">
-                              <a onclick="showAuthForm('pricing')" style="color: var(--primary-light); cursor: pointer;">Ver planos de assinatura</a>
-                                </div>
-                                      </div>
+        <button type="submit" class="btn btn-primary" id="login-btn">
+            <span>Entrar</span>
+        </button>
+    </form>
+    <div class="form-footer">
+        Não tem uma conta? <a onclick="showAuthForm('signup')">Criar conta</a>
+    </div>
+    <div style="margin-top: 30px; text-align: center;">
+        <a onclick="showAuthForm('pricing')" style="color: var(--primary-light); cursor: pointer;">Ver planos de assinatura</a>
+    </div>
+</div>
 
                 <!-- Signup Form -->
                 <div id="signup-form" class="form-container-auth">
@@ -2334,7 +2334,7 @@
                         <div class="form-group">
                             <label for="signup-password">Senha</label>
                             <div class="password-input">
-                                <input type="password" id="signup-password" required placeholder="Mínimo 6 caracteres" minlength="6">
+                                <input type="password" id="signup-password" required placeholder="Mínimo 6 caracteres" minlength="10">
                                 <button type="button" class="password-toggle" onclick="togglePassword('signup-password')">
                                     <i class="far fa-eye"></i>
                                 </button>
@@ -2426,7 +2426,7 @@
                 <ul class="pricing-features">
                     <li><i class="fas fa-check"></i> Acesso a todos os projetos</li>
                     <li><i class="fas fa-check"></i> Enviar até 10 orçamentos</li>
-                    <li><i class="fas fa-check"></i> Até 4 projetos por mês</li>
+                    <li><i class="fas fa-check"></i> Até 5 projetos por mês</li>
                     <li><i class="fas fa-check"></i> Taxa de R$ 29 por projeto</li>
                 </ul>
             </div>
@@ -2532,9 +2532,14 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" id="signup-btn">
-                            <span>Criar Conta</span>
-                        </button>
+                        <!-- 🔒 hCaptcha NO CADASTRO -->
+<div class="h-captcha-container">
+    <div class="h-captcha" data-sitekey="e7d2cc12-1d36-4b94-a8a8-4c508f8636b6"></div>
+</div>
+
+<button type="submit" class="btn btn-primary" id="signup-btn">
+    <span>Criar Conta</span>
+</button>
                     </form>
 
                     <div class="form-footer">
@@ -2804,7 +2809,7 @@
                         <h1>Painel do Cliente</h1>
                         <div class="page-subtitle">Gerencie seus projetos e orçamentos</div>
                     </div>
-                    <button class="btn btn-primary" id="new-project-btn">
+                    <button class="btn btn-outline" id="new-project-btn">
                         <i class="fas fa-plus"></i> Novo Projeto
                     </button>
                 </div>
@@ -3289,76 +3294,109 @@
         <!-- ========== NOVAS PÁGINAS DO RODAPÉ ========== -->
 
         <!-- Página: Como Funciona -->
-        <div id="como-funciona-page" class="page-container">
-            <div class="container">
-                <div class="page-title">
-                    <h1>Como Funciona</h1>
-                    <div class="page-subtitle">Guia rápido para usar a plataforma</div>
+<div id="how-it-works-page" class="page-container">
+    <div class="container">
+        <div class="page-title">
+            <h1>Como Funciona?</h1>
+            <div class="page-subtitle">Do seu projeto à peça pronta – de forma transparente e competitiva</div>
+        </div>
+        
+        <div class="card" style="color: #ffffff;">
+            
+            <h2>🚀 Simples, ágil e seguro</h2>
+            <p>A FabricateHub conecta você (cliente) a uma rede de fabricantes qualificados por meio de um sistema de <strong>licitação inteligente</strong>. Você publica o projeto, recebe orçamentos de múltiplos fornecedores, compara preço, prazo e reputação, e escolhe o melhor para sua demanda. Todo o processo é acompanhado pela plataforma, com chat integrado e progresso da produção.</p>
+            
+            <h3>📋 Passo a passo completo</h3>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; margin: 30px 0;">
+                <div style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">1️⃣</div>
+                    <h4 style="margin: 0 0 10px 0; color: #4CAF50;">Envio do projeto</h4>
+                    <p style="font-size: 0.9em;">Você faz upload dos arquivos (STL, STEP, DXF, etc.), descreve o material, a quantidade, as tolerâncias e o prazo desejado.</p>
                 </div>
-                <div class="card">
-                    <p style="color: var(--light-gray);">[Conteúdo explicativo sobre o funcionamento da plataforma.]</p>
-                    <p style="color: var(--light-gray);">Em breve, informações detalhadas sobre como clientes e fabricantes podem usar o FabricateHub.</p>
+                <div style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">2️⃣</div>
+                    <h4 style="margin: 0 0 10px 0; color: #4CAF50;">Publicação em licitação</h4>
+                    <p style="font-size: 0.9em;">O projeto vira um <strong>edital privado</strong> para os fabricantes parceiros. Eles veem PDF, requisitos técnicos, sua avaliação média (como cliente) e seu nome (ou empresa).</p>
+                </div>
+                <div style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">3️⃣</div>
+                    <h4 style="margin: 0 0 10px 0; color: #4CAF50;">Fabricantes enviam propostas</h4>
+                    <p style="font-size: 0.9em;">Cada fabricante interessado envia um orçamento com <strong>preço, prazo de entrega e um comentário técnico</strong> (explicando diferenciais ou observações).</p>
                 </div>
             </div>
-        </div>
-
-        <!-- Página: Preços (Planos) -->
-        <div id="pricing-page" class="page-container">
-            <div class="container">
-                <div class="page-title">
-                    <h1>Planos de Assinatura</h1>
-                    <div class="page-subtitle">Escolha o plano ideal para o seu negócio</div>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 30px;">
+                <div style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">4️⃣</div>
+                    <h4 style="margin: 0 0 10px 0; color: #4CAF50;">Você compara e escolhe</h4>
+                    <p style="font-size: 0.9em;">Visualize lado a lado: <strong>preço, prazo, avaliação média do fabricante</strong> (nota de clientes anteriores) e o comentário enviado. Decida qual proposta atende melhor seu projeto.</p>
                 </div>
-                <div class="pricing-grid" style="margin: 30px 0;">
-                    <!-- Plano Básico -->
-                    <div class="pricing-card">
-                        <div class="pricing-header">
-                            <h4>Básico</h4>
-                            <div class="pricing-price">R$ 49<span>/mês</span></div>
-                        </div>
-                        <div class="pricing-body">
-                            <ul class="pricing-features">
-                                <li><i class="fas fa-check"></i> Acesso a todos os projetos</li>
-                                <li><i class="fas fa-check"></i> Enviar até 10 orçamentos</li>
-                                <li><i class="fas fa-check"></i> Até 4 projetos por mês</li>
-                                <li><i class="fas fa-check"></i> Taxa de R$ 29 por projeto</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Plano Profissional -->
-                    <div class="pricing-card">
-                        <div class="pricing-header">
-                            <h4>Profissional</h4>
-                            <div class="pricing-price">R$ 99<span>/mês</span></div>
-                        </div>
-                        <div class="pricing-body">
-                            <ul class="pricing-features">
-                                <li><i class="fas fa-check"></i> Acesso a todos os projetos</li>
-                                <li><i class="fas fa-check"></i> Enviar até 40 orçamentos</li>
-                                <li><i class="fas fa-check"></i> Até 20 projetos por mês</li>
-                                <li><i class="fas fa-check"></i> Taxa de R$ 19 por projeto</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Plano Fabricante -->
-                    <div class="pricing-card">
-                        <div class="pricing-header">
-                            <h4>Fabricante</h4>
-                            <div class="pricing-price">R$ 249<span>/mês</span></div>
-                        </div>
-                        <div class="pricing-body">
-                            <ul class="pricing-features">
-                                <li><i class="fas fa-check"></i> Selo de fabricante verificado</li>
-                                <li><i class="fas fa-check"></i> Envio ilimitado de orçamentos</li>
-                                <li><i class="fas fa-check"></i> Projetos ilimitados</li>
-                                <li><i class="fas fa-check"></i> Aviso de novos projetos via e-mail</li>
-                                <li><i class="fas fa-check"></i> Taxa de aceite R$ 9 por projeto</li>
-                            </ul>
-                        </div>
-                    </div>
+                <div style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">5️⃣</div>
+                    <h4 style="margin: 0 0 10px 0; color: #4CAF50;">Confirmação e chat</h4>
+                    <p style="font-size: 0.9em;">Ao aceitar um orçamento, um <strong>chat exclusivo</strong> é aberto entre você e o fabricante. Ali vocês alinham detalhes, ajustam prazos ou tiram dúvidas técnicas.</p>
+                </div>
+                <div style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">6️⃣</div>
+                    <h4 style="margin: 0 0 10px 0; color: #4CAF50;">Acompanhamento da produção</h4>
+                    <p style="font-size: 0.9em;">O fabricante atualiza o <strong>progresso do projeto,</strong> você pode pedir informações sobre a etapa atual de fabricação via chat. Você vê o progresso através do visor em "Projetos ativos".</p>
                 </div>
             </div>
+            
+            <div style="background: rgba(76, 175, 80, 0.1); border-left: 4px solid #4CAF50; padding: 15px; margin: 20px 0 30px 0;">
+                <p style="margin: 0;"><strong>🎯 E, no final, você recebe a peça pronta, com a garantia de que todo o processo foi acompanhado por você!</strong></p>
+            </div>
+            
+            <h3>🔍 O que os fabricantes veem sobre você?</h3>
+            <p>Para que as propostas sejam justas e direcionadas, os fabricantes parceiros têm acesso a:</p>
+            <ul>
+                <li><strong>Arquivos do projeto</strong> (PDF, STEP, STL, etc.) e requisitos técnicos (material, tolerâncias, acabamento).</li>
+                <li><strong>Sua avaliação média</strong> como cliente (baseada em projetos anteriores).</li>
+                <li><strong>Seu nome ou razão social</strong> (para transparência).</li>
+                <li><strong>Prazo desejado</strong> e volume de peças.</li>
+            </ul>
+            <p>Seu contato direto (telefone/e-mail) <strong>não é exposto</strong> até a confirmação do orçamento – a comunicação inicial ocorre dentro da plataforma.</p>
+            
+            <h3>📊 Como você avalia os fabricantes?</h3>
+            <p>Após a conclusão do projeto, você pode dar uma nota de 0 a 5 e deixar um comentário sobre o fabricante. Essa avaliação alimenta a <strong>reputação</strong> dele, ajudando outros clientes na escolha.</p>
+            
+            <h3>📢 Vantagens de usar o sistema de licitação FabricateHub</h3>
+            <ul>
+                <li><strong>Economia real:</strong> Múltiplos orçamentos competitivos reduzem seu custo final.</li>
+                <li><strong>Transparência total:</strong> Você vê preço, prazo e reputação antes de decidir.</li>
+                <li><strong>Segurança:</strong> Todo fabricante passou por validação de capacidade e assinou termo de confidencialidade.</li>
+                <li><strong>Comunicação direta:</strong> Chat integrado evita troca de e-mails perdidos.</li>
+                <li><strong>Acompanhamento:</strong> Saiba exatamente em que etapa sua peça está – desde a matéria-prima até o envio.</li>
+            </ul>
+            
+            <h3>📱 E se eu precisar de suporte?</h3>
+            <p>Nossa equipe está disponível para auxiliar na preparação do projeto, na interpretação de propostas ou na resolução de conflitos. Você pode nos contatar diretamente:</p>
+            <ul>
+                <li><strong>E-mail:</strong> <a href="mailto:marcosdosanjos@outlook.com" style="color: #4CAF50;">marcosdosanjos@outlook.com</a></li>
+                <li><strong>WhatsApp:</strong> (41) 98438-3148 – atendimento todos os dias, incluindo feriados.</li>
+            </ul>
+            
+            <h3>❓ Perguntas frequentes – Client</h3>
+            <ul>
+                <li><strong>Preciso pagar para enviar um projeto?</strong> Não. Publicar projetos e receber orçamentos é gratuito. Você só paga ao fabricante após aprovar a proposta.</li>
+                <li><strong>Quantos fabricantes podem enviar propostas?</strong> Todos os parceiros cujas capacidades correspondam ao seu projeto. Normalmente, você recebe entre 3 e 8 orçamentos por projeto.</li>
+                <li><strong>Posso negociar o preço após receber as propostas?</strong> Sim, pelo chat com o fabricante. O orçamento pode ser renegociado até a confirmação final.</li>
+                <li><strong>E se o fabricante atrasar a entrega?</strong> A plataforma registra o cronograma. Você pode avaliar negativamente e nossa equipe intermedeia soluções (incluindo cancelamento com reembolso, se for o caso).</li>
+                <li><strong>Meus projetos são confidenciais?</strong> Absolutamente. Antes de ver qualquer arquivo, o fabricante já assinou um Termo de Confidencialidade.</li>
+            </ul>
+            
+            <hr style="border-color: rgba(255,255,255,0.2); margin: 30px 0;">
+            
+            <p style="text-align: center; font-size: 1.1em;">
+                <strong>📢 Pronto para começar?</strong><br>
+            </p>
+            <p style="text-align: center; font-size: 0.9em; color: rgba(255,255,255,0.7);">
+                Transforme ideias em peças com a transparência de uma licitação e a agilidade de um chat.
+            </p>
         </div>
+    </div>
+</div>
 
         <!-- Página: Requisitos de Arquivo -->
 <div id="file-requirements-page" class="page-container">
@@ -3561,7 +3599,7 @@
             <ul>
                 <li><strong>WhatsApp:</strong> Atendimento <strong>todos os dias, 24 horas</strong>.</li>
                 <li><strong>E-mail:</strong> De segunda a sexta, das 8h às 18h.</li>
-                <li><strong>Urgências:</strong> Para assuntos urgentes, prefira o WhatsApp para uma tratativa mais ágil.</li>
+                <li><strong>Urgências:</strong> Para assuntos urgentes, opte pelo WhatsApp para uma tratativa mais ágil.</li>
             </ul>
 
             <h3>🔒 Sigilo e Confidencialidade</h3>
@@ -3578,55 +3616,286 @@
 
         <!-- Página: Torne-se um Parceiro -->
         <div id="become-partner-page" class="page-container">
-            <div class="container">
-                <div class="page-title">
-                    <h1>Torne-se um Parceiro</h1>
-                    <div class="page-subtitle">Cadastre sua empresa como fabricante</div>
+    <div class="container">
+        <div class="page-title">
+            <h1>Torne-se um Parceiro</h1>
+            <div class="page-subtitle">Expanda seus negócios com a FabricateHub</div>
+        </div>
+        
+        <div class="card" style="color: #ffffff;">
+            
+            <h2>🌐 Conectamos sua Manufatura a Novos Projetos</h2>
+            
+            <p>A FabricateHub é uma plataforma que conecta engenharia, design e indústria. Ao se tornar um parceiro fabricante, você passa a receber demandas qualificadas de usinagem, manufatura aditiva, corte a laser, injeção plástica e outros processos, ampliando sua carteira de clientes sem custos de aquisição tradicionais.</p>
+
+            <h3>✅ Vantagens de Ser um Parceiro</h3>
+            
+            <ul>
+                <li><strong>Demanda qualificada:</strong> Receba projetos prontos para produção, com arquivos técnicos validados e informações claras.</li>
+                <li><strong>Fluxo de trabalho simplificado:</strong> Utilize nossa plataforma para orçamentos, comunicação e acompanhamento em um só lugar.</li>
+                <li><strong>Segurança jurídica:</strong> Todos os projetos são protegidos por Termos de Confidencialidade e a plataforma opera em conformidade com a LGPD.</li>
+                <li><strong>Visibilidade:</strong> Seu portfólio e capacidades técnicas são apresentados a uma rede crescente de engenheiros, arquitetos e empresas.</li>
+            </ul>
+
+            <h3>📋 Como se Cadastrar</h3>
+            <p>O processo de cadastro é rápido e objetivo. Preencha os dados abaixo e nossa equipe entrará em contato para validação e ativação do seu perfil de parceiro.</p>
+
+            <h4>🔧 Informações Necessárias</h4>
+            <ul>
+                <li><strong>Dados da empresa:</strong> Razão social, CNPJ, endereço completo, responsável legal.</li>
+                <li><strong>Contato principal:</strong> Nome, telefone (com WhatsApp), e-mail para recebimento de notificações.</li>
+                <li><strong>Capacidades produtivas:</strong> Principais processos (usinagem CNC, impressão 3D, corte a laser, injeção, etc.).</li>
+                <li><strong>Certificações e prazos:</strong> Certificações (ISO, etc.) e tempo médio de entrega para diferentes complexidades (opcional, mas fortemente recomendado).</li>
+                <li><strong>Portfólio:</strong> Fotos ou referências de projetos realizados (opcional, mas fortemente recomendado).</li>
+            </ul>
+
+            <h4>📎 Como Enviar seu Cadastro</h4>
+            <p>Envie as informações acima para o e-mail <strong>marcosdosanjos@outlook.com</strong> com o assunto <strong>“Cadastro Parceiro FabricateHub – [Nome da sua empresa]”</strong>. Nossa equipe analisará os dados e retornará em até 3 dias úteis com os próximos passos.</p>
+            
+            <!-- Opcional: se quiser adicionar um link para um formulário externo, pode substituir -->
+            <p style="background: rgba(255,255,255,0.1); padding: 15px; border-left: 4px solid #4CAF50; margin: 20px 0;">
+                <strong>📢 Dica:</strong> Quanto mais detalhes técnicos você fornecer (processos, capacidades, materiais), mais assertiva será a indicação de projetos para o seu perfil.
+            </p>
+
+            <h3>🤝 Diretrizes para uma Parceria de Sucesso</h3>
+            <p>Para que possamos construir uma relação sólida, alinhamos algumas práticas recomendadas entre nossos fabricantes parceiros:</p>
+            
+            <ul>
+                <li><strong>Resposta ágil:</strong> O primeiro contato com o cliente costuma ser crítico. Nossa plataforma exige retorno ao orçamento em até 72 horas úteis.</li>
+                <li><strong>Transparência técnica:</strong> Informe com clareza prazos, condições de pagamento e limitações de processo. Quanto mais alinhado o escopo, menor a chance de retrabalho.</li>
+                <li><strong>Confidencialidade:</strong> Todo projeto enviado é sigiloso. A violação de propriedade intelectual implica em descredenciamento imediato.</li>
+                <li><strong>Entrega no prazo:</strong> O cumprimento do cronograma é um dos pilares da avaliação de desempenho do cliente .</li>
+                <li><strong>Comunicação proativa:</strong> Qualquer desvio técnico ou necessidade de ajuste no projeto deve ser comunicado imediatamente para o cliente para uma resolução ágil.</li>
+            </ul>
+
+            <h3>📊 Modelo de Negócio</h3>
+            <p>A FabricateHub cobra taxas de adesão ou mensalidades. Nossa remuneração é baseada no sucesso: cobramos uma comissão sobre os projetos concluídos, que é descontada diretamente do pagamento ao fabricante. Dessa forma, só ganhamos quando você ganha.</p>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; margin: 30px 0;">
+                <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2em;">📈</div>
+                    <strong>Aumento de carteira</strong>
+                    <p style="font-size: 0.9em;">Acesso a novos clientes sem investimento em marketing</p>
                 </div>
-                <div class="card">
-                    <p style="color: var(--light-gray);">[Informações para fabricantes se registrarem]</p>
+                <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2em;">⚙️</div>
+                    <strong>Operação enxuta</strong>
+                    <p style="font-size: 0.9em;">Projetos validados tecnicamente, menos retrabalho</p>
+                </div>
+                <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2em;">🔒</div>
+                    <strong>Segurança</strong>
+                    <p style="font-size: 0.9em;">Proteção contratual e garantia de recebimento</p>
                 </div>
             </div>
+
+            <h3>❓ Dúvidas Frequentes</h3>
+            <ul>
+                <li><strong>Preciso ter maquinário próprio?</strong> Sim, todos os parceiros devem possuir infraestrutura fabril própria ou parceria operacional comprovada.</li>
+                <li><strong>Posso definir meus próprios prazos e preços?</strong> Sim, você mantém total autonomia sobre seus custos e cronogramas; a plataforma apenas facilita a negociação.</li>
+                <li><strong>Existe exclusividade?</strong> Não, você pode continuar atendendo seus clientes atuais. A parceria é uma via adicional de negócios.</li>
+                <li><strong>Como recebo os pagamentos?</strong> Os pagamentos são realizados por transferência bancária após a conclusão e validação do projeto pelo cliente.</li>
+            </ul>
+
+            <hr style="border-color: rgba(255,255,255,0.2); margin: 30px 0;">
+            
+            <p style="text-align: center; font-size: 1.1em;">
+                <strong>📢 Pronto para expandir seus negócios?</strong><br>
+                Envie seu cadastro para <a href="mailto:marcosdosanjos@outlook.com" style="color: #4CAF50; text-decoration: none;">marcosdosanjos@outlook.com</a> e comece a receber projetos alinhados à sua capacidade produtiva.
+            </p>
+            <p style="text-align: center; font-size: 0.9em; color: rgba(255,255,255,0.7);">
+                A FabricateHub está construindo a maior rede de manufatura sob demanda do Brasil. Faça parte desse crescimento!
+            </p>
         </div>
+    </div>
+</div>
 
         <!-- Página: Verificação de Capacidade -->
         <div id="capability-verification-page" class="page-container">
-            <div class="container">
-                <div class="page-title">
-                    <h1>Verificação de Capacidade</h1>
-                    <div class="page-subtitle">Como validar suas capacidades de fabricação</div>
+    <div class="container">
+        <div class="page-title">
+            <h1>Como Validar suas Capacidades de Fabricação</h1>
+            <div class="page-subtitle">Defina seu escopo produtivo e receba os projetos certos</div>
+        </div>
+        
+        <div class="card" style="color: #ffffff;">
+            
+            <h2>🎯 O segredo para uma parceria produtiva</h2>
+            <p>Na FabricateHub, conectamos sua manufatura a projetos reais com base nas suas capacidades. Quanto mais precisamente você definir o que sua empresa produz, mais assertivos serão os encaminhamentos. Você decide se quer receber todos os tipos de demanda ou apenas aquelas que se encaixam perfeitamente na sua área de atuação.</p>
+            
+            <h3>📝 Quais informações compõem seu perfil de capacidades?</h3>
+            <p>Durante o cadastro, você poderá preencher os seguintes campos. Não se preocupe: você pode preencher apenas o que for relevante e atualizar sempre que quiser.</p>
+            
+            <ul>
+                <li><strong>Processos de fabricação</strong> — usinagem CNC (torno, fresadora, centro de usinagem), corte a laser, dobra de chapas, injeção plástica, impressão 3D (FDM, SLA, SLS), fundição, tratamento térmico, etc.</li>
+                <li><strong>Materiais trabalhados</strong> — aço carbono, aço inoxidável, alumínio, latão, bronze, plásticos de engenharia (ABS, policarbonato, nylon), resinas, madeiras, compensados, entre outros.</li>
+                <li><strong>Dimensões máximas da peça</strong> — comprimento, largura, altura (em mm) ou área útil de trabalho.</li>
+                <li><strong>Capacidade de produção</strong> — volumes por lote (peça única, pequenos lotes, produção seriada) e lead time médio.</li>
+                <li><strong>Certificações</strong> — ISO 9001, AS9100, etc., se aplicável.</li>
+                <li><strong>Infraestrutura adicional</strong> — acabamentos, pintura, montagem, embalagem.</li>
+            </ul>
+            
+            <h3>⚙️ Como funciona o match com os projetos?</h3>
+            <p>Nosso sistema cruza o processo de produção do projeto postado com as capacidades cadastradas pelos fabricantes. A partir daí, dois cenários são possíveis:</p>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; margin: 30px 0;">
+                <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: #4CAF50;">🌍 Perfil amplo</h4>
+                    <p>Se você preencher <strong>todas ou a maioria das suas capacidades</strong>, receberá um fluxo diversificado de projetos — desde peças de alumínio usinadas até componentes em resina impressos em 3D. Ideal para quem tem versatilidade e quer explorar novos mercados.</p>
                 </div>
-                <div class="card">
-                    <p style="color: var(--light-gray);">[Processo de verificação e selo de qualidade]</p>
+                <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: #4CAF50;">🎯 Perfil filtrado</h4>
+                    <p>Se você preferir receber <strong>apenas projetos que correspondam exatamente ao que você executa</strong>, basta selecionar os campos que deseja atender. Por exemplo: apenas usinagem CNC em aço inoxidável. Assim, só aparecem oportunidades alinhadas ao seu foco.</p>
                 </div>
             </div>
+            
+            <p>Você pode <strong>mudar essa configuração a qualquer momento</strong> diretamente no painel do parceiro. Se quiser testar novos processos ou expandir seu portfólio, basta atualizar seu perfil.</p>
+            
+            <h3>✅ Por que validar suas capacidades é vantajoso?</h3>
+            <ul>
+                <li><strong>Economia de tempo:</strong> Você recebe apenas cotações compatíveis com sua operação, evitando analisar projetos que não pode produzir.</li>
+                <li><strong>Maior taxa de fechamento:</strong> Quanto mais alinhado o projeto às suas capacidades, mais competitivo e ágil será seu orçamento.</li>
+                <li><strong>Otimização da plataforma:</strong> Ajuda a FabricateHub a indicar você para os projetos mais adequados, aumentando a satisfação de todos os envolvidos.</li>
+            </ul>
+            
+            <h3>🔄 Como atualizar suas capacidades depois do cadastro?</h3>
+            <p>Após se tornar um parceiro ativo, você terá acesso a um painel onde poderá editar suas capacidades a qualquer momento. Basta acessar a área “Configurações da conta” e modificar os campos desejados. As alterações passam a valer imediatamente para novos projetos encaminhados.</p>
+            
+            <div style="background: rgba(76, 175, 80, 0.1); border-left: 4px solid #4CAF50; padding: 15px; margin: 25px 0;">
+                <p style="margin: 0;"><strong>💡 Dica de especialista:</strong> Comece listando os processos e materiais que dominam 80% da sua produção. Depois, com o tempo, você pode incluir capacidades secundárias que também deseja ofertar. O importante é que o perfil reflita a realidade da sua fábrica para que o match seja preciso.</p>
+            </div>
+            
+            <h3>❓ Perguntas frequentes</h3>
+            <ul>
+                <li><strong>E se eu listar uma capacidade mas não tiver disponibilidade no momento?</strong> Você pode temporariamente “remover” uma capacidade no painel. Assim, não recebe projetos daquele tipo até reativar.</li>
+                <li><strong>Preciso preencher todas as capacidades de uma vez?</strong> Não. Você pode começar com o essencial e complementar depois. O mais importante é que seu perfil esteja sempre atualizado.</li>
+                <li><strong>Minhas capacidades são visíveis para os clientes?</strong> Não, os perfis dos fabricantes não são acessíveis para os compradores, o comprador escolhe qual orçamento aceitar com base na avaliação geral que aparece tanto para o fabricante quanto para o comprador e no orçamento em si, (Valor, Prazo, Comentários).</li>
+            </ul>
+            
+            <hr style="border-color: rgba(255,255,255,0.2); margin: 30px 0;">
+            
+            <p style="text-align: center; font-size: 1.1em;">
+                <strong>📢 Pronto para configurar seu perfil de capacidades?</strong><br>
+                Entre em contato conosco pelo e-mail <a href="mailto:marcosdosanjos@outlook.com" style="color: #4CAF50; text-decoration: none;">marcosdosanjos@outlook.com</a> ou pelo WhatsApp <strong>(41) 98438-3148</strong> e inicie sua validação agora mesmo.
+            </p>
+            <p style="text-align: center; font-size: 0.9em; color: rgba(255,255,255,0.7);">
+                Quanto mais completo seu cadastro, mais oportunidades relevantes você receberá.
+            </p>
         </div>
+    </div>
+</div>
 
         <!-- Página: Diretrizes de Preços -->
         <div id="pricing-guidelines-page" class="page-container">
-            <div class="container">
-                <div class="page-title">
-                    <h1>Diretrizes de Preços</h1>
-                    <div class="page-subtitle">Orientações para formação de preços</div>
+    <div class="container">
+        <div class="page-title">
+            <h1>Orientações para Formação de Preços</h1>
+            <div class="page-subtitle">Boas práticas para orçamentos competitivos e sustentáveis</div>
+        </div>
+        
+        <div class="card" style="color: #ffffff;">
+            
+            <h2>📊 Precificação inteligente: o equilíbrio entre competitividade e lucro</h2>
+            <p>Uma das principais dúvidas dos fabricantes parceiros é: <em>“quanto devo cobrar para ganhar o projeto sem perder margem?”</em>. A resposta envolve uma combinação de custos reais, valor percebido e posicionamento no mercado. Abaixo, reunimos boas práticas para você estruturar orçamentos competitivos, transparentes e rentáveis dentro da plataforma FabricateHub.</p>
+            
+            <h3>💰 Componentes do preço de venda – o que considerar?</h3>
+            <p>Para não correr o risco de trabalhar no prejuízo, seu orçamento deve cobrir pelo menos:</p>
+            
+            <ul>
+                <li><strong>Materiais diretos:</strong> Matéria-prima (chapas, barras, resinas, filamentos, madeira, etc.) + perdas e refugos previstos.</li>
+                <li><strong>Mão de obra direta:</strong> Horas de operação de máquinas e montagem, incluindo encargos e benefícios proporcionais.</li>
+                <li><strong>Custos indiretos de fabricação (CIF):</strong> Depreciação de equipamentos, manutenção, energia elétrica, ferramentas de corte, insumos de limpeza, etc.</li>
+                <li><strong>Despesas administrativas e comerciais:</strong> Aluguel, salários administrativos, telemarketing, software, comissões.</li>
+                <li><strong>Tributos e taxas:</strong> Impostos incidentes sobre a operação (Simples Nacional, Lucro Presumido, etc.).</li>
+                <li><strong>Margem de lucro desejada:</strong> Percentual que garante o reinvestimento e a saúde financeira do negócio.</li>
+            </ul>
+            
+            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <p style="margin: 0;"><strong>🔧 Exemplo prático:</strong> Uma peça usinada em alumínio. Some o custo do bloco de alumínio (R$ 50), tempo de usinagem (2h x R$ 120/h = R$ 240), ferramenta especial (R$ 30 amortizado), energia e depreciação (R$ 20), despesas administrativas (15% sobre a soma = R$ 51), impostos (10% = R$ 34) e margem de lucro (20% sobre o total final). Isso resulta num preço competitivo, mas justo.</p>
+            </div>
+            
+            <h3>📈 Como definir um preço competitivo na prática?</h3>
+            <p>Na plataforma FabricateHub, você não compete apenas por preço, mas por <strong>prazo, qualidade e comunicação</strong>. No entanto, o valor ainda é um fator decisivo. Siga estas diretrizes:</p>
+            
+            <ul>
+                <li><strong>Calcule o custo mínimo aceitável:</strong> Determine o menor valor que ainda cobre todos os custos variáveis + um pequeno fixo (ponto de equilíbrio). Evite ofertar abaixo disso apenas para “ganhar o projeto”.</li>
+                <li><strong>Use a estratégia de precificação por valor:</strong> Se o cliente exige tolerâncias muito apertadas, acabamento especial ou prazo reduzido, seu preço pode ser mais alto – e o cliente tende a aceitar.</li>
+                <li><strong>Ofereça descontos condicionados:</strong> Volume maior, pagamento antecipado, ou retirada da peça podem reduzir o preço final. Deixe claro na proposta.</li>
+                <li><strong>Evite guerra de preços:</strong> Em vez de cortar margem, destaque seus diferenciais (certificações, prazo, suporte técnico, localização).</li>
+            </ul>
+            
+            <h3>✅ Boas práticas para elaborar orçamentos competitivos</h3>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; margin: 30px 0;">
+                <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: #4CAF50;">1. Seja transparente</h4>
+                    <p>Informe na proposta se o preço inclui frete, impostos, embalagem ou acabamento adicional. Evite surpresas que possam gerar desgaste.</p>
                 </div>
-                <div class="card">
-                    <p style="color: var(--light-gray);">[Boas práticas para orçamentos competitivos]</p>
+                <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: #4CAF50;">2. Responda rápido</h4>
+                    <p>O primeiro orçamento que chega ao cliente tem vantagem competitiva. Use modelos padronizados para agilizar. A FabricateHub permite o anexo de um orçamento em PDF do fabricante.</p>
+                </div>
+                <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: #4CAF50;">3. Destaque o prazo de entrega</h4>
+                    <p>Muitos clientes industriais priorizam lead time curto mesmo com preço ligeiramente superior.</p>
                 </div>
             </div>
-        </div>
-
-        <!-- Página: Recursos para Fabricantes -->
-        <div id="resources-page" class="page-container">
-            <div class="container">
-                <div class="page-title">
-                    <h1>Recursos</h1>
-                    <div class="page-subtitle">Ferramentas e materiais de apoio</div>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 30px;">
+                <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: #4CAF50;">4. Ofereça alternativas</h4>
+                    <p>Quando possível, apresente opções: material substituto mais barato, tolerância menos rigorosa, acabamento simplificado.</p>
                 </div>
-                <div class="card">
-                    <p style="color: var(--light-gray);">[Downloads, guias, templates]</p>
+                <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px;">
+                    <h4 style="margin-top: 0; color: #4CAF50;">5. Use a plataforma a seu favor</h4>
+                    <p>Envie mensagens anexas no orçamento detalhado, explicando os diferenciais técnicos e sua capacidade de produção.</p>
                 </div>
             </div>
+            
+            <h3>🧮 Calculando sua hora-máquina – passo a passo</h3>
+            <p>Um dos erros mais comuns é subestimar o custo por hora de operação. Veja como calcular de forma simples:</p>
+            <ol>
+                <li><strong>Levante o custo total anual da máquina:</strong> (depreciação + manutenção + energia + ferramentas + espaço) / horas úteis disponíveis no ano.</li>
+                <li><strong>Acrescente o custo da mão de obra direta:</strong> salário + encargos do operador por hora produtiva.</li>
+                <li><strong>Adicione uma taxa para cobrir despesas administrativas e comerciais (ex.: 15% a 25% sobre o subtotal).</strong></li>
+                <li><strong>Aplique o mark-up desejado (margem de lucro).</strong></li>
+            </ol>
+            <p>Exemplo: Se o custo da CNC + operador for R$ 150/hora, somar 20% de despesas (R$ 30) e 25% de margem (R$ 45) resulta em uma hora-máquina comercial de R$ 225/hora.</p>
+            
+            <h3>📋 Checklist: seu orçamento está competitivo?</h3>
+            <ul>
+                <li>✅ Inclui todos os custos variáveis e fixos proporcionais?</li>
+                <li>✅ Está alinhado com a média de mercado para peças similares?</li>
+                <li>✅ Oferece prazo de entrega realista e bem comunicado?</li>
+                <li>✅ Destaca os diferenciais (certificação, qualidade, suporte)?</li>
+                <li>✅ Considera o volume e a complexidade do projeto?</li>
+                <li>✅ Deixa claro o que está incluso (frete, impostos, embalagem)?</li>
+            </ul>
+            
+            <div style="background: rgba(76, 175, 80, 0.1); border-left: 4px solid #4CAF50; padding: 15px; margin: 25px 0;">
+                <p style="margin: 0;"><strong>💡 Lembrete da FabricateHub:</strong> Clientes retornam quando recebem orçamentos claros e justos. Se você não pode reduzir o preço, mostre o valor agregado – pós-venda, agilidade na comunicação, flexibilidade para ajustes. O menor preço nem sempre é o escolhido.</p>
+            </div>
+            
+            <h3>❓ Perguntas frequentes sobre precificação na plataforma</h3>
+            <ul>
+                <li><strong>Devo enviar o orçamento em moeda estrangeira?</strong> Não, todos os projetos são precificados em Real (R$) – a menos que haja acordo específico com cliente internacional.</li>
+                <li><strong>E se o cliente pedir desconto após o orçamento?</strong> Você decide. Tenha uma margem de negociação planejada (ex.: 5% a 10%). Se o desconto comprometer o resultado, recuse educadamente.</li>
+                <li><strong>Posso cobrar pelo desenvolvimento de protótipo e depois abater na produção?</strong> Sim, é uma prática comum e deve ser explicitada no orçamento.</li>
+                <li><strong>Como lidar com a flutuação do preço do material?</strong> Inclua uma cláusula de reajuste (válida por 30 dias) ou use uma cotação de referência no momento da proposta.</li>
+            </ul>
+            
+            <hr style="border-color: rgba(255,255,255,0.2); margin: 30px 0;">
+            
+            <p style="text-align: center; font-size: 1.1em;">
+                <strong>🔧 Precificar bem é o primeiro passo para uma parceria sustentável.</strong><br>
+                Se ainda tiver dúvidas sobre como estruturar seus custos, nossa equipe pode ajudar com uma planilha-modelo. Basta enviar um e-mail para <a href="mailto:marcosdosanjos@outlook.com" style="color: #4CAF50; text-decoration: none;">marcosdosanjos@outlook.com</a>.
+            </p>
+            <p style="text-align: center; font-size: 0.9em; color: rgba(255,255,255,0.7);">
+                A FabricateHub apoia fabricantes que trabalham com transparência e eficiência.
+            </p>
         </div>
+    </div>
+</div>
 
         <!-- Página: Sobre Nós -->
         <div id="about-page" class="page-container">
@@ -3641,20 +3910,7 @@
             </div>
         </div>
 
-        <!-- Página: Blog -->
-        <div id="blog-page" class="page-container">
-            <div class="container">
-                <div class="page-title">
-                    <h1>Blog</h1>
-                    <div class="page-subtitle">Artigos e novidades</div>
-                </div>
-                <div class="card">
-                    <p style="color: var(--light-gray);">[Lista de posts]</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Página: Carreiras -->
+                <!-- Página: Carreiras -->
         <div id="careers-page" class="page-container">
             <div class="container">
                 <div class="page-title">
@@ -3670,28 +3926,152 @@
         <!-- Página: Contato -->
         <div id="contact-page" class="page-container">
             <div class="container">
-                <div class="page-title">
-                    <h1>Contato</h1>
-                    <div class="page-subtitle">Fale com a gente</div>
-                </div>
-                <div class="card">
-                    <p style="color: var(--light-gray);">[Formulário de contato, e-mail, telefone]</p>
-                </div>
-            </div>
+        <div class="page-title">
+            <h1>Contato</h1>
+            <div class="page-subtitle">Canais de comunicação e atendimento</div>
         </div>
+        
+        <div class="card" style="color: #ffffff;">
+            
+            <h2>Estamos Prontos para Atender sua Demanda</h2>
+            
+            <p>Sua indústria precisa de agilidade, e nós entregamos. No caso de dúvidas ou considerações em relação a plataforma da FabricateHub, contestação em relação as políticas da plataforma ou práticas dos fabricantes, nossa equipe está à disposição. Abaixo estão todos os canais para falar conosco.</p>
+
+            <h3>📞 Canais de Atendimento</h3>
+            
+             <table>
+                <thead>
+                     <tr>
+                        <th>Canal</th>
+                        <th>Informação</th>
+                        <th>Disponibilidade</th>
+                     </tr>
+                </thead>
+                <tbody>
+                     <tr>
+                        <td><strong>WhatsApp</strong></td>
+                        <td>(41) 98438-3148</td>
+                        <td><span style="color: #da3a37;">●</span> <strong>24/7</strong> (dias úteis, finais de semana e feriados)</td>
+                     </tr>
+                     <tr>
+                        <td><strong>E-mail</strong></td>
+                        <td>marcosdosanjos@outlook.com</td>
+                        <td>Resposta em poucas horas em horário comercial</td>
+                     </tr>
+                     <tr>
+                        <td><strong>Instagram</strong></td>
+                        <td>@fabricate_hub</td>
+                        <td>Acompanhamento de cases e novidades técnicas</td>
+                     </tr>
+                </tbody>
+             </table>
+
+            <h3>👤 Responsável Técnico</h3>
+            <p>Todo o atendimento é realizado diretamente por:</p>
+            <p style="font-size: 1.2em; background: rgba(255,255,255,0.1); padding: 15px; border-left: 4px solid #da3a37;">
+                <strong>Marcos dos Anjos Figueiredo</strong><br>
+                <span style="font-size: 0.9em;">Responsável pela integração e funcionamento da plataforma.</span>
+            </p>
+
+            <h3>⏱️ Horário de Funcionamento</h3>
+            <ul>
+                <li><strong>WhatsApp:</strong> Atendimento <strong>todos os dias, 24 horas</strong>.</li>
+                <li><strong>E-mail:</strong> De segunda a sexta, das 8h às 18h.</li>
+                <li><strong>Urgências:</strong> Para assuntos urgentes, opte pelo WhatsApp para uma tratativa mais ágil.</li>
+            </ul>
+
+            <h3>🔒 Sigilo e Confidencialidade</h3>
+            <p>Todo contato comercial e técnico é protegido por nossa política de confidencialidade. Informações de projetos, desenhos e estratégias são tratadas com total sigilo, em conformidade com a LGPD. O primeiro contato já estabelece um ambiente seguro para discutirmos sua demanda.</p>
+
+            <hr style="border-color: rgba(255,255,255,0.2); margin: 30px 0;">
+
+            <p style="text-align: center; font-size: 1.1em;">
+                <strong>Entre em contato agora mesmo pelo <a href="https://wa.me/5541984383148" style="color: #da3a37; text-decoration: none;">WhatsApp</a> ou envie um e-mail para <a href="mailto:marcosdosanjos@outlook.com" style="color: #da3a37; text-decoration: none;">marcosdosanjos@outlook.com</a>.</strong><br>
+            </p>
+        </div>
+    </div>
+</div>
 
         <!-- Página: Política de Privacidade -->
         <div id="privacy-page" class="page-container">
-            <div class="container">
-                <div class="page-title">
-                    <h1>Política de Privacidade</h1>
-                    <div class="page-subtitle">Como protegemos seus dados</div>
-                </div>
-                <div class="card">
-                    <p style="color: var(--light-gray);">[Texto legal da política de privacidade]</p>
-                </div>
-            </div>
+    <div class="container">
+        <div class="page-title">
+            <h1>Política de Privacidade</h1>
+            <div class="page-subtitle">Compromisso com a confidencialidade e a proteção de dados</div>
         </div>
+        <div class="card" style="color: #ffffff;">
+            
+            <h2>1. Nosso papel como intermediadora</h2>
+            <p>A FabricateHub é uma <strong>plataforma tecnológica de conexão</strong> entre compradores (clientes) e fabricantes parceiros. <strong>Não fabricamos, não usinamos, não fundimos, não imprimimos 3D e não realizamos qualquer atividade de manufatura</strong>. Também <strong>não atuamos como intermediadora de pagamentos</strong> – a negociação financeira e o acerto entre as partes são de responsabilidade exclusiva do cliente e do fabricante, respeitando os canais e acordos definidos entre eles.</p>
+            <p>Nosso papel limita-se a:</p>
+            <ul>
+                <li>Disponibilizar uma plataforma para envio de projetos, cotação e comunicação.</li>
+                <li>Validar capacidades técnicas dos fabricantes parceiros.</li>
+                <li>Exigir e armazenar termos de confidencialidade assinados pelos fabricantes.</li>
+                <li>Garantir um ambiente seguro para troca de arquivos e informações.</li>
+            </ul>
+            
+            <h2>2. Confidencialidade dos projetos</h2>
+            <p><strong>Todos os projetos, desenhos, arquivos CAD, especificações e demais informações enviadas à plataforma são tratados como estritamente confidenciais.</strong> Nenhum dado técnico é compartilhado com terceiros não autorizados. Os fabricantes parceiros, antes de terem acesso a qualquer projeto, assinam um <strong>Termo de Confidencialidade e Responsabilidade Técnica</strong>, comprometendo-se a não reproduzir, divulgar ou utilizar as informações para qualquer fim fora da execução do serviço contratado.</p>
+            <p>A FabricateHub utiliza criptografia e controles de acesso rigorosos para proteger sua propriedade intelectual.</p>
+            
+            <h2>3. Conformidade com a LGPD</h2>
+            <p>A Lei Geral de Proteção de Dados (LGPD – Lei nº 13.709/2018) é integralmente respeitada pela FabricateHub. Coletamos apenas os dados necessários para:</p>
+            <ul>
+                <li>Identificar e autenticar clientes e fabricantes.</li>
+                <li>Processar o envio de projetos e a comunicação entre as partes.</li>
+                <li>Gerenciar avaliações de reputação.</li>
+                <li>Cumprir obrigações legais e regulatórias.</li>
+            </ul>
+            <p><strong>Seus dados pessoais e técnicos nunca serão vendidos, alugados ou compartilhados para fins não relacionados à plataforma.</strong> Você tem direito a acessar, corrigir, eliminar ou solicitar a portabilidade dos seus dados a qualquer momento, mediante requisição enviada para <a href="mailto:marcosdosanjos@outlook.com" style="color: #4CAF50;">marcosdosanjos@outlook.com</a>.</p>
+            
+            <div style="background: rgba(76, 175, 80, 0.1); border-left: 4px solid #4CAF50; padding: 15px; margin: 20px 0;">
+                <p style="margin: 0;"><strong>🔒 Compromisso adicional:</strong> A FabricateHub <strong>condena veementemente qualquer prática de espionagem industrial, engenharia reversa não autorizada, apropriação indevida de projetos ou violação de segredo comercial</strong>. Em caso de descumprimento do Termo de Confidencialidade por parte de algum fabricante, a plataforma fornecerá todo o suporte legal ao cliente, incluindo o compartilhamento de provas e o descredenciamento imediato do infrator.</p>
+            </div>
+            
+            <h2>4. Coleta e uso de informações</h2>
+            <p><strong>Clientes:</strong> Coletamos nome, e-mail, telefone, empresa (opcional), histórico de projetos e avaliações. Esses dados são usados para viabilizar a licitação e a comunicação com fabricantes.</p>
+            <p><strong>Fabricantes:</strong> Coletamos razão social, CNPJ, endereço, capacidades técnicas, certificações, dados bancários (apenas para repasse de informações ao cliente – não armazenamos chaves de pagamento), histórico de propostas e avaliações.</p>
+            <p><strong>Arquivos de projeto:</strong> São armazenados de forma criptografada e ficam disponíveis apenas para o cliente e para o(s) fabricante(s) convidado(s) a cotar. Após a conclusão do projeto, o cliente pode solicitar a exclusão definitiva dos arquivos.</p>
+            
+            <h2>5. Armazenamento e segurança</h2>
+            <p>Utilizamos servidores com certificado SSL/TLS, firewalls e controles de acesso baseados em função. Todos os colaboradores da FabricateHub assinam cláusulas de confidencialidade. As senhas são armazenadas de forma hasheada (não legível).</p>
+            
+            <h2>6. Seus direitos como titular de dados</h2>
+            <ul>
+                <li><strong>Confirmação e acesso:</strong> Saber se tratamos seus dados e obter cópia.</li>
+                <li><strong>Correção:</strong> Atualizar informações incompletas ou desatualizadas.</li>
+                <li><strong>Eliminação:</strong> Solicitar a remoção de dados desnecessários.</li>
+                <li><strong>Revogação do consentimento:</strong> A qualquer momento, para dados que não sejam obrigatórios por lei.</li>
+                <li><strong>Portabilidade:</strong> Receber seus dados em formato estruturado.</li>
+            </ul>
+            <p>Para exercer esses direitos, envie um e-mail para <a href="mailto:marcosdosanjos@outlook.com" style="color: #4CAF50;">marcosdosanjos@outlook.com</a> com o assunto “LGPD – Solicitação”. Responderemos em até 15 dias.</p>
+            
+            <h2>7. Retenção de dados</h2>
+            <p>Os dados pessoais e arquivos de projeto serão mantidos pelo prazo necessário para cumprir as finalidades descritas, respeitando prazos legais (ex.: questões fiscais, contratuais). Após esse período, serão anonimizados ou excluídos de forma segura.</p>
+            
+            <h2>8. Transferência internacional de dados</h2>
+            <p>A FabricateHub opera prioritariamente no Brasil. Caso utilize serviços de armazenamento em nuvem localizados no exterior, adotamos cláusulas contratuais que garantem o mesmo nível de proteção exigido pela LGPD.</p>
+            
+            <h2>9. Atualizações desta política</h2>
+            <p>Esta política pode ser revisada periodicamente. Notificaremos os usuários por e-mail ou por meio de aviso na plataforma sobre mudanças relevantes. A data da última revisão está indicada no final.</p>
+            
+            <h2>10. Contato – Encarregado de Dados (DPO)</h2>
+            <p>Caso tenha dúvidas sobre privacidade ou queira fazer uma reclamação, entre em contato conosco:</p>
+            <ul>
+                <li><strong>E-mail:</strong> <a href="mailto:marcosdosanjos@outlook.com" style="color: #4CAF50;">marcosdosanjos@outlook.com</a></li>
+                <li><strong>WhatsApp:</strong> (41) 98438-3148</li>
+                <li><strong>Responsável:</strong> Marcos dos Anjos Figueiredo</li>
+            </ul>
+            
+            <hr style="border-color: rgba(255,255,255,0.2); margin: 30px 0;">
+            
+            <p style="text-align: center; font-size: 0.9em; color: rgba(255,255,255,0.7);">
+                Última revisão: Março de 2026<br>
+            </p>
+        </div>
+    </div>
+</div>
 
         <!-- Modais -->
         <div id="quote-modal" class="modal">
@@ -4108,7 +4488,7 @@
                 <div class="footer-container">
                     <div class="footer-column">
                         <h3>FabricateHub</h3>
-                        <p style="color: #bdbdbd; margin-bottom: 20px;">Conectando clientes com fabricantes para fabricação de componentes sob demanda desde 2026.</p>
+                        <p style="color: #bdbdbd; margin-bottom: 20px;">Conectando compradores com indústrias para fabricação de componentes sob demanda desde 2026.</p>
                         <div style="display: flex; gap: 15px;">
                             <a><i class="fab fa-linkedin fa-lg"></i></a>
                             <a><i class="fab fa-twitter fa-lg"></i></a>
@@ -4119,8 +4499,7 @@
                     <div class="footer-column">
                         <h3>Para Clientes</h3>
                         <ul>
-                            <li><a class="nav-link" data-page="home">Como Funciona</a></li>
-                            <li><a id="pricing-link">Preços</a></li>
+                            <li><a id="how-it-works-link">Como Funciona</a></li>
                             <li><a id="file-requirements-link">Requisitos de Arquivo</a></li>
                             <li><a id="material-guide-link">Guia de Materiais</a></li>
                             <li><a id="help-center-link">Central de Ajuda</a></li>
@@ -4133,14 +4512,12 @@
                             <li><a id="nav-fabricator" class="nav-link" data-page="fabricator-page">Painel do Fabricante</a></li>
                             <li><a id="capabilities-link">Verificação de Capacidade</a></li>
                             <li><a id="pricing-guidelines-link">Diretrizes de Preços</a></li>
-                            <li><a id="manufacturer-resources-link">Recursos</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
                         <h3>Empresa</h3>
                         <ul>
                             <li><a id="about-us-link">Sobre Nós</a></li>
-                            <li><a id="blog-link">Blog</a></li>
                             <li><a id="careers-link">Carreiras</a></li>
                             <li><a id="contact-link">Contato</a></li>
                             <li><a id="privacy-link">Política de Privacidade</a></li>
@@ -5390,9 +5767,9 @@
                     }
                 });
 
-                document.getElementById('pricing-link').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    app.showPage('pricing');
+                document.getElementById('how-it-works-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                app.showPage('how-it-works');
                 });
                 document.getElementById('file-requirements-link').addEventListener('click', (e) => {
                     e.preventDefault();
@@ -5418,17 +5795,9 @@
                     e.preventDefault();
                     app.showPage('pricing-guidelines');
                 });
-                document.getElementById('manufacturer-resources-link').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    app.showPage('resources');
-                });
                 document.getElementById('about-us-link').addEventListener('click', (e) => {
                     e.preventDefault();
                     app.showPage('about');
-                });
-                document.getElementById('blog-link').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    app.showPage('blog');
                 });
                 document.getElementById('careers-link').addEventListener('click', (e) => {
                     e.preventDefault();
