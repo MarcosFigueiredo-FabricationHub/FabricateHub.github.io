@@ -4695,38 +4695,87 @@
             event.currentTarget.classList.add('featured');
         };
 
-        // No submit do loginForm
-document.getElementById('loginForm').addEventListener('submit', async function (e) {
+        // Login
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    setButtonLoading('login-btn', true);
+    hideAlert();
 
-    // Verifica se o captcha foi resolvido (idêntico ao que já temos)
-    const hcaptchaResponse = loginForm.querySelector('[name="h-captcha-response"]');
-    if (!hcaptchaResponse || !hcaptchaResponse.value) {
+    // Obtém o token do hCaptcha (campo oculto gerado pelo widget)
+    const captchaToken = document.querySelector('#loginForm [name="h-captcha-response"]')?.value;
+    if (!captchaToken) {
         showAlert('Por favor, resolva o captcha antes de entrar.', 'error');
+        setButtonLoading('login-btn', false);
         return;
     }
 
-    // Pega o email e a senha
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
-    // Chama o Supabase passando o token do captcha
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-        options: {
-            captchaToken: hcaptchaResponse.value  // <- essencial
+    try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password,
+            options: { captchaToken: captchaToken }   // ← token enviado ao Supabase
+        });
+
+        if (error) throw error;
+
+        // O restante do seu código de perfil continua idêntico
+        const { data: profile, error: profileError } = await supabaseClient
+            .from('profiles')
+            .select('*')
+            .eq('id', data.user.id)
+            .single();
+
+        if (profileError && profileError.code === 'PGRST116') {
+            const { data: newProfile } = await supabaseClient
+                .from('profiles')
+                .insert([{
+                    id: data.user.id,
+                    name: data.user.email.split('@')[0],
+                    user_type: 'client'
+                }])
+                .select()
+                .single();
+            
+            currentUser = {
+                id: data.user.id,
+                name: newProfile?.name || data.user.email.split('@')[0],
+                email: data.user.email,
+                type: newProfile?.user_type || 'client',
+                is_verified: false
+            };
+        } else if (profile) {
+            currentUser = {
+                id: data.user.id,
+                name: profile?.name || data.user.email.split('@')[0],
+                email: data.user.email,
+                type: profile?.user_type || 'client',
+                is_verified: profile?.is_verified || false
+            };
+        } else {
+            throw new Error('Erro ao carregar perfil do usuário');
         }
-    });
 
-    // Reseta o captcha (para não ficar bloqueado)
-    hcaptcha.reset();
+        AppState.currentUser = currentUser;
+        localStorage.setItem('fabricatehub_user', JSON.stringify(currentUser));
 
-    if (error) {
-        showAlert(error.message, 'error');
-    } else {
-        showAlert('Login realizado com sucesso!', 'success');
-        // Redirecionar ou atualizar a UI
+        showAlert('Login realizado com sucesso! Redirecionando...', 'success');
+        
+        setTimeout(() => {
+            showMarketplace();
+        }, 1500);
+
+    } catch (error) {
+        console.error('Erro no login:', error);
+        showAlert(error.message || 'Erro ao fazer login', 'error');
+        setButtonLoading('login-btn', false);
+    } finally {
+        // Reseta o captcha para permitir nova tentativa
+        if (typeof hcaptcha !== 'undefined' && hcaptcha.reset) {
+            hcaptcha.reset();
+        }
     }
 });
 
