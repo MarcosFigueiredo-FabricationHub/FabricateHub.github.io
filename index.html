@@ -4696,7 +4696,7 @@
         };
 
         // No submit do loginForm
-loginForm.addEventListener('submit', async function (e) {
+document.getElementById('loginForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
     // Verifica se o captcha foi resolvido (idêntico ao que já temos)
