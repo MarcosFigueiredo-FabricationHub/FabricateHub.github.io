@@ -4846,20 +4846,13 @@ async function handleRecoveryFlow() {
     const accessToken = params.get('access_token');
 
     if (type === 'recovery' && accessToken) {
-        // Estamos no fluxo de redefinição de senha
-        // Não mostrar o marketplace ainda, e sim o formulário de reset
         showResetPasswordForm();
     } else {
-        // Comportamento normal: exibir a página de login
-        showAuthPage();
+        // Opção 1: chamar a função que exibe o login
+        showAuthForm('login');
+        // Opção 2: não fazer nada e deixar o fluxo padrão seguir
     }
 }
-
-// Chame essa função assim que o DOM estiver pronto, antes de configurar os listeners
-document.addEventListener('DOMContentLoaded', () => {
-    // ... seus outros códigos ...
-    handleRecoveryFlow();
-});
 
         // Signup
         document.getElementById('signupForm').addEventListener('submit', async (e) => {
