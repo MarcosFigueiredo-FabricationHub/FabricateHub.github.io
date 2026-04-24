@@ -4890,27 +4890,41 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         });
 
         // Forgot Password
-        document.getElementById('forgotForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            setButtonLoading('forgot-btn', true);
-            hideAlert();
+document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setButtonLoading('forgot-btn', true);
+    hideAlert();
 
-            const email = document.getElementById('forgot-email').value;
+    // 1. Obtém o token do hCaptcha
+    const captchaToken = document.querySelector('#forgotForm [name="h-captcha-response"]')?.value;
+    if (!captchaToken) {
+        showAlert('Por favor, resolva o captcha antes de continuar.', 'error');
+        setButtonLoading('forgot-btn', false);
+        return;
+    }
 
-            try {
-                const { error } = await supabaseClient.auth.resetPasswordForEmail(email);
-                if (error) throw error;
+    const email = document.getElementById('forgot-email').value;
 
-                showAlert('Instruções enviadas para seu email!', 'success');
-                document.getElementById('forgotForm').reset();
-
-            } catch (error) {
-                console.error('Erro:', error);
-                showAlert(error.message || 'Erro ao enviar email', 'error');
-            } finally {
-                setButtonLoading('forgot-btn', false);
-            }
+    try {
+        const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+            captchaToken: captchaToken   // 2. Passa o token ao Supabase
         });
+        if (error) throw error;
+
+        showAlert('Instruções enviadas para seu email!', 'success');
+        document.getElementById('forgotForm').reset();
+
+    } catch (error) {
+        console.error('Erro:', error);
+        showAlert(error.message || 'Erro ao enviar email', 'error');
+    } finally {
+        setButtonLoading('forgot-btn', false);
+        // 3. Reseta o widget após cada tentativa
+        if (typeof hcaptcha !== 'undefined' && hcaptcha.reset) {
+            hcaptcha.reset();
+        }
+    }
+});
 
         // Mostrar Marketplace
         function showMarketplace() {
