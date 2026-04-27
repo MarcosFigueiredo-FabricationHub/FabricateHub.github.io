@@ -4948,24 +4948,44 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     }
 });
 
-// Forgot Password (inalterado)
+// Forgot Password (COM VERIFICAÇÃO DO hCaptcha)
 document.getElementById('forgotForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     setButtonLoading('forgot-btn', true);
     hideAlert();
 
+    // Obtém o token do hCaptcha
+    const captchaToken = document.querySelector('#forgotForm [name="h-captcha-response"]')?.value;
+    if (!captchaToken) {
+        showAlert('Por favor, resolva o captcha antes de continuar.', 'error');
+        setButtonLoading('forgot-btn', false);
+        // Reseta o captcha para permitir nova tentativa
+        if (typeof hcaptcha !== 'undefined' && hcaptcha.reset) {
+            hcaptcha.reset();
+        }
+        return;
+    }
+
     const email = document.getElementById('forgot-email').value;
 
     try {
-        const { error } = await supabaseClient.auth.resetPasswordForEmail(email);
+        const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+            captchaToken: captchaToken   // ← token obrigatório
+        });
         if (error) throw error;
 
-        showAlert('Instruções enviadas para seu email!', 'success');
+        showAlert('Instruções enviadas para o seu email! Verifique a caixa de entrada.', 'success');
         document.getElementById('forgotForm').reset();
+        if (typeof hcaptcha !== 'undefined' && hcaptcha.reset) {
+            hcaptcha.reset();
+        }
 
     } catch (error) {
         console.error('Erro:', error);
-        showAlert(error.message || 'Erro ao enviar email', 'error');
+        showAlert(error.message || 'Erro ao enviar email de recuperação', 'error');
+        if (typeof hcaptcha !== 'undefined' && hcaptcha.reset) {
+            hcaptcha.reset();
+        }
     } finally {
         setButtonLoading('forgot-btn', false);
     }
