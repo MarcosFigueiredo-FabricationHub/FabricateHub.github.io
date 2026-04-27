@@ -4648,6 +4648,7 @@ supabaseClient.auth.onAuthStateChange((event, session) => {
 });
 
 let currentUser = null;
+let app;        
 let AppState = {
     currentUser: null,
     projects: [],
@@ -5683,7 +5684,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // ==================== APLICAÇÃO DO MARKETPLACE ====================
-        const app = {
+        app = {
             init: () => {
                 app.setupEventListeners();
                 app.updateUI();
