@@ -4641,7 +4641,7 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 supabaseClient.auth.onAuthStateChange((event, session) => {
     if (event === 'PASSWORD_RECOVERY') {
         // Mostra automaticamente o formulário de redefinição de senha
-        showAuthForm('reset');
+        showAuthForm('reset-password');
         // Limpa o hash para evitar re-trigger
         window.location.hash = '';
     }
@@ -5020,10 +5020,13 @@ async function handleRecoveryFlow() {
     const accessToken = params.get('access_token');
 
     if (type === 'recovery' && accessToken) {
-        showAuthForm('reset');
+        const resetFormExists = document.getElementById('reset-password-form');
+        if (resetFormExists) {
+            // CORREÇÃO: 'reset-password' forma o ID 'reset-password-form'
+            showAuthForm('reset-password');
+        }
         window.location.hash = '';
     }
-    // Se não for recuperação, o comportamento normal (login) já está definido via showAuthForm('login') chamado em outro lugar ou deixamos como está.
 }
 
 // Executa a verificação assim que o DOM estiver pronto
