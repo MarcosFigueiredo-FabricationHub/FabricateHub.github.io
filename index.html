@@ -4955,7 +4955,7 @@ document.getElementById('forgotForm').addEventListener('submit', async (e) => {
     hideAlert();
 
     // Obtém o token do hCaptcha
-    const captchaToken = document.querySelector('#forgotForm [name="h-captcha-response"]')?.value;
+    const captchaToken = typeof hcaptcha !== 'undefined' ? hcaptcha.getResponse() : null;
     if (!captchaToken) {
         showAlert('Por favor, resolva o captcha antes de continuar.', 'error');
         setButtonLoading('forgot-btn', false);
