@@ -2564,6 +2564,45 @@
                             <input type="email" id="forgot-email" required placeholder="seu@email.com">
                         </div>
 
+                        <!-- Reset Password Form (nova senha) -->
+<div id="reset-password-form" class="form-container-auth">
+    <div class="form-header">
+        <h3>Redefinir Senha</h3>
+        <p>Escolha uma nova senha para sua conta</p>
+    </div>
+    <form id="resetPasswordForm">
+        <div class="form-group">
+            <label for="reset-password">Nova Senha</label>
+            <div class="password-input">
+                <input type="password" id="reset-password" required 
+                       placeholder="Mínimo 6 caracteres" minlength="6">
+                <button type="button" class="password-toggle" 
+                        onclick="togglePassword('reset-password')">
+                    <i class="far fa-eye"></i>
+                </button>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="reset-password-confirm">Confirmar Senha</label>
+            <div class="password-input">
+                <input type="password" id="reset-password-confirm" required 
+                       placeholder="Repita a nova senha">
+                <button type="button" class="password-toggle" 
+                        onclick="togglePassword('reset-password-confirm')">
+                    <i class="far fa-eye"></i>
+                </button>
+            </div>
+        </div>
+        <div id="reset-password-error" style="color: #ff6b6b; margin-bottom: 15px; display: none;"></div>
+        <button type="submit" class="btn btn-primary" id="reset-password-btn">
+            <span>Salvar Nova Senha</span>
+        </button>
+    </form>
+    <div class="form-footer">
+        <a onclick="showAuthForm('login')">← Voltar ao login</a>
+    </div>
+</div>
+
                         <!-- hCaptcha -->
         <div class="h-captcha-container">
             <div class="h-captcha" data-sitekey="e7d2cc12-1d36-4b94-a8a8-4c508f8636b6"></div>
@@ -4586,121 +4625,139 @@
         };
 
         // ==================== CONFIGURAÇÃO SUPABASE ====================
-        const SUPABASE_URL = 'https://evojynztlxbcyfsujtoy.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2b2p5bnp0bHhiY3lmc3VqdG95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1MTA0MDAsImV4cCI6MjA4NDA4NjQwMH0.ylCkwvVMnWsioaF08lyHTz6QQPoJ1DT9BpiOcU_zQyc';
+const SUPABASE_URL = 'https://evojynztlxbcyfsujtoy.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2b2p5bnp0bHhiY3lmc3VqdG95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1MTA0MDAsImV4cCI6MjA4NDA4NjQwMH0.ylCkwvVMnWsioaF08lyHTz6QQPoJ1DT9BpiOcU_zQyc';
 
-        const { createClient } = supabase;
-        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const { createClient } = supabase;
+// ATENÇÃO: adicionei detectSessionInUrl: true para capturar o link de recuperação
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: {
+        detectSessionInUrl: true,
+        flowType: 'pkce'
+    }
+});
 
-        let currentUser = null;
-        let AppState = {
-            currentUser: null,
-            projects: [],
-            fabricatorRequests: [],
-            fabricatorQuotes: [],
-            fabricatorJobs: [],
-            fabricatorCapabilities: {
-                methods: ["cnc-machining", "laser-cutting", "3d-printing", "machining", "welding", "wood-fabrication", "metal-bending"],
-                minOrder: 100,
-                maxSize: "60x60x60",
-                leadTime: 14,
-                materials: "Alumínio, Aço, Aço Inoxidável, ABS, PLA, Nylon"
-            },
-            currentQuoteProject: null,
-            currentQuotePdfFile: null,
-            currentChatProject: null,
-            chatMessages: []
-        };
+// Escuta mudanças no estado de autenticação (ex.: PASSWORD_RECOVERY)
+supabaseClient.auth.onAuthStateChange((event, session) => {
+    if (event === 'PASSWORD_RECOVERY') {
+        // Mostra automaticamente o formulário de redefinição de senha
+        showAuthForm('reset');
+        // Limpa o hash para evitar re-trigger
+        window.location.hash = '';
+    }
+});
 
-        // ==================== FUNÇÕES DE LOGIN ====================
-        function showNotification(message, type = 'success') {
-            const area = document.getElementById('notification-area');
-            const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
-            notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
-            
-            area.appendChild(notification);
-            setTimeout(() => notification.classList.add('active'), 10);
-            
-            setTimeout(() => {
-                notification.classList.remove('active');
-                setTimeout(() => notification.remove(), 300);
-            }, 5000);
-        }
+let currentUser = null;
+let AppState = {
+    currentUser: null,
+    projects: [],
+    fabricatorRequests: [],
+    fabricatorQuotes: [],
+    fabricatorJobs: [],
+    fabricatorCapabilities: {
+        methods: ["cnc-machining", "laser-cutting", "3d-printing", "machining", "welding", "wood-fabrication", "metal-bending"],
+        minOrder: 100,
+        maxSize: "60x60x60",
+        leadTime: 14,
+        materials: "Alumínio, Aço, Aço Inoxidável, ABS, PLA, Nylon"
+    },
+    currentQuoteProject: null,
+    currentQuotePdfFile: null,
+    currentChatProject: null,
+    chatMessages: []
+};
 
-        function showAlert(message, type = 'info') {
-            const alert = document.getElementById('alert');
-            alert.className = `alert alert-${type} show`;
-            alert.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> ${message}`;
-        }
+// ==================== FUNÇÕES DE LOGIN (e agora também de reset) ====================
+function showNotification(message, type = 'success') {
+    const area = document.getElementById('notification-area');
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
+    
+    area.appendChild(notification);
+    setTimeout(() => notification.classList.add('active'), 10);
+    
+    setTimeout(() => {
+        notification.classList.remove('active');
+        setTimeout(() => notification.remove(), 300);
+    }, 5000);
+}
 
-        function hideAlert() {
-            document.getElementById('alert').classList.remove('show');
-        }
+function showAlert(message, type = 'info') {
+    const alert = document.getElementById('alert');
+    alert.className = `alert alert-${type} show`;
+    alert.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> ${message}`;
+}
 
-        function showAuthForm(formName) {
-            document.querySelectorAll('.form-container-auth').forEach(form => form.classList.remove('active'));
-            document.getElementById(`${formName}-form`).classList.add('active');
-            hideAlert();
-        }
+function hideAlert() {
+    document.getElementById('alert').classList.remove('show');
+}
 
-        function togglePassword(inputId) {
-            const input = document.getElementById(inputId);
-            const icon = input.nextElementSibling.querySelector('i');
-            
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
+function showAuthForm(formName) {
+    document.querySelectorAll('.form-container-auth').forEach(form => form.classList.remove('active'));
+    document.getElementById(`${formName}-form`).classList.add('active');
+    hideAlert();
+}
 
-        function setButtonLoading(buttonId, loading) {
-            const btn = document.getElementById(buttonId);
-            const span = btn.querySelector('span');
-            
-            if (loading) {
-                btn.disabled = true;
-                span.innerHTML = '<span class="loading-spinner"></span> Processando...';
-            } else {
-                btn.disabled = false;
-                if (buttonId === 'login-btn') span.textContent = 'Entrar';
-                else if (buttonId === 'signup-btn') span.textContent = 'Criar Conta';
-                else if (buttonId === 'forgot-btn') span.textContent = 'Enviar Instruções';
-            }
-        }
+function togglePassword(inputId) {
+    const input = document.getElementById(inputId);
+    const icon = input.nextElementSibling.querySelector('i');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
 
-        function toggleConditionalFields() {
-            const userType = document.getElementById('signup-usertype').value;
-            const clientFields = document.getElementById('client-fields');
-            const fabricatorFields = document.getElementById('fabricator-fields');
-            
-            if (clientFields) clientFields.classList.remove('active');
-            if (fabricatorFields) fabricatorFields.classList.remove('active');
-            
-            if (userType === 'client' && clientFields) {
-                clientFields.classList.add('active');
-            } else if (userType === 'fabricator' && fabricatorFields) {
-                fabricatorFields.classList.add('active');
-            }
-        }
+function setButtonLoading(buttonId, loading) {
+    const btn = document.getElementById(buttonId);
+    const span = btn.querySelector('span');
+    
+    if (loading) {
+        btn.disabled = true;
+        span.innerHTML = '<span class="loading-spinner"></span> Processando...';
+    } else {
+        btn.disabled = false;
+        if (buttonId === 'login-btn') span.textContent = 'Entrar';
+        else if (buttonId === 'signup-btn') span.textContent = 'Criar Conta';
+        else if (buttonId === 'forgot-btn') span.textContent = 'Enviar Instruções';
+        // NOVA LINHA para o botão de reset
+        else if (buttonId === 'reset-password-btn') span.textContent = 'Salvar Nova Senha';
+    }
+}
 
-        window.selectPlan = function(plan, event) {
-            event.preventDefault();
-            document.getElementById('fabricator-plan').value = plan;
-            document.querySelectorAll('#fabricator-fields .pricing-card').forEach(card => {
-                card.style.border = '1px solid rgba(255,255,255,0.1)';
-                card.classList.remove('featured');
-            });
-            event.currentTarget.style.border = '2px solid var(--primary)';
-            event.currentTarget.classList.add('featured');
-        };
+function toggleConditionalFields() {
+    const userType = document.getElementById('signup-usertype').value;
+    const clientFields = document.getElementById('client-fields');
+    const fabricatorFields = document.getElementById('fabricator-fields');
+    
+    if (clientFields) clientFields.classList.remove('active');
+    if (fabricatorFields) fabricatorFields.classList.remove('active');
+    
+    if (userType === 'client' && clientFields) {
+        clientFields.classList.add('active');
+    } else if (userType === 'fabricator' && fabricatorFields) {
+        fabricatorFields.classList.add('active');
+    }
+}
 
-        // Login
+window.selectPlan = function(plan, event) {
+    event.preventDefault();
+    document.getElementById('fabricator-plan').value = plan;
+    document.querySelectorAll('#fabricator-fields .pricing-card').forEach(card => {
+        card.style.border = '1px solid rgba(255,255,255,0.1)';
+        card.classList.remove('featured');
+    });
+    event.currentTarget.style.border = '2px solid var(--primary)';
+    event.currentTarget.classList.add('featured');
+};
+
+// Login (inalterado)
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     setButtonLoading('login-btn', true);
@@ -4784,135 +4841,196 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     }
 });
 
-        // Signup
-        document.getElementById('signupForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            setButtonLoading('signup-btn', true);
-            hideAlert();
+// Signup (inalterado)
+document.getElementById('signupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setButtonLoading('signup-btn', true);
+    hideAlert();
 
-            const termsCheckbox = document.getElementById('terms-accept');
-            if (!termsCheckbox.checked) {
-                showAlert('Você deve aceitar os Termos e Disclaimer para se cadastrar.', 'error');
-                setButtonLoading('signup-btn', false);
-                return;
-            }
+    const termsCheckbox = document.getElementById('terms-accept');
+    if (!termsCheckbox.checked) {
+        showAlert('Você deve aceitar os Termos e Disclaimer para se cadastrar.', 'error');
+        setButtonLoading('signup-btn', false);
+        return;
+    }
 
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const userType = document.getElementById('signup-usertype').value;
+    const name = document.getElementById('signup-name').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    const userType = document.getElementById('signup-usertype').value;
 
-            let additionalData = {};
-            
-            if (userType === 'client') {
-                const cpf = document.getElementById('client-cpf').value;
-                const cep = document.getElementById('client-cep').value;
-                const phone = document.getElementById('client-phone').value;
-                const clientSubtype = document.getElementById('client-subtype').value;
-                
-                additionalData = {
-                    cpf,
-                    cep,
-                    phone,
-                    client_subtype: clientSubtype,
-                    company_name: null,
-                    company_age: null,
-                    fabrication_areas: null,
-                    file_format_preference: null,
-                    plan: null,
-                    is_verified: false
-                };
-            } else if (userType === 'fabricator') {
-                const cnpj = document.getElementById('fabricator-cnpj').value;
-                const cep = document.getElementById('fabricator-cep').value;
-                const companyName = document.getElementById('fabricator-company-name').value;
-                const companyAge = document.getElementById('fabricator-company-age').value;
-                const phone = document.getElementById('fabricator-phone').value;
-                const plan = document.getElementById('fabricator-plan').value;
-                
-                const areaCheckboxes = document.querySelectorAll('#fabricator-fields input[type="checkbox"]:checked');
-                const fabricationAreas = Array.from(areaCheckboxes).map(cb => cb.value);
-                
-                const fileFormatPref = document.querySelector('input[name="file-format-pref"]:checked');
-                const fileFormatPreference = fileFormatPref ? fileFormatPref.value : 'dedicated';
-                
-                additionalData = {
-                    cnpj,
-                    cep,
-                    phone,
-                    company_name: companyName,
-                    company_age: companyAge || null,
-                    fabrication_areas: fabricationAreas,
-                    file_format_preference: fileFormatPreference,
-                    plan: plan,
-                    cpf: null,
-                    client_subtype: null,
-                    is_verified: (plan === 'Fabricante') // Only Fabricante plan gives verified status
-                };
+    let additionalData = {};
+    
+    if (userType === 'client') {
+        const cpf = document.getElementById('client-cpf').value;
+        const cep = document.getElementById('client-cep').value;
+        const phone = document.getElementById('client-phone').value;
+        const clientSubtype = document.getElementById('client-subtype').value;
+        
+        additionalData = {
+            cpf,
+            cep,
+            phone,
+            client_subtype: clientSubtype,
+            company_name: null,
+            company_age: null,
+            fabrication_areas: null,
+            file_format_preference: null,
+            plan: null,
+            is_verified: false
+        };
+    } else if (userType === 'fabricator') {
+        const cnpj = document.getElementById('fabricator-cnpj').value;
+        const cep = document.getElementById('fabricator-cep').value;
+        const companyName = document.getElementById('fabricator-company-name').value;
+        const companyAge = document.getElementById('fabricator-company-age').value;
+        const phone = document.getElementById('fabricator-phone').value;
+        const plan = document.getElementById('fabricator-plan').value;
+        
+        const areaCheckboxes = document.querySelectorAll('#fabricator-fields input[type="checkbox"]:checked');
+        const fabricationAreas = Array.from(areaCheckboxes).map(cb => cb.value);
+        
+        const fileFormatPref = document.querySelector('input[name="file-format-pref"]:checked');
+        const fileFormatPreference = fileFormatPref ? fileFormatPref.value : 'dedicated';
+        
+        additionalData = {
+            cnpj,
+            cep,
+            phone,
+            company_name: companyName,
+            company_age: companyAge || null,
+            fabrication_areas: fabricationAreas,
+            file_format_preference: fileFormatPreference,
+            plan: plan,
+            cpf: null,
+            client_subtype: null,
+            is_verified: (plan === 'Fabricante') // Only Fabricante plan gives verified status
+        };
 
-                if (!plan) {
-                    showAlert('Por favor, selecione um plano de assinatura.', 'error');
-                    setButtonLoading('signup-btn', false);
-                    return;
+        if (!plan) {
+            showAlert('Por favor, selecione um plano de assinatura.', 'error');
+            setButtonLoading('signup-btn', false);
+            return;
+        }
+    }
+
+    try {
+        const { data, error } = await supabaseClient.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: {
+                    name: name,
+                    user_type: userType,
+                    ...additionalData
                 }
             }
-
-            try {
-                const { data, error } = await supabaseClient.auth.signUp({
-                    email: email,
-                    password: password,
-                    options: {
-                        data: {
-                            name: name,
-                            user_type: userType,
-                            ...additionalData
-                        }
-                    }
-                });
-
-                if (error) throw error;
-
-                showAlert('Conta criada com sucesso! Você pode fazer login agora.', 'success');
-                
-                document.getElementById('signupForm').reset();
-                toggleConditionalFields();
-                
-                setTimeout(() => {
-                    showAuthForm('login');
-                }, 2000);
-
-            } catch (error) {
-                console.error('Erro no registro:', error);
-                showAlert(error.message || 'Erro ao criar conta', 'error');
-            } finally {
-                setButtonLoading('signup-btn', false);
-            }
         });
 
-        // Forgot Password
-        document.getElementById('forgotForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            setButtonLoading('forgot-btn', true);
-            hideAlert();
+        if (error) throw error;
 
-            const email = document.getElementById('forgot-email').value;
+        showAlert('Conta criada com sucesso! Você pode fazer login agora.', 'success');
+        
+        document.getElementById('signupForm').reset();
+        toggleConditionalFields();
+        
+        setTimeout(() => {
+            showAuthForm('login');
+        }, 2000);
 
-            try {
-                const { error } = await supabaseClient.auth.resetPasswordForEmail(email);
-                if (error) throw error;
+    } catch (error) {
+        console.error('Erro no registro:', error);
+        showAlert(error.message || 'Erro ao criar conta', 'error');
+    } finally {
+        setButtonLoading('signup-btn', false);
+    }
+});
 
-                showAlert('Instruções enviadas para seu email!', 'success');
-                document.getElementById('forgotForm').reset();
+// Forgot Password (inalterado)
+document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setButtonLoading('forgot-btn', true);
+    hideAlert();
 
-            } catch (error) {
-                console.error('Erro:', error);
-                showAlert(error.message || 'Erro ao enviar email', 'error');
-            } finally {
-                setButtonLoading('forgot-btn', false);
-            }
-        });
+    const email = document.getElementById('forgot-email').value;
 
-        // Mostrar Marketplace
+    try {
+        const { error } = await supabaseClient.auth.resetPasswordForEmail(email);
+        if (error) throw error;
+
+        showAlert('Instruções enviadas para seu email!', 'success');
+        document.getElementById('forgotForm').reset();
+
+    } catch (error) {
+        console.error('Erro:', error);
+        showAlert(error.message || 'Erro ao enviar email', 'error');
+    } finally {
+        setButtonLoading('forgot-btn', false);
+    }
+});
+
+// ==================== NOVA FUNCIONALIDADE: REDEFINIÇÃO DE SENHA ====================
+// Handler para o formulário que aparece após clicar no link do e-mail
+document.getElementById('resetPasswordForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setButtonLoading('reset-password-btn', true);
+    
+    const password = document.getElementById('reset-password').value;
+    const confirmPassword = document.getElementById('reset-password-confirm').value;
+    const errorDiv = document.getElementById('reset-password-error');
+    
+    // Validações
+    if (password !== confirmPassword) {
+        errorDiv.textContent = 'As senhas não coincidem.';
+        errorDiv.style.display = 'block';
+        setButtonLoading('reset-password-btn', false);
+        return;
+    }
+    if (password.length < 6) {
+        errorDiv.textContent = 'A senha deve ter no mínimo 6 caracteres.';
+        errorDiv.style.display = 'block';
+        setButtonLoading('reset-password-btn', false);
+        return;
+    }
+    
+    errorDiv.style.display = 'none';
+    
+    try {
+        const { error } = await supabaseClient.auth.updateUser({ password });
+        
+        if (error) throw error;
+        
+        showAlert('Senha redefinida com sucesso! Faça login com sua nova senha.', 'success');
+        showAuthForm('login');
+        window.location.hash = '';
+        
+    } catch (err) {
+        errorDiv.textContent = err.message || 'Ocorreu um erro. Tente novamente.';
+        errorDiv.style.display = 'block';
+    } finally {
+        setButtonLoading('reset-password-btn', false);
+    }
+});
+
+// Fallback: caso o onAuthStateChange não dispare, verificamos o hash manualmente ao carregar a página
+async function handleRecoveryFlow() {
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    const type = params.get('type');
+    const accessToken = params.get('access_token');
+
+    if (type === 'recovery' && accessToken) {
+        showAuthForm('reset');
+        window.location.hash = '';
+    }
+    // Se não for recuperação, o comportamento normal (login) já está definido via showAuthForm('login') chamado em outro lugar ou deixamos como está.
+}
+
+// Executa a verificação assim que o DOM estiver pronto
+document.addEventListener('DOMContentLoaded', () => {
+    handleRecoveryFlow();
+    // Outros códigos de inicialização podem ser colocados aqui...
+});        // Mostrar Marketplace
         function showMarketplace() {
             window.scrollTo(0, 0);
             document.body.style.overflow = 'auto';
