@@ -2298,8 +2298,8 @@
 
         <!-- 🔒 hCaptcha inserido aqui -->
         <div class="h-captcha-container">
-    <div class="h-captcha" data-sitekey="e7d2cc12-1d36-4b94-a8a8-4c508f8636b6" data-callback="forgotCaptchaCallback"></div>
-</div>
+            <div class="h-captcha" data-sitekey="e7d2cc12-1d36-4b94-a8a8-4c508f8636b6"></div>
+        </div>
 
         <button type="submit" class="btn btn-primary" id="login-btn">
             <span>Entrar</span>
@@ -4625,12 +4625,6 @@
             }
         };
 
-        // Callback e token para o hCaptcha do formulário "Esqueci minha senha"
-let forgotCaptchaToken = null;
-window.forgotCaptchaCallback = function(token) {
-    forgotCaptchaToken = token;
-};
-
         // ==================== CONFIGURAÇÃO SUPABASE ====================
 const SUPABASE_URL = 'https://evojynztlxbcyfsujtoy.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2b2p5bnp0bHhiY3lmc3VqdG95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1MTA0MDAsImV4cCI6MjA4NDA4NjQwMH0.ylCkwvVMnWsioaF08lyHTz6QQPoJ1DT9BpiOcU_zQyc';
@@ -4961,18 +4955,14 @@ document.getElementById('forgotForm').addEventListener('submit', async (e) => {
     hideAlert();
 
     // Obtém o token do hCaptcha
-    document.getElementById('forgotForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    setButtonLoading('forgot-btn', true);
-    hideAlert();
-
-    // Usa o token guardado pelo callback, em vez de getResponse()
-    const captchaToken = forgotCaptchaToken;
+    const captchaToken = typeof hcaptcha !== 'undefined' ? hcaptcha.getResponse() : null;
     if (!captchaToken) {
         showAlert('Por favor, resolva o captcha antes de continuar.', 'error');
         setButtonLoading('forgot-btn', false);
-        // Reset ao widget específico (se houver referência), como fallback fazemos reset global
-        if (typeof hcaptcha !== 'undefined' && hcaptcha.reset) hcaptcha.reset();
+        // Reseta o captcha para permitir nova tentativa
+        if (typeof hcaptcha !== 'undefined' && hcaptcha.reset) {
+            hcaptcha.reset();
+        }
         return;
     }
 
@@ -4980,19 +4970,22 @@ document.getElementById('forgotForm').addEventListener('submit', async (e) => {
 
     try {
         const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-            captchaToken: captchaToken
+            captchaToken: captchaToken   // ← token obrigatório
         });
         if (error) throw error;
 
         showAlert('Instruções enviadas para o seu email! Verifique a caixa de entrada.', 'success');
         document.getElementById('forgotForm').reset();
-        forgotCaptchaToken = null; // limpa para próxima tentativa
-        if (typeof hcaptcha !== 'undefined' && hcaptcha.reset) hcaptcha.reset();
+        if (typeof hcaptcha !== 'undefined' && hcaptcha.reset) {
+            hcaptcha.reset();
+        }
+
     } catch (error) {
         console.error('Erro:', error);
         showAlert(error.message || 'Erro ao enviar email de recuperação', 'error');
-        forgotCaptchaToken = null;
-        if (typeof hcaptcha !== 'undefined' && hcaptcha.reset) hcaptcha.reset();
+        if (typeof hcaptcha !== 'undefined' && hcaptcha.reset) {
+            hcaptcha.reset();
+        }
     } finally {
         setButtonLoading('forgot-btn', false);
     }
