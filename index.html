@@ -2553,19 +2553,33 @@
 
                 <!-- Forgot Password Form -->
                 <div id="forgot-form" class="form-container-auth">
-                    <div class="form-header">
-                        <h3>Recuperar Senha</h3>
-                        <p>Digite seu email para receber instruções</p>
-                    </div>
+    <div class="form-header">
+        <h3>Recuperar Senha</h3>
+        <p>Digite seu email para receber instruções</p>
+    </div>
 
-                    <form id="forgotForm">
-                        <div class="form-group">
-                            <label for="forgot-email">Email</label>
-                            <input type="email" id="forgot-email" required placeholder="seu@email.com">
-                        </div>
-                    </form>
+    <form id="forgotForm">
+        <div class="form-group">
+            <label for="forgot-email">Email</label>
+            <input type="email" id="forgot-email" required placeholder="seu@email.com">
+        </div>
 
-                        <!-- Reset Password Form (nova senha) -->
+        <!-- hCaptcha (agora dentro do form) -->
+        <div class="h-captcha-container">
+            <div class="h-captcha" data-sitekey="e7d2cc12-1d36-4b94-a8a8-4c508f8636b6"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="forgot-btn">
+            <span>Enviar Instruções</span>
+        </button>
+    </form>
+
+    <div class="form-footer">
+        <a onclick="showAuthForm('login')">← Voltar ao login</a>
+    </div>
+</div>
+
+<!-- Reset Password Form (fora do forgot-form) -->
 <div id="reset-password-form" class="form-container-auth">
     <div class="form-header">
         <h3>Redefinir Senha</h3>
