@@ -2564,7 +2564,7 @@
             <input type="email" id="forgot-email" required placeholder="seu@email.com">
         </div>
 
-        <!-- hCaptcha (agora dentro do form) -->
+        <!-- hCaptcha -->
         <div class="h-captcha-container">
             <div class="h-captcha" data-sitekey="e7d2cc12-1d36-4b94-a8a8-4c508f8636b6"></div>
         </div>
@@ -2579,23 +2579,30 @@
     </div>
 </div>
 
-<!-- Reset Password Form (fora do forgot-form) -->
+<!-- Reset Password Form (NÃO pode estar dentro de outro form) -->
 <div id="reset-password-form" class="form-container-auth">
-    
-                        <!-- hCaptcha -->
-        <div class="h-captcha-container">
-            <div class="h-captcha" data-sitekey="e7d2cc12-1d36-4b94-a8a8-4c508f8636b6"></div>
+    <div class="form-header">
+        <h3>Redefinir Senha</h3>
+        <p>Escolha uma nova senha</p>
+    </div>
+    <form id="resetPasswordForm">
+        <div class="form-group">
+            <label for="reset-password">Nova Senha</label>
+            <input type="password" id="reset-password" required placeholder="Mínimo 6 caracteres" minlength="6">
         </div>
-
-                        <button type="submit" class="btn btn-primary" id="forgot-btn">
-                            <span>Enviar Instruções</span>
-                        </button>
-                    </form>
-
-                    <div class="form-footer">
-                        <a onclick="showAuthForm('login')">← Voltar ao login</a>
-                    </div>
-                </div>
+        <div class="form-group">
+            <label for="reset-password-confirm">Confirmar Senha</label>
+            <input type="password" id="reset-password-confirm" required placeholder="Repita a nova senha">
+        </div>
+        <div id="reset-password-error" style="color: #ff6b6b; margin-bottom: 15px; display: none;"></div>
+        <button type="submit" class="btn btn-primary" id="reset-password-btn">
+            <span>Salvar Nova Senha</span>
+        </button>
+    </form>
+    <div class="form-footer">
+        <a onclick="showAuthForm('login')">← Voltar ao login</a>
+    </div>
+</div>
                 
                 <!-- ========== PLANOS DE ASSINATURA (nova aba) ========== -->
 <div id="pricing-form" class="form-container-auth">
