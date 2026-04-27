@@ -4986,8 +4986,8 @@ document.getElementById('resetPasswordForm').addEventListener('submit', async (e
         setButtonLoading('reset-password-btn', false);
         return;
     }
-    if (password.length < 6) {
-        errorDiv.textContent = 'A senha deve ter no mínimo 6 caracteres.';
+    if (password.length < 10) {
+        errorDiv.textContent = 'A senha deve ter no mínimo 10 caracteres.';
         errorDiv.style.display = 'block';
         setButtonLoading('reset-password-btn', false);
         return;
@@ -5020,11 +5020,7 @@ async function handleRecoveryFlow() {
     const accessToken = params.get('access_token');
 
     if (type === 'recovery' && accessToken) {
-        const resetFormExists = document.getElementById('reset-password-form');
-        if (resetFormExists) {
-            // CORREÇÃO: 'reset-password' forma o ID 'reset-password-form'
-            showAuthForm('reset-password');
-        }
+        showAuthForm('reset-password');   // ✅ gera o ID 'reset-password-form'
         window.location.hash = '';
     }
 }
@@ -5033,7 +5029,8 @@ async function handleRecoveryFlow() {
 document.addEventListener('DOMContentLoaded', () => {
     handleRecoveryFlow();
     // Outros códigos de inicialização podem ser colocados aqui...
-});        // Mostrar Marketplace
+});        
+        // Mostrar Marketplace
         function showMarketplace() {
             window.scrollTo(0, 0);
             document.body.style.overflow = 'auto';
