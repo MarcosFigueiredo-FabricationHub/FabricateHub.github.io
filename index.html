@@ -4623,16 +4623,24 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     }
 });
 
-// Escuta mudanças no estado de autenticação (ex.: PASSWORD_RECOVERY)
+// ==================== CONFIGURAÇÃO DO LISTENER DE AUTENTICAÇÃO ====================
 supabaseClient.auth.onAuthStateChange((event, session) => {
-    if (event === 'PASSWORD_RECOVERY') {
-        // Mostra automaticamente o formulário de redefinição de senha
-        showAuthForm('reset-password');
-        // Limpa o hash para evitar re-trigger
-        window.location.hash = '';
-    }
-});
+  console.log('🔔 Evento recebido:', event);
+  if (session) {
+    console.log('📦 Sessão ativa, amr:', session.user?.amr);
+  }
 
+  if (event === 'PASSWORD_RECOVERY') {
+    console.log('✅ PASSWORD_RECOVERY disparado – exibindo formulário');
+    showAuthForm('reset-password');
+    window.location.hash = '';
+  } 
+  else if (event === 'SIGNED_IN' && session?.user?.amr?.some(e => e.method === 'recovery')) {
+    console.log('✅ Sessão de recuperação detectada – exibindo formulário');
+    showAuthForm('reset-password');
+  }
+});
+        
 let currentUser = null;
 let app;        
 let AppState = {
@@ -4976,71 +4984,59 @@ document.getElementById('forgotForm').addEventListener('submit', async (e) => {
     }
 });
 
-// ==================== NOVA FUNCIONALIDADE: REDEFINIÇÃO DE SENHA ====================
-// Handler será registrado somente quando o DOM estiver pronto
+// ==================== INICIALIZAÇÃO SEGURA ====================
 function initResetPasswordForm() {
-    const form = document.getElementById('resetPasswordForm');
-    if (!form) {
-        console.error('resetPasswordForm não encontrado');
-        return;
+  const form = document.getElementById('resetPasswordForm');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setButtonLoading('reset-password-btn', true);
+    
+    const password = document.getElementById('reset-password').value;
+    const confirmPassword = document.getElementById('reset-password-confirm').value;
+    const errorDiv = document.getElementById('reset-password-error');
+    
+    if (password !== confirmPassword) {
+      errorDiv.textContent = 'As senhas não coincidem.';
+      errorDiv.style.display = 'block';
+      setButtonLoading('reset-password-btn', false);
+      return;
     }
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        setButtonLoading('reset-password-btn', true);
+    if (password.length < 10) {
+      errorDiv.textContent = 'A senha deve ter no mínimo 10 caracteres.';
+      errorDiv.style.display = 'block';
+      setButtonLoading('reset-password-btn', false);
+      return;
+    }
     
-        const password = document.getElementById('reset-password').value;
-        const confirmPassword = document.getElementById('reset-password-confirm').value;
-        const errorDiv = document.getElementById('reset-password-error');
+    errorDiv.style.display = 'none';
     
-        if (password !== confirmPassword) {
-            errorDiv.textContent = 'As senhas não coincidem.';
-            errorDiv.style.display = 'block';
-            setButtonLoading('reset-password-btn', false);
-            return;
-        }
-        if (password.length < 10) {
-            errorDiv.textContent = 'A senha deve ter no mínimo 10 caracteres.';
-            errorDiv.style.display = 'block';
-            setButtonLoading('reset-password-btn', false);
-            return;
-        }
-    
-        errorDiv.style.display = 'none';
-    
-        try {
-            const { error } = await supabaseClient.auth.updateUser({ password });
-            if (error) throw error;
-    
-            showAlert('Senha redefinida com sucesso! Faça login com sua nova senha.', 'success');
-            showAuthForm('login');
-            window.location.hash = '';
-        } catch (err) {
-            errorDiv.textContent = err.message || 'Ocorreu um erro. Tente novamente.';
-            errorDiv.style.display = 'block';
-        } finally {
-            setButtonLoading('reset-password-btn', false);
-        }
-    });
+    try {
+      const { error } = await supabaseClient.auth.updateUser({ password });
+      if (error) throw error;
+      
+      showAlert('Senha redefinida com sucesso! Faça login com sua nova senha.', 'success');
+      showAuthForm('login');
+      window.location.hash = '';
+    } catch (err) {
+      errorDiv.textContent = err.message || 'Ocorreu um erro. Tente novamente.';
+      errorDiv.style.display = 'block';
+    } finally {
+      setButtonLoading('reset-password-btn', false);
+    }
+  });
 }
 
-// Fallback: caso o onAuthStateChange não dispare, verificamos o hash manualmente ao carregar a página
-async function handleRecoveryFlow() {
-    const hash = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash);
-    const type = params.get('type');
-    const accessToken = params.get('access_token');
+document.addEventListener('DOMContentLoaded', () => {
+  initResetPasswordForm();
 
-    if (type === 'recovery' && accessToken) {
-        showAuthForm('reset-password');   // ✅ gera o ID 'reset-password-form'
-        window.location.hash = '';
-    }
-}
-
-// Executa ao carregar a página
-document.addEventListener('DOMContentLoaded', async () => {
-    // Registra o evento do formulário de reset (agora seguro, pois o DOM existe)
-    initResetPasswordForm();
-
+  // Fallback extra (caso o hash ainda esteja presente)
+  const hash = window.location.hash.substring(1);
+  if (new URLSearchParams(hash).get('type') === 'recovery') {
+    showAuthForm('reset-password');
+  }
+});
     // Fallback 1: Verifica o hash da URL (caso ainda não tenha sido consumido)
     const hash = window.location.hash.substring(1);
     const params = new URLSearchParams(hash);
