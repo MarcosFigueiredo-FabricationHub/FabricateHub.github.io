@@ -4977,47 +4977,51 @@ document.getElementById('forgotForm').addEventListener('submit', async (e) => {
 });
 
 // ==================== NOVA FUNCIONALIDADE: REDEFINIÇÃO DE SENHA ====================
-// Handler para o formulário que aparece após clicar no link do e-mail
-document.getElementById('resetPasswordForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    setButtonLoading('reset-password-btn', true);
-    
-    const password = document.getElementById('reset-password').value;
-    const confirmPassword = document.getElementById('reset-password-confirm').value;
-    const errorDiv = document.getElementById('reset-password-error');
-    
-    // Validações
-    if (password !== confirmPassword) {
-        errorDiv.textContent = 'As senhas não coincidem.';
-        errorDiv.style.display = 'block';
-        setButtonLoading('reset-password-btn', false);
+// Handler será registrado somente quando o DOM estiver pronto
+function initResetPasswordForm() {
+    const form = document.getElementById('resetPasswordForm');
+    if (!form) {
+        console.error('resetPasswordForm não encontrado');
         return;
     }
-    if (password.length < 10) {
-        errorDiv.textContent = 'A senha deve ter no mínimo 10 caracteres.';
-        errorDiv.style.display = 'block';
-        setButtonLoading('reset-password-btn', false);
-        return;
-    }
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        setButtonLoading('reset-password-btn', true);
     
-    errorDiv.style.display = 'none';
+        const password = document.getElementById('reset-password').value;
+        const confirmPassword = document.getElementById('reset-password-confirm').value;
+        const errorDiv = document.getElementById('reset-password-error');
     
-    try {
-        const { error } = await supabaseClient.auth.updateUser({ password });
-        
-        if (error) throw error;
-        
-        showAlert('Senha redefinida com sucesso! Faça login com sua nova senha.', 'success');
-        showAuthForm('login');
-        window.location.hash = '';
-        
-    } catch (err) {
-        errorDiv.textContent = err.message || 'Ocorreu um erro. Tente novamente.';
-        errorDiv.style.display = 'block';
-    } finally {
-        setButtonLoading('reset-password-btn', false);
-    }
-});
+        if (password !== confirmPassword) {
+            errorDiv.textContent = 'As senhas não coincidem.';
+            errorDiv.style.display = 'block';
+            setButtonLoading('reset-password-btn', false);
+            return;
+        }
+        if (password.length < 10) {
+            errorDiv.textContent = 'A senha deve ter no mínimo 10 caracteres.';
+            errorDiv.style.display = 'block';
+            setButtonLoading('reset-password-btn', false);
+            return;
+        }
+    
+        errorDiv.style.display = 'none';
+    
+        try {
+            const { error } = await supabaseClient.auth.updateUser({ password });
+            if (error) throw error;
+    
+            showAlert('Senha redefinida com sucesso! Faça login com sua nova senha.', 'success');
+            showAuthForm('login');
+            window.location.hash = '';
+        } catch (err) {
+            errorDiv.textContent = err.message || 'Ocorreu um erro. Tente novamente.';
+            errorDiv.style.display = 'block';
+        } finally {
+            setButtonLoading('reset-password-btn', false);
+        }
+    });
+}
 
 // Fallback: caso o onAuthStateChange não dispare, verificamos o hash manualmente ao carregar a página
 async function handleRecoveryFlow() {
@@ -5032,11 +5036,30 @@ async function handleRecoveryFlow() {
     }
 }
 
-// Executa a verificação assim que o DOM estiver pronto
-document.addEventListener('DOMContentLoaded', () => {
-    handleRecoveryFlow();
-    // Outros códigos de inicialização podem ser colocados aqui...
+// Executa ao carregar a página
+document.addEventListener('DOMContentLoaded', async () => {
+    // Registra o evento do formulário de reset (agora seguro, pois o DOM existe)
+    initResetPasswordForm();
+
+    // Fallback 1: Verifica o hash da URL (caso ainda não tenha sido consumido)
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    const type = params.get('type');
+    if (type === 'recovery') {
+        showAuthForm('reset-password');
+        return;
+    }
+
+    // Fallback 2: Verifica a sessão atual — se foi iniciada via "recovery"
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session?.user?.amr?.some(entry => entry.method === 'recovery')) {
+        showAuthForm('reset-password');
+        return;
+    }
+
+    // Se nenhum fallback for acionado, a página permanece no formulário padrão (login)
 });        
+        
         // Mostrar Marketplace
         function showMarketplace() {
             window.scrollTo(0, 0);
