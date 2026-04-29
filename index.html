@@ -4601,16 +4601,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // ==================== FUNÇÃO DE DISCLAIMER ====================
-        window.openDisclaimerModal = function() {
-            const modal = document.getElementById('disclaimer-modal');
-            if (modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        };
+        
+        // ==================== SALVA HASH ORIGINAL (ANTES DO SUPABASE LIMPAR) ====================
+const initialHash = window.location.hash;
 
-        // ==================== FUNÇÃO DE DISCLAIMER ====================
+// ==================== FUNÇÃO DE DISCLAIMER ====================
 window.openDisclaimerModal = function() {
     const modal = document.getElementById('disclaimer-modal');
     if (modal) {
@@ -4631,7 +4626,7 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     }
 });
 
-// Listener de autenticação atualizado
+// ==================== LISTENER DE AUTENTICAÇÃO ====================
 supabaseClient.auth.onAuthStateChange((event, session) => {
     console.log('🔔 Evento auth:', event);
 
@@ -4641,14 +4636,21 @@ supabaseClient.auth.onAuthStateChange((event, session) => {
         window.location.hash = '';
     } 
     else if (event === 'SIGNED_IN') {
-        // Consulta assíncrona para obter sessão completa com `amr`
-        (async () => {
+        // Primeiro: verifica se o hash original continha "type=recovery"
+        if (initialHash.includes('type=recovery')) {
+            console.log('✅ Recuperação detectada pelo hash original');
+            showAuthForm('reset-password');
+            return;
+        }
+
+        // Segundo: tenta obter a sessão completa (pode levar um tempo)
+        setTimeout(async () => {
             const { data: { session: fullSession } } = await supabaseClient.auth.getSession();
             if (fullSession?.user?.amr?.some(entry => entry.method === 'recovery')) {
-                console.log('✅ Sessão de recuperação confirmada – exibindo formulário');
+                console.log('✅ Sessão de recuperação confirmada (após delay)');
                 showAuthForm('reset-password');
             }
-        })();
+        }, 1500);
     }
 });
 
@@ -4998,12 +5000,6 @@ function initResetPasswordForm() {
 // ==================== INICIALIZAÇÃO ====================
 document.addEventListener('DOMContentLoaded', () => {
     initResetPasswordForm();
-
-    // Fallback extra: verifica hash manualmente
-    const hash = window.location.hash.substring(1);
-    if (new URLSearchParams(hash).get('type') === 'recovery') {
-        showAuthForm('reset-password');
-    }
 });        
         
         // Mostrar Marketplace
