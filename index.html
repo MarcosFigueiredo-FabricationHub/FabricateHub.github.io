@@ -4631,18 +4631,24 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     }
 });
 
-// ==================== LISTENER DE AUTENTICAÇÃO ====================
+// Listener de autenticação atualizado
 supabaseClient.auth.onAuthStateChange((event, session) => {
     console.log('🔔 Evento auth:', event);
-    if (session) console.log('📦 Sessão amr:', session.user?.amr);
 
     if (event === 'PASSWORD_RECOVERY') {
         console.log('✅ Exibindo formulário de reset (via evento PASSWORD_RECOVERY)');
         showAuthForm('reset-password');
         window.location.hash = '';
-    } else if (event === 'SIGNED_IN' && session?.user?.amr?.some(entry => entry.method === 'recovery')) {
-        console.log('✅ Sessão recovery detectada – exibindo formulário');
-        showAuthForm('reset-password');
+    } 
+    else if (event === 'SIGNED_IN') {
+        // Consulta assíncrona para obter sessão completa com `amr`
+        (async () => {
+            const { data: { session: fullSession } } = await supabaseClient.auth.getSession();
+            if (fullSession?.user?.amr?.some(entry => entry.method === 'recovery')) {
+                console.log('✅ Sessão de recuperação confirmada – exibindo formulário');
+                showAuthForm('reset-password');
+            }
+        })();
     }
 });
 
