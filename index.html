@@ -2386,6 +2386,44 @@
     transform: scale(0.95);
     transform-origin: left center;
 }
+/* Correção para os links do footer da landing page */
+#landing-page .footer-column a {
+    display: block;          /* cada link em uma nova linha */
+    margin-bottom: 10px;    /* espaçamento vertical entre os links */
+    color: #bdbdbd;
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+#landing-page .footer-column a:hover {
+    color: var(--primary-light);
+    text-decoration: underline;
+}
+
+/* Garantir que as colunas tenham largura adequada */
+#landing-page .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-between;
+}
+
+#landing-page .footer-column {
+    flex: 1;
+    min-width: 150px;
+}
+
+/* Responsivo: empilhar em telas pequenas */
+@media (max-width: 768px) {
+    #landing-page .footer-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    #landing-page .footer-column {
+        width: 100%;
+    }
+}
     </style>
 </head>
 <body>
@@ -2472,29 +2510,41 @@
             <p>Capacidades industriais diversificadas para qualquer demanda</p>
         </div>
         <div class="methods-mini-grid">
-            <div class="method-mini-card">
-                <img src="/home/z/Website/Index/Cnc.png" alt="Usinagem CNC">
-                <span>Usinagem CNC</span>
+            <!-- CNC -->
+            <div class="equipment-card">
+                <img src="/Cnc.png" alt="CNC Machine" class="equipment-image">
+                <h3>CNC</h3>
+                <p>Usinagem de precisão</p>
             </div>
-            <div class="method-mini-card">
-                <img src="/home/z/Website/Index/Corte a laser.jpg" alt="Corte a Laser">
-                <span>Corte a Laser</span>
+            <!-- Corte a Laser -->
+            <div class="equipment-card">
+                <img src="/Cortealaser.jpg" alt="Corte a Laser" class="equipment-image">
+                <h3>Corte a Laser</h3>
+                <p>Corte e gravação com laser</p>
             </div>
-            <div class="method-mini-card">
-                <img src="/home/z/Website/Index/Impressão 3d.png" alt="Impressão 3D">
-                <span>Impressão 3D</span>
+            <!-- Impressão 3D -->
+            <div class="equipment-card">
+                <img src="/Impressão3d.png" alt="Impressão 3D" class="equipment-image">
+                <h3>Impressão 3D</h3>
+                <p>Fabricação aditiva</p>
             </div>
-            <div class="method-mini-card">
-                <img src="/home/z/Website/Index/Soldagem.png" alt="Soldagem">
-                <span>Soldagem e Fabricação</span>
+            <!-- Soldagem -->
+            <div class="equipment-card">
+                <img src="/Soldagem.png" alt="Soldagem" class="equipment-image">
+                <h3>Soldagem</h3>
+                <p>Serviços de soldagem profissional</p>
             </div>
-            <div class="method-mini-card">
-                <img src="/home/z/Website/Index/Marcenaria.webp" alt="Fabricação em Madeira">
-                <span>Fabricação em Madeira</span>
+            <!-- Marcenaria -->
+            <div class="equipment-card">
+                <img src="/Marcenaria.webp" alt="Marcenaria" class="equipment-image">
+                <h3>Marcenaria</h3>
+                <p>Trabalho em madeira</p>
             </div>
-            <div class="method-mini-card">
-                <img src="/home/z/Website/Index/Calandra.png" alt="Conformação de metais">
-                <span>Conformação de metais</span>
+            <!-- Calandra -->
+            <div class="equipment-card">
+                <img src="/Calandra.png" alt="Calandra" class="equipment-image">
+                <h3>Calandra</h3>
+                <p>Máquina de conformação de chapas</p>
             </div>
         </div>
     </div>
@@ -2509,17 +2559,35 @@
         </div>
 
         <footer>
-            <div class="container">
-                <div class="footer-container">
-                    <div class="footer-column"><h3>FabricateHub</h3><a>Sobre</a></div>
-                    <div class="footer-column"><h3>Para clientes</h3><a>Como funciona</a><a>Requisitos de arquivo</a><a>Guia de materiais</a></div>
-                    <div class="footer-column"><h3>Para fabricantes</h3><a>Seja parceiro</a><a>Planos</a><a>Central de ajuda</a></div>
-                    <div class="footer-column"><h3>Suporte</h3><a>Contato</a><a>Política de privacidade</a><a>Termos de uso</a></div>
-                </div>
-                <div class="copyright">© 2026 FabricateHub – Conectando a indústria brasileira. Todos os direitos reservados.</div>
+    <div class="container">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>FabricateHub</h3>
+                <a id="landing-about-link">Sobre</a>
             </div>
-        </footer>
+            <div class="footer-column">
+                <h3>Para clientes</h3>
+                <a id="landing-how-it-works-link">Como funciona</a>
+                <a id="landing-file-requirements-link">Requisitos de arquivo</a>
+                <a id="landing-material-guide-link">Guia de materiais</a>
+            </div>
+            <div class="footer-column">
+                <h3>Para fabricantes</h3>
+                <a id="landing-become-partner-link">Seja parceiro</a>
+                <a id="landing-pricing-link">Planos</a>
+                <a id="landing-help-center-link">Central de ajuda</a>
+            </div>
+            <div class="footer-column">
+                <h3>Suporte</h3>
+                <a id="landing-contact-link">Contato</a>
+                <a id="landing-privacy-link">Política de privacidade</a>
+                <a id="landing-terms-link">Termos de uso</a>
+            </div>
+        </div>
+        <div class="copyright">© 2026 FabricateHub – Conectando a indústria brasileira. Todos os direitos reservados.</div>
     </div>
+</footer>
+</div>
     
     <!-- ========== PÁGINA DE LOGIN ========== -->
     <div id="auth-page" class="active">
@@ -2871,11 +2939,6 @@
                             </div>
                         </div>
                         
-                        <!-- 🔒 hCaptcha no cadastro -->
-<div class="h-captcha-container" style="margin-bottom: 20px;">
-    <div class="h-captcha" data-sitekey="e7d2cc12-1d36-4b94-a8a8-4c508f8636b6"></div>
-</div>
-
                         <button type="submit" class="btn btn-primary" id="signup-btn">
                             <span>Criar Conta</span>
                         </button>
@@ -2903,11 +2966,6 @@
                             <input type="email" id="forgot-email" required placeholder="seu@email.com">
                         </div>
                         
-                        <!-- hCaptcha -->
-<div class="h-captcha-container" style="margin-bottom: 20px;">
-    <div class="h-captcha" data-sitekey="e7d2cc12-1d36-4b94-a8a8-4c508f8636b6"></div>
-</div>
-
                         <button type="submit" class="btn btn-primary" id="forgot-btn">
                             <span>Enviar Instruções</span>
                         </button>
@@ -4775,10 +4833,55 @@
                 <button type="button" class="btn btn-primary close-modal">Ok</button>
             </div>
         </div>
+</div>
+<!-- Modal para informações resumidas da Landing Page -->
+<div id="landing-info-modal" class="modal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3 id="landing-info-title"></h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body" id="landing-info-body" style="max-height: 60vh; overflow-y: auto;">
+            <!-- Conteúdo será inserido via JavaScript -->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline close-modal">Fechar</button>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+    
+    // ========== FECHAMENTO DE MODAIS GLOBAL ==========
+function setupGlobalModalClosing() {
+    // Fecha qualquer modal ao clicar no botão .close-modal
+    document.addEventListener('click', (e) => {
+        const closeBtn = e.target.closest('.close-modal');
+        if (closeBtn) {
+            const modal = closeBtn.closest('.modal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                e.preventDefault();
+            }
+        }
+    });
+
+    // Fecha modal ao clicar no overlay (fundo escuro)
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            e.target.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+}
+
+// Executa assim que o DOM estiver pronto
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupGlobalModalClosing);
+} else {
+    setupGlobalModalClosing();
+}
     
     // Função para extrair parâmetros do fragmento da URL (parte após o #)
 function getParameterFromHash(name) {
@@ -8550,6 +8653,104 @@ async function checkPasswordResetRedirect() {
         showLanding();
     }
 });
+
+// ==================== POP-UPS RESUMIDOS PARA LANDING PAGE ====================
+function showLandingPopup(title, content) {
+    const modal = document.getElementById('landing-info-modal');
+    const titleEl = document.getElementById('landing-info-title');
+    const bodyEl = document.getElementById('landing-info-body');
+    if (!modal || !titleEl || !bodyEl) {
+        console.error('Modal não encontrado. Verifique se o elemento landing-info-modal existe.');
+        return;
+    }
+    titleEl.textContent = title;
+    bodyEl.innerHTML = content;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Conteúdos resumidos (edite à vontade)
+const popupContents = {
+    'landing-about-link': {
+        title: 'Sobre o FabricateHub',
+        content: '<p style="color: #e0e0e0;">Plataforma que conecta projetistas e empresas a fabricantes de todo o Brasil. Missão: fortalecer a indústria nacional com manufatura sob demanda.</p><p style="color: #e0e0e0;">Fundada em 2026, já realizamos mais de 1.000 projetos com 98% de satisfação.</p>'
+    },
+    'landing-how-it-works-link': {
+        title: 'Como funciona',
+        content: '<ol style="color: #e0e0e0; margin-left: 20px;"><li><strong>Envie seu projeto</strong> – descreva a peça, material, quantidade e anexe o arquivo técnico (STL, STEP, DXF, PDF).</li><li><strong>Receba orçamentos</strong> – fabricantes qualificados enviam propostas detalhadas em até 72h.</li><li><strong>Compare e escolha</strong> – analise preço, prazo e reputação do fabricante.</li><li><strong>Aceite e acompanhe</strong> – após aceitar o orçamento, um chat exclusivo é aberto e você acompanha o progresso da produção.</li><li><strong>Receba sua peça</strong> – produção, validação e entrega com total segurança.</li></ol>'
+    },
+    'landing-file-requirements-link': {
+        title: 'Requisitos de arquivo',
+        content: '<p style="color: #e0e0e0;"><strong>Formatos aceitos:</strong> STL, STEP, IGES, DXF, DWG, SLDPRT, 3DM, OBJ, PDF (para desenhos técnicos).</p><p style="color: #e0e0e0;"><strong>Tamanho máximo:</strong> 50MB por arquivo (compacte em ZIP/RAR se necessário).</p><p style="color: #e0e0e0;"><strong>Recomendações:</strong> use unidades em milímetros, escala 1:1 em arquivos 2D, geometria sólida e impermeável para impressão 3D.</p>'
+    },
+    'landing-material-guide-link': {
+        title: 'Guia de materiais',
+        content: '<ul style="color: #e0e0e0; margin-left: 20px;"><li><strong>Metais ferrosos:</strong> Aço carbono, aço inoxidável (304/316).</li><li><strong>Metais não ferrosos:</strong> Alumínio (5052, 6061, 7075), latão, bronze, cobre.</li><li><strong>Polímeros:</strong> ABS, Nylon, Policarbonato, PLA, resinas fotopolimerizáveis.</li><li><strong>Madeira:</strong> Pinus, MDF, compensados, madeiras nobres.</li><li><strong>Outros:</strong> Titânio, Inconel, cerâmica técnica, elastômeros.</li></ul>'
+    },
+    'landing-become-partner-link': {
+        title: 'Seja parceiro',
+        content: '<p style="color: #e0e0e0;">Cadastre sua empresa e comece a receber projetos qualificados. Vantagens:</p><ul style="color: #e0e0e0;"><li>Acesso a uma rede crescente de compradores.</li><li>Fluxo simplificado de orçamento e comunicação.</li><li>Proteção jurídica (termos de confidencialidade e LGPD).</li><li>Comissão baseada no sucesso – só pagamos quando você ganha.</li></ul><p style="color: #e0e0e0;">Envie seus dados para <strong>marcosdosanjos@outlook.com</strong> com o assunto “Cadastro Parceiro FabricateHub”.</p>'
+    },
+    'landing-pricing-link': {
+        title: 'Planos de assinatura',
+        content: '<div style="display: flex; flex-wrap: wrap; gap: 15px; margin: 10px 0;">' +
+            '<div style="flex: 1; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;"><strong>Básico</strong><br>R$49/mês<br>Até 4 projetos/mês<br>Taxa R$29/projeto</div>' +
+            '<div style="flex: 1; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;"><strong>Profissional</strong><br>R$99/mês<br>Até 20 projetos/mês<br>Taxa R$19/projeto</div>' +
+            '<div style="flex: 1; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;"><strong>Fabricante</strong><br>R$249/mês<br>Projetos ilimitados<br>Taxa R$9/projeto</div>' +
+            '</div><p style="color: #e0e0e0;">Consulte os planos completos no Marketplace.</p>'
+    },
+    'landing-help-center-link': {
+        title: 'Central de ajuda',
+        content: '<p style="color: #e0e0e0;"><strong>Canais de atendimento:</strong></p><ul style="color: #e0e0e0;"><li><strong>WhatsApp:</strong> (41) 98438-3148 (24/7)</li><li><strong>E-mail:</strong> marcosdosanjos@outlook.com (resposta em poucas horas)</li><li><strong>Instagram:</strong> @fabricate_hub</li></ul><p style="color: #e0e0e0;">Responsável técnico: Marcos dos Anjos Figueiredo.</p>'
+    },
+    'landing-contact-link': {
+        title: 'Contato',
+        content: '<p style="color: #e0e0e0;"><strong>E-mail:</strong> marcosdosanjos@outlook.com</p><p style="color: #e0e0e0;"><strong>WhatsApp:</strong> (41) 98438-3148 (atendimento 24h)</p><p style="color: #e0e0e0;"><strong>Instagram:</strong> @fabricate_hub</p><p style="color: #e0e0e0;">Estamos à disposição para esclarecer dúvidas, receber sugestões ou resolver problemas.</p>'
+    },
+    'landing-privacy-link': {
+        title: 'Política de privacidade',
+        content: '<p style="color: #e0e0e0;">A FabricateHub respeita a LGPD. Seus dados pessoais são utilizados apenas para identificação, autenticação, comunicação sobre projetos e melhoria dos serviços. Não compartilhamos seus dados com terceiros sem autorização. Para mais detalhes, consulte a versão completa no Marketplace.</p>'
+    },
+    'landing-terms-link': {
+        title: 'Termos de uso (Disclaimer)',
+        content: '<p style="color: #e0e0e0;">A plataforma atua exclusivamente como intermediadora entre clientes e fabricantes. Não nos responsabilizamos por negociações, pagamentos, fretes ou qualidade dos produtos. Cada usuário é responsável por sua própria diligência.</p><button class="btn btn-small btn-primary" id="open-disclaimer-from-popup" style="margin-top: 10px;">Ver Termos Completos</button>'
+    }
+};
+
+// Adiciona eventos de clique aos links do rodapé da landing page
+function initLandingPopups() {
+    for (const [id, data] of Object.entries(popupContents)) {
+        const link = document.getElementById(id);
+        if (link) {
+            // Remove qualquer listener anterior (evita duplicação)
+            const newLink = link.cloneNode(true);
+            link.parentNode.replaceChild(newLink, link);
+            newLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showLandingPopup(data.title, data.content);
+                // Caso especial para "Termos de uso"
+                if (id === 'landing-terms-link') {
+                    setTimeout(() => {
+                        const btn = document.getElementById('open-disclaimer-from-popup');
+                        if (btn) btn.addEventListener('click', () => {
+                            openDisclaimerModal();
+                            document.getElementById('landing-info-modal')?.classList.remove('active');
+                        });
+                    }, 100);
+                }
+            });
+        } else {
+            console.warn(`Elemento com id "${id}" não encontrado.`);
+        }
+    }
+}
+
+// Inicializa os pop-ups quando a página estiver completamente carregada
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLandingPopups);
+} else {
+    initLandingPopups();
+}
     </script>
 </body>
 </html>
