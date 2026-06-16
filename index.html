@@ -4887,6 +4887,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+
+        let appInitialized = false;
     
     // ========== FECHAMENTO DE MODAIS GLOBAL ==========
 function setupGlobalModalClosing() {
@@ -5376,6 +5378,8 @@ document.getElementById('resetPasswordForm').addEventListener('submit', async (e
             showNotification(`Bem-vindo, ${currentUser.name}!`, 'success');
             
             app.init();
+            if (appInitialized) return;
+            appInitialized = true;
         }
         
         // Listeners para os botões da landing page
@@ -7058,6 +7062,11 @@ if (document.readyState === 'loading') {
             
             handleProjectSubmit: async (e) => {
                 e.preventDefault();
+
+                    const submitBtn = document.querySelector('#project-form button[type="submit"]');
+if (submitBtn.disabled) return;
+submitBtn.disabled = true;
+submitBtn.innerHTML = 'Enviando...';
                 
                 const fileInput = document.getElementById('file-input');
                 if (!fileInput) {
@@ -7162,6 +7171,11 @@ if (document.readyState === 'loading') {
             
             handleQuoteSubmit: async (e) => {
                 e.preventDefault();
+
+        const submitBtn = document.querySelector('#quote-form button[type="submit"]');
+if (submitBtn.disabled) return;
+submitBtn.disabled = true;
+submitBtn.innerHTML = 'Enviando...';
                 
                 const amount = parseFloat(document.getElementById('quote-amount').value);
                 const leadTime = parseInt(document.getElementById('quote-lead-time').value);
@@ -7798,6 +7812,8 @@ if (document.readyState === 'loading') {
             },
             
             acceptQuote: async (projectId, quoteId, fabricatorId) => {
+                if (this.processingAccept) return;
+this.processingAccept = true;
                 if (confirm('Tem certeza que deseja aceitar este orçamento?')) {
                     try {
                         const { error: quoteError } = await supabaseClient
@@ -8402,36 +8418,32 @@ if (document.readyState === 'loading') {
                 }
             },
             
-            sendChatMessage: async () => {
-                const messageInput = document.getElementById('chat-message-input');
-                const message = messageInput.value.trim();
-                const project = AppState.currentChatProject;
-                
-                if (!message || !project) return;
-                
-                try {
-                    const { data, error } = await supabaseClient
-                        .from('messages')
-                        .insert([{
-                            project_id: project.id,
-                            sender_id: AppState.currentUser.id,
-                            message: message,
-                            read: false
-                        }]);
-                    
-                    if (error) throw error;
-                    
-                    messageInput.value = '';
-                    
-                    await app.loadChatMessages(project.id);
-                    
-                    utils.showNotification('Mensagem enviada!', 'success');
-                    
-                } catch (error) {
-                    console.error('Erro ao enviar mensagem:', error);
-                    utils.showNotification('Erro ao enviar mensagem.', 'error');
-                }
-            },
+            sendChatMessage: async function() {
+    if (this.sendingMessage) return;
+    this.sendingMessage = true;
+    try {
+        const messageInput = document.getElementById('chat-message-input');
+        const message = messageInput.value.trim();
+        const project = AppState.currentChatProject;
+        if (!message || !project) return;
+
+        await supabaseClient.from('messages').insert([{
+            project_id: project.id,
+            sender_id: AppState.currentUser.id,
+            message: message,
+            read: false
+        }]);
+
+        messageInput.value = '';
+        await this.loadChatMessages(project.id);
+        utils.showNotification('Mensagem enviada!', 'success');
+    } catch (error) {
+        console.error('Erro ao enviar mensagem:', error);
+        utils.showNotification('Erro ao enviar mensagem.', 'error');
+    } finally {
+        this.sendingMessage = false;
+    }
+}
 
             openSettingsModal: async () => {
                 if (!AppState.currentUser) {
