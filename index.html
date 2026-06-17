@@ -4941,6 +4941,8 @@ function showAuth() {
 }
 
 function showMarketplace() {
+    if (app.initialized) return;
+    app.initialized = true;
     document.getElementById('landing-page').classList.remove('active');
     document.getElementById('auth-page').classList.remove('active');
     document.getElementById('marketplace-page').classList.add('active');
@@ -6020,6 +6022,9 @@ if (document.readyState === 'loading') {
 
         // ==================== APLICAÇÃO DO MARKETPLACE ====================
         const app = {
+            initialized: false,
+            sendingMessage: false,
+            processingAccept: false,
             init: () => {
                 app.setupEventListeners();
                 app.updateUI();
@@ -7167,6 +7172,10 @@ submitBtn.innerHTML = 'Enviando...';
                     console.error('Erro ao enviar projeto:', error);
                     utils.showNotification('Erro ao enviar projeto. Tente novamente.', 'error');
                 }
+                finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = 'Enviar Projeto';
+                }
             },
             
             handleQuoteSubmit: async (e) => {
@@ -7257,6 +7266,10 @@ submitBtn.innerHTML = 'Enviando...';
                     console.error('Erro ao enviar orçamento:', error);
                     utils.showNotification('Erro ao enviar orçamento. Tente novamente.', 'error');
                 }
+                } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = 'Enviar';
+}
             },
             
             handleCapabilitiesSubmit: async (e) => {
@@ -7811,11 +7824,10 @@ submitBtn.innerHTML = 'Enviando...';
                 }
             },
             
-            acceptQuote: async (projectId, quoteId, fabricatorId) => {
-                if (this.processingAccept) return;
-this.processingAccept = true;
-                if (confirm('Tem certeza que deseja aceitar este orçamento?')) {
-                    try {
+            acceptQuote: async function(projectId, quoteId, fabricatorId) {
+    if (this.processingAccept) return;  // agora this funciona
+    this.processingAccept = true;
+    try {
                         const { error: quoteError } = await supabaseClient
                             .from('quotes')
                             .update({ 
@@ -7962,8 +7974,10 @@ this.processingAccept = true;
                     } catch (error) {
                         console.error('Erro detalhado ao aceitar orçamento:', error);
                         utils.showNotification(`Erro ao aceitar orçamento: ${error.message}`, 'error');
-                    }
-                }
+                    } finally {
+        this.processingAccept = false; // libera a flag sempre, mesmo se der erro
+    }
+}
             },
             
             cancelProject: async (projectId) => {
@@ -8421,11 +8435,15 @@ this.processingAccept = true;
             sendChatMessage: async function() {
     if (this.sendingMessage) return;
     this.sendingMessage = true;
-    try {
         const messageInput = document.getElementById('chat-message-input');
         const message = messageInput.value.trim();
         const project = AppState.currentChatProject;
-        if (!message || !project) return;
+        if (!message || !project) {
+        this.sendingMessage = false; // libera antes de sair
+        return;
+    }
+
+    try {
 
         await supabaseClient.from('messages').insert([{
             project_id: project.id,
