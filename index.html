@@ -6643,25 +6643,29 @@ if (document.readyState === 'loading') {
             },
             
             loadFabricatorTabContent: (tab) => {
-                switch(tab) {
-                    case 'new':
-                        const pendingRequests = AppState.fabricatorRequests.filter(r => r.status === 'pending');
-                        app.renderFabricatorRequestsTable(pendingRequests);
-                        break;
-                    case 'quotes':
-                        const fabricatorQuotes = AppState.fabricatorQuotes.filter(q => q.fabricatorId === AppState.currentUser.id);
-                        app.renderFabricatorQuotesTable(fabricatorQuotes);
-                        break;
-                    case 'active':
-                        const activeJobs = AppState.fabricatorJobs.filter(j => j.status === 'in-progress' || j.status === 'accepted');
-                        app.renderFabricatorActiveJobsTable(activeJobs);
-                        break;
-                    case 'completed':
-                        const completedJobs = AppState.fabricatorJobs.filter(j => j.status === 'completed');
-                        app.renderFabricatorCompletedTable(completedJobs);
-                        break;
-                }
-            },
+    switch(tab) {
+        case 'new': {
+            const pendingRequests = AppState.fabricatorRequests.filter(r => r.status === 'pending');
+            app.renderFabricatorRequestsTable(pendingRequests);
+            break;
+        }
+        case 'quotes': {
+            const fabricatorQuotes = AppState.fabricatorQuotes.filter(q => q.fabricatorId === AppState.currentUser.id);
+            app.renderFabricatorQuotesTable(fabricatorQuotes);
+            break;
+        }
+        case 'active': {
+            const activeJobs = AppState.fabricatorJobs.filter(j => j.status === 'in-progress' || j.status === 'accepted');
+            app.renderFabricatorActiveJobsTable(activeJobs);
+            break;
+        }
+        case 'completed': {
+            const completedJobs = AppState.fabricatorJobs.filter(j => j.status === 'completed');
+            app.renderFabricatorCompletedTable(completedJobs);
+            break;
+        }
+    }
+},
             
             renderFabricatorRequestsTable: (requests) => {
                 const container = document.getElementById('fabricator-new-requests-table');
