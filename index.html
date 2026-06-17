@@ -4887,8 +4887,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-
-        let appInitialized = false;
     
     // ========== FECHAMENTO DE MODAIS GLOBAL ==========
 function setupGlobalModalClosing() {
@@ -4941,8 +4939,6 @@ function showAuth() {
 }
 
 function showMarketplace() {
-    if (app.initialized) return;
-    app.initialized = true;
     document.getElementById('landing-page').classList.remove('active');
     document.getElementById('auth-page').classList.remove('active');
     document.getElementById('marketplace-page').classList.add('active');
@@ -5380,8 +5376,6 @@ document.getElementById('resetPasswordForm').addEventListener('submit', async (e
             showNotification(`Bem-vindo, ${currentUser.name}!`, 'success');
             
             app.init();
-            if (appInitialized) return;
-            appInitialized = true;
         }
         
         // Listeners para os botões da landing page
@@ -6022,9 +6016,6 @@ if (document.readyState === 'loading') {
 
         // ==================== APLICAÇÃO DO MARKETPLACE ====================
         const app = {
-            initialized: false,
-            sendingMessage: false,
-            processingAccept: false,
             init: () => {
                 app.setupEventListeners();
                 app.updateUI();
@@ -6643,29 +6634,25 @@ if (document.readyState === 'loading') {
             },
             
             loadFabricatorTabContent: (tab) => {
-    switch(tab) {
-        case 'new': {
-            const pendingRequests = AppState.fabricatorRequests.filter(r => r.status === 'pending');
-            app.renderFabricatorRequestsTable(pendingRequests);
-            break;
-        }
-        case 'quotes': {
-            const fabricatorQuotes = AppState.fabricatorQuotes.filter(q => q.fabricatorId === AppState.currentUser.id);
-            app.renderFabricatorQuotesTable(fabricatorQuotes);
-            break;
-        }
-        case 'active': {
-            const activeJobs = AppState.fabricatorJobs.filter(j => j.status === 'in-progress' || j.status === 'accepted');
-            app.renderFabricatorActiveJobsTable(activeJobs);
-            break;
-        }
-        case 'completed': {
-            const completedJobs = AppState.fabricatorJobs.filter(j => j.status === 'completed');
-            app.renderFabricatorCompletedTable(completedJobs);
-            break;
-        }
-    }
-},
+                switch(tab) {
+                    case 'new':
+                        const pendingRequests = AppState.fabricatorRequests.filter(r => r.status === 'pending');
+                        app.renderFabricatorRequestsTable(pendingRequests);
+                        break;
+                    case 'quotes':
+                        const fabricatorQuotes = AppState.fabricatorQuotes.filter(q => q.fabricatorId === AppState.currentUser.id);
+                        app.renderFabricatorQuotesTable(fabricatorQuotes);
+                        break;
+                    case 'active':
+                        const activeJobs = AppState.fabricatorJobs.filter(j => j.status === 'in-progress' || j.status === 'accepted');
+                        app.renderFabricatorActiveJobsTable(activeJobs);
+                        break;
+                    case 'completed':
+                        const completedJobs = AppState.fabricatorJobs.filter(j => j.status === 'completed');
+                        app.renderFabricatorCompletedTable(completedJobs);
+                        break;
+                }
+            },
             
             renderFabricatorRequestsTable: (requests) => {
                 const container = document.getElementById('fabricator-new-requests-table');
@@ -7071,11 +7058,6 @@ if (document.readyState === 'loading') {
             
             handleProjectSubmit: async (e) => {
                 e.preventDefault();
-
-                    const submitBtn = document.querySelector('#project-form button[type="submit"]');
-if (submitBtn.disabled) return;
-submitBtn.disabled = true;
-submitBtn.innerHTML = 'Enviando...';
                 
                 const fileInput = document.getElementById('file-input');
                 if (!fileInput) {
@@ -7176,19 +7158,10 @@ submitBtn.innerHTML = 'Enviando...';
                     console.error('Erro ao enviar projeto:', error);
                     utils.showNotification('Erro ao enviar projeto. Tente novamente.', 'error');
                 }
-                finally {
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = 'Enviar Projeto';
-                }
             },
             
             handleQuoteSubmit: async (e) => {
                 e.preventDefault();
-
-        const submitBtn = document.querySelector('#quote-form button[type="submit"]');
-if (submitBtn.disabled) return;
-submitBtn.disabled = true;
-submitBtn.innerHTML = 'Enviando...';
                 
                 const amount = parseFloat(document.getElementById('quote-amount').value);
                 const leadTime = parseInt(document.getElementById('quote-lead-time').value);
@@ -7269,10 +7242,7 @@ submitBtn.innerHTML = 'Enviando...';
                 } catch (error) {
                     console.error('Erro ao enviar orçamento:', error);
                     utils.showNotification('Erro ao enviar orçamento. Tente novamente.', 'error');
-                } finally {
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = 'Enviar';
-}
+                }
             },
             
             handleCapabilitiesSubmit: async (e) => {
@@ -7827,10 +7797,9 @@ submitBtn.innerHTML = 'Enviando...';
                 }
             },
             
-            acceptQuote: async function(projectId, quoteId, fabricatorId) {
-    if (this.processingAccept) return;  // agora this funciona
-    this.processingAccept = true;
-    try {
+            acceptQuote: async (projectId, quoteId, fabricatorId) => {
+                if (confirm('Tem certeza que deseja aceitar este orçamento?')) {
+                    try {
                         const { error: quoteError } = await supabaseClient
                             .from('quotes')
                             .update({ 
@@ -7977,10 +7946,8 @@ submitBtn.innerHTML = 'Enviando...';
                     } catch (error) {
                         console.error('Erro detalhado ao aceitar orçamento:', error);
                         utils.showNotification(`Erro ao aceitar orçamento: ${error.message}`, 'error');
-                    } finally {
-        this.processingAccept = false; // libera a flag sempre, mesmo se der erro
-    }
-}
+                    }
+                }
             },
             
             cancelProject: async (projectId) => {
@@ -8435,36 +8402,36 @@ submitBtn.innerHTML = 'Enviando...';
                 }
             },
             
-            sendChatMessage: async function() {
-    if (this.sendingMessage) return;
-    this.sendingMessage = true;
-        const messageInput = document.getElementById('chat-message-input');
-        const message = messageInput.value.trim();
-        const project = AppState.currentChatProject;
-        if (!message || !project) {
-        this.sendingMessage = false; // libera antes de sair
-        return;
-    }
-
-    try {
-
-        await supabaseClient.from('messages').insert([{
-            project_id: project.id,
-            sender_id: AppState.currentUser.id,
-            message: message,
-            read: false
-        }]);
-
-        messageInput.value = '';
-        await this.loadChatMessages(project.id);
-        utils.showNotification('Mensagem enviada!', 'success');
-    } catch (error) {
-        console.error('Erro ao enviar mensagem:', error);
-        utils.showNotification('Erro ao enviar mensagem.', 'error');
-    } finally {
-        this.sendingMessage = false;
-    }
-},
+            sendChatMessage: async () => {
+                const messageInput = document.getElementById('chat-message-input');
+                const message = messageInput.value.trim();
+                const project = AppState.currentChatProject;
+                
+                if (!message || !project) return;
+                
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('messages')
+                        .insert([{
+                            project_id: project.id,
+                            sender_id: AppState.currentUser.id,
+                            message: message,
+                            read: false
+                        }]);
+                    
+                    if (error) throw error;
+                    
+                    messageInput.value = '';
+                    
+                    await app.loadChatMessages(project.id);
+                    
+                    utils.showNotification('Mensagem enviada!', 'success');
+                    
+                } catch (error) {
+                    console.error('Erro ao enviar mensagem:', error);
+                    utils.showNotification('Erro ao enviar mensagem.', 'error');
+                }
+            },
 
             openSettingsModal: async () => {
                 if (!AppState.currentUser) {
@@ -8620,7 +8587,7 @@ submitBtn.innerHTML = 'Enviando...';
                     console.error('Erro ao enviar avaliação:', error);
                     utils.showNotification(`Erro: ${error.message}`, 'error');
                 }
-            }
+            },
         };
 
         // ==================== OUVINTES DE EVENTO DA JANELA ====================
